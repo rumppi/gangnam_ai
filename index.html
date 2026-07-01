@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JH STUDIO 세곡점 리포트 홈</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      color: #33333f;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255, 219, 232, 0.9), transparent 30%),
+        radial-gradient(circle at 90% 15%, rgba(218, 239, 255, 0.9), transparent 30%),
+        radial-gradient(circle at 20% 90%, rgba(232, 255, 235, 0.9), transparent 32%),
+        radial-gradient(circle at 85% 85%, rgba(243, 230, 255, 0.9), transparent 32%),
+        #fffaf7;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 44px 20px 70px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 52px 34px;
+      border-radius: 36px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 55px rgba(90, 90, 120, 0.13);
+      backdrop-filter: blur(16px);
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(255, 225, 235, 0.8);
+      top: -80px;
+      left: -70px;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(224, 241, 255, 0.9);
+      right: -90px;
+      bottom: -110px;
+      z-index: 0;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: #fff4fb;
+      color: #c65c83;
+      border: 1px solid #ffd9e7;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 1.32;
+      letter-spacing: -1.1px;
+      color: #2f2f3d;
+    }
+
+    .hero-desc {
+      max-width: 720px;
+      margin: 18px auto 0;
+      color: #5b5b68;
+      font-size: 18px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .tag {
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #eee;
+      font-size: 14px;
+      font-weight: 700;
+      color: #666;
+      box-shadow: 0 6px 14px rgba(90, 90, 120, 0.06);
+    }
+
+    .tag.blue {
+      background: #eef8ff;
+      color: #46789e;
+      border-color: #d8efff;
+    }
+
+    .tag.pink {
+      background: #fff0f5;
+      color: #c65c83;
+      border-color: #ffd9e7;
+    }
+
+    .tag.green {
+      background: #f0fff3;
+      color: #4f965d;
+      border-color: #d6f2dd;
+    }
+
+    .tag.purple {
+      background: #f5efff;
+      color: #7357b7;
+      border-color: #e4d8ff;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 26px 0 34px;
+    }
+
+    .summary-card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(240, 240, 240, 0.9);
+      border-radius: 24px;
+      padding: 22px 18px;
+      box-shadow: 0 10px 26px rgba(80, 80, 110, 0.08);
+      text-align: center;
+      min-height: 138px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .summary-card:nth-child(1) {
+      background: #eef8ff;
+      border-color: #d9efff;
+    }
+
+    .summary-card:nth-child(2) {
+      background: #fff8df;
+      border-color: #ffecaf;
+    }
+
+    .summary-card:nth-child(3) {
+      background: #f0fff3;
+      border-color: #d4f1dc;
+    }
+
+    .summary-card:nth-child(4) {
+      background: #f5efff;
+      border-color: #e4d8ff;
+    }
+
+    .summary-card span {
+      display: block;
+      font-size: 14px;
+      color: #777;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .summary-card strong {
+      display: block;
+      color: #333340;
+      font-size: 20px;
+      line-height: 1.42;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0 18px;
+      gap: 14px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 27px;
+      letter-spacing: -0.5px;
+      color: #333340;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: #777;
+      font-size: 15px;
+      text-align: right;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      margin-bottom: 34px;
+    }
+
+    .report-card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 360px;
+      border-radius: 30px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(245, 245, 245, 0.95);
+      box-shadow: 0 14px 34px rgba(80, 80, 110, 0.11);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .report-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 48px rgba(80, 80, 110, 0.16);
+    }
+
+    .report-card.branding {
+      background: linear-gradient(145deg, #fff7fb 0%, #f3f9ff 100%);
+    }
+
+    .report-card.competitor {
+      background: linear-gradient(145deg, #f6fff7 0%, #f6f0ff 100%);
+    }
+
+    .report-icon {
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 22px;
+      font-size: 30px;
+      margin-bottom: 20px;
+      background: #ffffffcc;
+      border: 1px solid #ffffff;
+      box-shadow: 0 8px 18px rgba(120, 120, 140, 0.09);
+    }
+
+    .report-card h3 {
+      margin: 0 0 12px;
+      color: #2f2f3d;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+    }
+
+    .report-card p {
+      margin: 0;
+      color: #5e5e6c;
+      font-size: 16px;
+    }
+
+    .report-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 26px;
+    }
+
+    .report-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 9px;
+      color: #4b4b58;
+      font-size: 15px;
+    }
+
+    .report-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #c65c83;
+      font-weight: 900;
+    }
+
+    .competitor .report-list li::before {
+      color: #5a9d6a;
+    }
+
+    .button-row {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 900;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    .btn-primary {
+      background: #37364a;
+      color: #fff;
+    }
+
+    .btn-light {
+      background: #ffffff;
+      color: #5d5a75;
+      border: 1px solid #eee;
+    }
+
+    .guide {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(245, 245, 245, 0.95);
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 14px 34px rgba(80, 80, 110, 0.09);
+    }
+
+    .guide h2 {
+      margin: 0 0 18px;
+      font-size: 25px;
+      color: #333340;
+      letter-spacing: -0.4px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .step {
+      padding: 20px;
+      border-radius: 22px;
+      background: #fffdf8;
+      border: 1px solid #f2e7c9;
+    }
+
+    .step:nth-child(2) {
+      background: #eef8ff;
+      border-color: #d9efff;
+    }
+
+    .step:nth-child(3) {
+      background: #f5efff;
+      border-color: #e4d8ff;
+    }
+
+    .step b {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #6a58a7;
+      margin-bottom: 10px;
+      box-shadow: 0 5px 12px rgba(120, 120, 140, 0.07);
+    }
+
+    .step strong {
+      display: block;
+      font-size: 17px;
+      color: #333340;
+      margin-bottom: 7px;
+    }
+
+    .step span {
+      display: block;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 34px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .file-note {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px dashed #d8d4e8;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        padding: 28px 15px 56px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .hero {
+        padding: 40px 20px;
+        border-radius: 28px;
+      }
+
+      .hero-desc {
+        font-size: 16px;
+      }
+
+      .summary,
+      .report-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        display: block;
+      }
+
+      .section-title p {
+        text-align: left;
+        margin-top: 6px;
+      }
+
+      .report-card {
+        min-height: auto;
+        padding: 24px;
+      }
+
+      .report-card h3 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="badge">JH STUDIO 세곡점 리포트 허브</div>
+        <h1>브랜드 분석과 경쟁사 분석을<br />한곳에서 확인하세요</h1>
+        <p class="hero-desc">
+          세곡동·자곡동 생활권 1:1 PT 스튜디오의 네이버 플레이스 최적화,
+          브랜딩 방향, 경쟁 포지셔닝을 시각화한 리포트 모음입니다.
+        </p>
+
+        <div class="hero-tags">
+          <span class="tag pink">세곡동 PT</span>
+          <span class="tag blue">자곡동 PT</span>
+          <span class="tag green">1:1 퍼스널트레이닝</span>
+          <span class="tag purple">네이버 플레이스 최적화</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="summary-card">
+        <span>매장 포지션</span>
+        <strong>세곡·자곡<br />1:1 PT</strong>
+      </div>
+      <div class="summary-card">
+        <span>브랜딩 방향</span>
+        <strong>맞춤관리<br />전문성</strong>
+      </div>
+      <div class="summary-card">
+        <span>콘텐츠 목표</span>
+        <strong>고객 이해도<br />향상</strong>
+      </div>
+      <div class="summary-card">
+        <span>활용 채널</span>
+        <strong>네이버 블로그<br />플레이스</strong>
+      </div>
+    </section>
+
+    <div class="section-title">
+      <h2>리포트 바로가기</h2>
+      <p>아래 카드를 클릭하면 각 HTML 리포트 페이지로 이동합니다.</p>
+    </div>
+
+    <section class="report-grid">
+      <article class="report-card branding">
+        <div class="report-icon">🌸</div>
+        <h3>브랜드 분석 리포트</h3>
+        <p>
+          JH STUDIO 세곡점의 매장 정체성, 핵심 고객층, USP,
+          네이버 플레이스 최적화 방향을 정리한 리포트입니다.
+        </p>
+
+        <ul class="report-list">
+          <li>한눈에 보는 매장 브랜딩 요약</li>
+          <li>11가지 브랜딩 분석 프레임</li>
+          <li>대표 키워드와 확장 키워드</li>
+          <li>사진기획·블로그·SNS 콘텐츠 아이디어</li>
+          <li>오늘/이번 주/이번 달 실행 체크리스트</li>
+        </ul>
+
+        <div class="button-row">
+          <a class="btn btn-primary" href="branding.html">브랜드 분석 보기</a>
+          <a class="btn btn-light" href="branding.html" target="_blank" rel="noopener">새 창으로 열기</a>
+        </div>
+      </article>
+
+      <article class="report-card competitor">
+        <div class="report-icon">🧭</div>
+        <h3>경쟁사 분석 리포트</h3>
+        <p>
+          세곡동·자곡동·수서 생활권의 PT 경쟁 매장을 비교하고,
+          JH STUDIO 세곡점의 차별화 방향을 정리한 리포트입니다.
+        </p>
+
+        <ul class="report-list">
+          <li>주요 경쟁사별 확인 정보 정리</li>
+          <li>운영시간·편의시설·포지션 비교</li>
+          <li>경쟁사 대비 JH STUDIO 보완점</li>
+          <li>추천 포지셔닝 문장</li>
+          <li>네이버 플레이스 경쟁 대응 문구</li>
+        </ul>
+
+        <div class="button-row">
+          <a class="btn btn-primary" href="competitor.html">경쟁사 분석 보기</a>
+          <a class="btn btn-light" href="competitor.html" target="_blank" rel="noopener">새 창으로 열기</a>
+        </div>
+      </article>
+    </section>
+
+   
+    <div class="footer">
+      JH STUDIO 세곡점 · 브랜드 & 경쟁사 분석 리포트
+    </div>
+
+  </main>
+</body>
+</html>
