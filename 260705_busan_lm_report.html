@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>빨간오뎅 부산어묵 · 마케팅 로드맵 리포트</title>
+<style>
+  :root{
+    --red:#d6301f; --red-dark:#a81c0e; --red-soft:#fdecea;
+    --ink:#2a2320; --gray:#6b6560; --line:#efe7e3;
+    --gold:#e3a008; --green:#2e9e5b; --blue:#2f6fed; --bg:#faf6f3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.75;padding:24px 14px}
+  .wrap{max-width:1000px;margin:0 auto}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,var(--red),var(--red-dark));
+    color:#fff;border-radius:22px;padding:44px 36px;position:relative;overflow:hidden}
+  .hero::after{content:"🍢";position:absolute;right:26px;bottom:-14px;
+    font-size:150px;opacity:.13;transform:rotate(-14deg)}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.2);
+    padding:6px 15px;border-radius:30px;font-size:13px;letter-spacing:.5px;margin-bottom:16px}
+  .hero h1{font-size:27px;font-weight:800;letter-spacing:-.6px;line-height:1.4}
+  .hero .sub{margin-top:12px;font-size:14px;opacity:.92;font-weight:500}
+
+  /* SECTION */
+  section{background:#fff;border-radius:18px;padding:30px 32px;margin-top:22px;
+    box-shadow:0 4px 16px rgba(180,80,60,.06);border:1px solid var(--line)}
+  .sec-head{display:flex;align-items:center;gap:13px;margin-bottom:8px}
+  .sec-head .n{background:var(--red);color:#fff;min-width:34px;height:34px;
+    border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:16px}
+  .sec-head h2{font-size:20px;font-weight:800;letter-spacing:-.4px}
+  .sec-lead{font-size:14px;color:var(--gray);margin:6px 0 20px;padding-left:47px}
+
+  p.body{font-size:14.5px;margin-bottom:14px}
+  .hl{background:linear-gradient(transparent 60%,#ffe08a 60%);font-weight:700;padding:0 2px}
+  .em{color:var(--red-dark);font-weight:700}
+
+  /* SW cards */
+  .diag{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+  .dcard{border-radius:14px;padding:20px 22px}
+  .dcard.s{background:#eefaf1;border:1px solid #cdeed7}
+  .dcard.w{background:#fdf3ee;border:1px solid #f6d9c9}
+  .dcard h3{font-size:15px;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+  .dcard.s h3{color:var(--green)} .dcard.w h3{color:var(--red)}
+  .dcard p{font-size:13px;color:var(--ink)}
+  .stat{display:flex;align-items:baseline;gap:8px;background:#fff;border-radius:10px;
+    padding:10px 14px;margin:10px 0}
+  .stat .big{font-size:24px;font-weight:800;color:var(--red)}
+  .stat .cap{font-size:12.5px;color:var(--gray)}
+  .turn{background:linear-gradient(135deg,#fff8e6,#fdf0d0);border:1px solid #f0dca0;
+    border-radius:14px;padding:20px 24px;margin-top:18px}
+  .turn h3{color:#8a6d0c;font-size:15px;margin-bottom:6px}
+  .turn p{font-size:14px;color:#5c4a10}
+
+  /* TIMELINE */
+  .tl-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red-soft);
+    color:var(--red-dark);padding:6px 16px;border-radius:30px;font-weight:800;
+    font-size:14px;margin-bottom:6px}
+  .block{margin-top:16px}
+  .block .bh{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:10px;
+    padding-left:14px;border-left:4px solid var(--red)}
+  .items{display:flex;flex-direction:column;gap:9px}
+  .li{display:flex;gap:12px;align-items:flex-start;background:var(--bg);
+    border-radius:10px;padding:12px 16px;font-size:13.5px}
+  .li .ic{font-size:16px;flex-shrink:0;margin-top:1px}
+  .li b{color:var(--red-dark)}
+  .quote{background:#2a2320;color:#fff;border-radius:12px;padding:14px 18px;
+    font-size:13.5px;margin-top:12px;position:relative}
+  .quote::before{content:"“";position:absolute;left:10px;top:-6px;font-size:40px;
+    color:var(--gold);opacity:.6}
+  .quote span{padding-left:22px;display:block;font-style:italic}
+
+  /* Menu highlight chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{background:var(--ink);color:#fff;font-size:12.5px;padding:5px 13px;
+    border-radius:20px;font-weight:600}
+  .chip.gold{background:var(--gold)} .chip.red{background:var(--red)}
+
+  /* CLOSING */
+  .close{background:linear-gradient(135deg,var(--ink),#4a3e37);color:#fff;
+    border-radius:20px;padding:36px 34px;margin-top:22px;text-align:center}
+  .close h2{font-size:20px;font-weight:800;margin-bottom:12px}
+  .close p{font-size:14px;opacity:.9;max-width:720px;margin:0 auto 8px}
+  .close .cta{display:inline-block;margin-top:18px;background:var(--red);
+    color:#fff;padding:13px 28px;border-radius:12px;font-weight:800;font-size:15px}
+
+  footer{text-align:center;color:var(--gray);font-size:12px;margin:26px 0 8px}
+
+  @media(max-width:720px){
+    .diag{grid-template-columns:1fr}
+    .hero h1{font-size:21px}
+    .sec-lead{padding-left:0}
+    section{padding:24px 20px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="tag">MARKETING ROADMAP REPORT</span>
+    <h1>🔴 빨간오뎅 부산어묵<br>신규 고객 유입 극대화 &amp; 브랜드 경험 혁신 전략</h1>
+    <div class="sub">강력한 유산(노포 헤리티지) × 디지털 가시성 — 강남 1등 분식 랜드마크로의 전환</div>
+  </div>
+
+  <!-- 1. 진단 -->
+  <section>
+    <div class="sec-head"><span class="n">1</span><h2>개요 및 현황 진단</h2></div>
+    <div class="sec-lead">강력한 유산과 디지털 공백의 간극 분석</div>
+    <p class="body">성공적인 비즈니스 확장은 <b>현재 매장의 가치가 시장에 얼마나 정확히 전달되고 있는지</b>를 진단하는 것에서 시작합니다. 아무리 훌륭한 노포라도 디지털 환경에서 발견되지 못하면 그 가치는 매일 <span class="em">'기회 손실'</span>이라는 비용으로 사라집니다. 빨간오뎅 부산어묵은 검증된 본질을 갖췄으나, 현대 소비자의 구매 여정에 이식하지 못해 발생하는 매출 누수 지점이 명확합니다.</p>
+
+    <div class="diag">
+      <div class="dcard s">
+        <h3>💪 브랜드 자산 (Strengths)</h3>
+        <div class="stat"><span class="big">20년+</span><span class="cap">자본으로 살 수 없는 '시간의 신뢰' 노포 헤리티지</span></div>
+        <div class="stat"><span class="big">2,271건</span><span class="cap">네이버 '음식이 맛있어요' — 강남권 독보적 맛의 권위</span></div>
+        <p>+ '놀라운 토요일' 방송 출연 · 매일 직접 뽑는 <b>통 가래떡 왕떡볶이</b> · 매생이·톳·조개살 등 <b>10종+ 전문 어묵</b> = 프랜차이즈가 흉내 낼 수 없는 핵심 USP</p>
+      </div>
+      <div class="dcard w">
+        <h3>⚠️ 경험적 마찰 · 기회 손실 (Weaknesses)</h3>
+        <p><b>① 디지털 가시성 부재</b> — 영업시간 미등록으로 <span class="hl">밤 23:50까지 운영되는 '강남권 희소 심야 분식'</span> 소구 포인트가 검색에서 완전 누락 → 야식 수요를 경쟁점에 헌납</p>
+        <p style="margin-top:8px"><b>② 낮은 브랜드 상기도</b> — '빨간오뎅'이라는 흔한 상호명</p>
+        <p style="margin-top:8px"><b>③ 진입장벽</b> — 구두 주문 방식이 MZ·외국인에게 심리적 마찰로 작용</p>
+      </div>
+    </div>
+
+    <div class="turn">
+      <h3>🎯 전략적 전환점</h3>
+      <p>지금 필요한 것은 <b>메뉴의 변화가 아니라 '경험의 설계'</b>입니다. 20년 맛의 내공에 디지털 가시성을 입히고, 매장 진입부터 주문까지의 마찰을 제거하면 <b>강남 1등 분식 랜드마크</b>의 지위를 확고히 할 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 2. 1주차 -->
+  <section>
+    <span class="tl-badge">📅 1주차</span>
+    <div class="sec-head"><span class="n">2</span><h2>네이버 스마트플레이스 최적화</h2></div>
+    <div class="sec-lead">브랜드 고정 및 가시성 확보 — 온라인 '첫인상'이 오프라인 방문을 좌우</div>
+
+    <div class="block">
+      <div class="bh">정보 최신화 &amp; 브랜드 고정 전략</div>
+      <div class="items">
+        <div class="li"><span class="ic">🕛</span><span><b>영업시간 보완</b> : 10:00 ~ 23:50 — 심야 운영 강점을 전면 강조</span></div>
+        <div class="li"><span class="ic">🔖</span><span><b>상호 각인</b> : 일반 명사 대신 <b>'개포시장 빨간오뎅' / '개포동 빨간오뎅'</b>을 고유 브랜드명으로 소개글·키워드 전반 반복 노출 → 검색 상기도 ↑</span></div>
+        <div class="li"><span class="ic">📍</span><span><b>위치 직관화</b> : '개포동역 6번 출구 도보 3분, 시장 입구 코너'</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="bh">비주얼 최적화 지침</div>
+      <div class="items">
+        <div class="li"><span class="ic">📸</span><span><b>대표 이미지</b> : '김이 모락모락 나는 빨간오뎅 클로즈업' 컷</span></div>
+        <div class="li"><span class="ic">🍢</span><span><b>차별화 메뉴 강조</b> : '통 가래떡 왕떡볶이' 단면 컷 + 10종 어묵 진열 풀샷을 메뉴 섹션 전면 배치</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 2주차 -->
+  <section>
+    <span class="tl-badge">📅 2주차</span>
+    <div class="sec-head"><span class="n">3</span><h2>매장 진입 장벽 해소 &amp; UX 혁신</h2></div>
+    <div class="sec-lead">주문 경험 최적화 — 쭈뼛거리는 순간 만족도는 하락한다</div>
+
+    <div class="block">
+      <div class="bh">초정밀 주문 가이드라인 설치</div>
+      <div class="items">
+        <div class="li"><span class="ic">🪧</span><span>고객 시선이 머무는 <b>'어묵 솥 바로 위'</b>와 <b>'가판대 좌측'</b> 두 곳에 직관적 주문 안내판 설치</span></div>
+        <div class="li"><span class="ic">🌐</span><span><b>외국인/MZ 대응</b> : 영어·중국어·일본어 병기 + 어묵 10종에 <b>No.1~No.10 번호 부여</b> → "1번, 5번 주세요" 언어 장벽 없는 주문</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="bh">어묵 샘플러 &amp; 페어링 전략</div>
+      <div class="items">
+        <div class="li"><span class="ic">🍱</span><span><b>'어묵 샘플러' 도입</b> : 매생이·톳·조개살·봉봉이 등 독특한 어묵을 한 번에 맛보는 세트 → 객단가 ↑</span></div>
+        <div class="li"><span class="ic">🌶️</span><span><b>안심 페어링 안내</b> : 매운빨간오뎅(1,000원)을 "신라면보다 매콤한 중독성"으로 명시 + 중화용 매생이오뎅(1,500원) 함께 배치 → 심리적 안심 장치</span></div>
+      </div>
+      <div class="quote"><span>매운빨간오뎅 → 매생이오뎅으로 이어지는 '맵기 안심 동선'을 설계하라.</span></div>
+    </div>
+  </section>
+
+  <!-- 4. 3~4주차 -->
+  <section>
+    <span class="tl-badge">📅 3~4주차</span>
+    <div class="sec-head"><span class="n">4</span><h2>포장 라인 강화 &amp; 원거리 고객 유치</h2></div>
+    <div class="sec-lead">배후 상권 확장 — 공간의 제약을 상권 확장의 기회로 전환</div>
+
+    <div class="block">
+      <div class="bh">대치·도곡 학원가 타겟팅 마케팅</div>
+      <div class="items">
+        <div class="li"><span class="ic">🅿️</span><span>상인회 지원 <b>무료 주차권</b>을 단순 정보가 아닌, 페르소나 행동 패턴에 맞춘 <b>'방문 명분'</b>으로 활용</span></div>
+      </div>
+      <div class="quote"><span>"대치·도곡동 학원가 라이딩 전후, 10분 포장 필수 코스 — 공영주차장 무료 주차권 지원으로 주차 걱정 없이 방문하세요."</span></div>
+    </div>
+
+    <div class="block">
+      <div class="bh">포장 전용 세트(Take-out) 활성화</div>
+      <div class="items">
+        <div class="li"><span class="ic">🥡</span><span>퇴근길 가구를 겨냥해 가시성 높은 포장 세트 메뉴판을 매장 전면에 크게 노출</span></div>
+      </div>
+      <div class="chips">
+        <span class="chip red">매운오뎅 5개 세트 · 5,000원</span>
+        <span class="chip gold">수제어묵 3개 세트 · 4,500원</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 월간 지속 -->
+  <section>
+    <span class="tl-badge">🔁 월간 정기 · 지속</span>
+    <div class="sec-head"><span class="n">5</span><h2>브랜딩 &amp; 리뷰 선순환 로드맵</h2></div>
+    <div class="sec-lead">인프라가 갖춰지면 확산하고 팬덤을 형성하는 단계</div>
+
+    <div class="block">
+      <div class="bh">숏폼(Short-form) 콘텐츠 기획</div>
+      <div class="items">
+        <div class="li"><span class="ic">🎬</span><span>'김이 나는 빨간오뎅' · '가위로 단번에 잘리는 쫄깃한 왕떡볶이' = 숏폼 최적 소재</span></div>
+        <div class="li"><span class="ic">📱</span><span><b>실행 지침</b> : 주 1회 인스타 릴스/유튜브 쇼츠, 학원가 학생 겨냥 '오늘의 간식' 톤앤매너 업로드 → 즉각적 방문 유도</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="bh">리뷰 자산 관리 &amp; SEO</div>
+      <div class="items">
+        <div class="li"><span class="ic">🎁</span><span>영수증 리뷰 참여 시 <b>'어묵 1개 증정'</b> 이벤트로 리뷰 꾸준히 축적</span></div>
+        <div class="li"><span class="ic">💬</span><span>답글에 핵심 키워드 자연 반복 → 검색 최적화 극대화</span></div>
+      </div>
+      <div class="quote"><span>"개포동 떡볶이 맛집을 찾아주셔서 감사합니다" · "개포시장 빨간오뎅의 매운맛이 생각날 때 또 들러주세요"</span></div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <div class="close">
+    <h2>💡 최종 결언</h2>
+    <p>본 로드맵은 단순히 홍보를 늘리는 것이 아니라, <b>20년 노포의 가치를 현대적 시스템으로 재정의</b>하는 과정입니다.</p>
+    <p>온라인의 디지털 가시성과 오프라인의 편리한 주문 경험이 결합될 때, '개포시장 빨간오뎅'은 시장 분식집을 넘어 <b>강남 전역에서 찾아오는 독보적인 맛의 성지</b>가 됩니다.</p>
+    <div class="cta">🚀 지금 즉시, 스마트플레이스 영업시간 입력부터 시작하십시오</div>
+    <p style="margin-top:16px;font-size:13px;opacity:.75">사장님의 실천이 강남 1등 매장을 만듭니다.</p>
+  </div>
+
+  <footer>ⓒ 2026 빨간오뎅 부산어묵 · 마케팅 로드맵 리포트</footer>
+
+</div>
+</body>
+</html>
