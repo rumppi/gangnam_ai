@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>빨간오뎅 부산어묵 · 사전 리서치 자료</title>
+<style>
+  :root{
+    --red:#d6301f; --red-dark:#a81c0e; --red-soft:#fdecea;
+    --ink:#2a2320; --gray:#6b6560; --line:#efe7e3;
+    --gold:#e3a008; --green:#2e9e5b; --bg:#faf6f3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;padding:24px 14px}
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* Header */
+  .hero{background:linear-gradient(135deg,var(--red),var(--red-dark));
+    color:#fff;border-radius:20px;padding:38px 34px;position:relative;overflow:hidden}
+  .hero::after{content:"🍢";position:absolute;right:24px;top:14px;
+    font-size:120px;opacity:.14;transform:rotate(-12deg)}
+  .hero .badge{display:inline-block;background:rgba(255,255,255,.2);
+    padding:5px 14px;border-radius:30px;font-size:13px;letter-spacing:.5px;margin-bottom:14px}
+  .hero h1{font-size:30px;font-weight:800;letter-spacing:-.5px}
+  .hero p{margin-top:10px;font-size:13.5px;opacity:.92}
+
+  /* Section */
+  section{background:#fff;border-radius:16px;padding:26px 28px;margin-top:20px;
+    box-shadow:0 3px 14px rgba(180,80,60,.06);border:1px solid var(--line)}
+  .sec-title{display:flex;align-items:center;gap:11px;margin-bottom:18px}
+  .sec-title .num{background:var(--red);color:#fff;width:30px;height:30px;
+    border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:15px;flex-shrink:0}
+  .sec-title h2{font-size:19px;font-weight:800;letter-spacing:-.3px}
+
+  /* Info table */
+  .info{display:grid;grid-template-columns:130px 1fr;gap:0}
+  .info dt{background:var(--red-soft);color:var(--red-dark);font-weight:700;
+    padding:11px 14px;border-bottom:2px solid #fff;font-size:14px}
+  .info dd{padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px}
+
+  /* Menu */
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .menu-box{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .menu-box h3{background:var(--ink);color:#fff;font-size:14px;padding:9px 14px;
+    display:flex;justify-content:space-between;align-items:center}
+  .menu-box h3 .tag{font-size:11px;background:var(--gold);color:#fff;
+    padding:2px 8px;border-radius:20px;font-weight:700}
+  .menu-box.sig h3{background:var(--red)}
+  .menu-box ul{list-style:none;padding:6px 0}
+  .menu-box li{display:flex;justify-content:space-between;padding:7px 14px;
+    font-size:13.5px;border-bottom:1px dashed var(--line)}
+  .menu-box li:last-child{border-bottom:none}
+  .menu-box li .price{font-weight:700;color:var(--red-dark);white-space:nowrap}
+  .menu-box li small{color:var(--gray);font-size:11.5px;display:block;margin-top:2px}
+  .note{font-size:12.5px;color:var(--gray);margin-top:14px;padding:10px 14px;
+    background:var(--bg);border-radius:8px}
+
+  /* Review bars */
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+  .bar-row .lbl{width:135px;font-size:13.5px;font-weight:600;flex-shrink:0}
+  .bar-track{flex:1;background:var(--line);border-radius:20px;height:22px;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--red-dark));
+    border-radius:20px;display:flex;align-items:center;justify-content:flex-end;
+    padding-right:10px;color:#fff;font-size:12px;font-weight:700;min-width:44px}
+  .rate-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:12px;margin-top:18px}
+  .rate-card{text-align:center;border:1px solid var(--line);border-radius:12px;padding:14px 6px}
+  .rate-card .big{font-size:26px;font-weight:800;color:var(--red)}
+  .rate-card .cap{font-size:12px;color:var(--gray);margin-top:3px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .chip{background:var(--red-soft);color:var(--red-dark);font-size:12.5px;
+    padding:4px 12px;border-radius:20px;font-weight:600}
+
+  /* SW columns */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .sw{border-radius:12px;padding:18px 20px}
+  .sw.s{background:#eefaf1;border:1px solid #cdeed7}
+  .sw.w{background:#fdf3ee;border:1px solid #f6d9c9}
+  .sw h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+  .sw.s h3{color:var(--green)} .sw.w h3{color:var(--red)}
+  .sw ul{list-style:none}
+  .sw li{font-size:13px;padding:6px 0 6px 20px;position:relative;border-bottom:1px dashed rgba(0,0,0,.06)}
+  .sw li:last-child{border-bottom:none}
+  .sw.s li::before{content:"▲";position:absolute;left:0;color:var(--green);font-size:10px;top:8px}
+  .sw.w li::before{content:"▼";position:absolute;left:0;color:var(--red);font-size:10px;top:8px}
+
+  /* Env */
+  .env-list{display:flex;flex-direction:column;gap:10px}
+  .env-list .item{display:flex;gap:12px;align-items:flex-start;font-size:13.5px}
+  .env-list .ic{font-size:18px;flex-shrink:0}
+
+  /* Strategy */
+  .strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .strat .card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+    position:relative;background:linear-gradient(180deg,#fff,var(--bg))}
+  .strat .card .no{position:absolute;top:-12px;left:16px;background:var(--red);
+    color:#fff;width:26px;height:26px;border-radius:8px;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .strat .card p{font-size:13px;margin-top:8px}
+  .strat .card strong{color:var(--red-dark)}
+
+  .footer-note{background:#fff8e6;border:1px solid #f0dca0;border-radius:12px;
+    padding:14px 18px;margin-top:20px;font-size:13px;color:#7a6413}
+
+  footer{text-align:center;color:var(--gray);font-size:12px;margin:26px 0 8px}
+
+  @media(max-width:720px){
+    .info{grid-template-columns:100px 1fr}
+    .two-col{grid-template-columns:1fr}
+    .bar-row .lbl{width:110px;font-size:12.5px}
+    .hero h1{font-size:23px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="badge">네이버 마케팅 컨설팅 · 사전 리서치 자료</span>
+    <h1>🔴 빨간오뎅 부산어묵</h1>
+    <p>조사일 2026.06.27 &nbsp;|&nbsp; 출처: 네이버 스마트플레이스 · 블로그 후기 · 다이닝코드 · 유튜브 · 인스타그램</p>
+  </div>
+
+  <!-- 1. 기본정보 -->
+  <section>
+    <div class="sec-title"><span class="num">1</span><h2>업체 기본 정보</h2></div>
+    <dl class="info">
+      <dt>상호명</dt><dd>빨간오뎅 부산어묵</dd>
+      <dt>업종</dt><dd>부산어묵 전문점 + 분식집 (어묵 / 떡볶이 / 순대 / 튀김)</dd>
+      <dt>주소</dt><dd>서울 강남구 개포로82길 13-11 4층 <small style="color:#6b6560">(지번: 서울 강남구 개포동 186-5)</small></dd>
+      <dt>위치 특성</dt><dd>개포시장 입구 코너 / 시장 한가운데 가장 사람 많은 자리</dd>
+      <dt>전화번호</dt><dd>02-459-6928</dd>
+      <dt>영업시간</dt><dd>10:00 ~ 23:00 (블로그 기준, 약 13시간 영업)</dd>
+      <dt>휴무일</dt><dd>명절, 여름 휴가 기간</dd>
+      <dt>주차</dt><dd>자체 주차장 없음 → 노상 공영주차장 이용 (상인회 무료 주차권 지원 → 차량 방문 부담 ↓)</dd>
+      <dt>접근성</dt><dd>개포동역 6번 출구 도보 약 3분 (5·6번 출구 앞)</dd>
+      <dt>운영 방식</dt><dd>서서 먹는 길거리 분식 스타일 / 가판대 직접 주문(구두) · 포장 선불, 매장 취식 후불</dd>
+    </dl>
+  </section>
+
+  <!-- 2. 메뉴 -->
+  <section>
+    <div class="sec-title"><span class="num">2</span><h2>메뉴 &amp; 가격 <span style="font-size:13px;color:#6b6560;font-weight:500">(2025~2026 기준)</span></h2></div>
+    <div class="menu-grid">
+      <div class="menu-box sig">
+        <h3>떡볶이류 <span class="tag">시그니처</span></h3>
+        <ul>
+          <li><span>쌀떡볶이<small>직접 뽑은 가래떡, '식감 천재' 호평</small></span><span class="price">4,500원</span></li>
+          <li><span>밀떡볶이</span><span class="price">4,500원</span></li>
+          <li><span>쌀반밀반</span><span class="price">4,500원</span></li>
+          <li><span>왕떡볶이<small>가래떡 한 줄 통째로, 차별화 메뉴</small></span><span class="price">4,500원</span></li>
+        </ul>
+      </div>
+      <div class="menu-box">
+        <h3>어묵류 <span class="tag">상호 정체성</span></h3>
+        <ul>
+          <li><span>매운빨간오뎅<small>간판 메뉴 · "속 치는 매운맛" 호불호</small></span><span class="price">1,000원</span></li>
+          <li><span>부산어묵(기본)</span><span class="price">1,000원</span></li>
+          <li><span>조개살오뎅</span><span class="price">1,000원</span></li>
+          <li><span>혼합오뎅</span><span class="price">1,000원</span></li>
+          <li><span>조기살오뎅</span><span class="price">1,000원</span></li>
+          <li><span>수제어묵</span><span class="price">1,500원</span></li>
+          <li><span>사각오뎅</span><span class="price">1,500원</span></li>
+          <li><span>매생이오뎅<small>은은한 매생이향, 매운맛 중화로 인기</small></span><span class="price">1,500원</span></li>
+          <li><span>봉봉이오뎅</span><span class="price">1,500원</span></li>
+          <li><span>톳오뎅</span><span class="price">1,500원</span></li>
+        </ul>
+      </div>
+      <div class="menu-box">
+        <h3>순대 · 튀김</h3>
+        <ul>
+          <li><span>토종찰순대<small>냄새 없고 깔끔, "순대만 먹는다" 단골多</small></span><span class="price">4,500원</span></li>
+          <li><span>수제튀김 5개<small>김말이·고구마·오징어·새우·야끼만두</small></span><span class="price">5,000원</span></li>
+        </ul>
+      </div>
+      <div class="menu-box">
+        <h3>포장 전용</h3>
+        <ul>
+          <li><span>매운빨간오뎅 5개</span><span class="price">5,000원</span></li>
+          <li><span>부산어묵 5개</span><span class="price">5,000원</span></li>
+          <li><span>수제어묵 3개</span><span class="price">4,500원</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">💡 어묵 종류만 <b>10종 이상</b> — "골라먹는 재미"가 강점 &nbsp;|&nbsp; ※ 김밥 메뉴는 없음</p>
+  </section>
+
+  <!-- 3. 리뷰 -->
+  <section>
+    <div class="sec-title"><span class="num">3</span><h2>평점 &amp; 리뷰 현황</h2></div>
+    <h3 style="font-size:14px;color:#6b6560;margin-bottom:14px">네이버 방문자 리뷰 언급 키워드 (누적)</h3>
+    <div class="bar-row"><span class="lbl">음식이 맛있어요 🥇</span><div class="bar-track"><div class="bar-fill" style="width:100%">2,271</div></div></div>
+    <div class="bar-row"><span class="lbl">가성비가 좋아요</span><div class="bar-track"><div class="bar-fill" style="width:22%">492</div></div></div>
+    <div class="bar-row"><span class="lbl">친절해요</span><div class="bar-track"><div class="bar-fill" style="width:17%">391</div></div></div>
+    <div class="bar-row"><span class="lbl">혼밥하기 좋아요</span><div class="bar-track"><div class="bar-fill" style="width:15%">333</div></div></div>
+    <div class="bar-row"><span class="lbl">재료가 신선해요</span><div class="bar-track"><div class="bar-fill" style="width:14%">316</div></div></div>
+    <div class="bar-row"><span class="lbl">특별한 메뉴가 있어요</span><div class="bar-track"><div class="bar-fill" style="width:11%">254</div></div></div>
+    <div class="bar-row"><span class="lbl">양이 많아요</span><div class="bar-track"><div class="bar-fill" style="width:9%">211</div></div></div>
+    <p class="note">→ 누적 리뷰 수천 건 규모, <b>'맛'에 대한 신뢰가 매우 두텁게 형성</b>됨</p>
+
+    <h3 style="font-size:14px;color:#6b6560;margin:22px 0 4px">다이닝코드</h3>
+    <div class="rate-cards">
+      <div class="rate-card"><div class="big">3.9</div><div class="cap">종합 (68점 · 13명)</div></div>
+      <div class="rate-card"><div class="big">4.4</div><div class="cap">맛</div></div>
+      <div class="rate-card"><div class="big">3.9</div><div class="cap">가격</div></div>
+      <div class="rate-card"><div class="big">3.8</div><div class="cap">응대</div></div>
+    </div>
+    <div class="chips">
+      <span class="chip"># 서민적인</span><span class="chip"># 시끌벅적한</span>
+      <span class="chip"># 지역주민이찾는</span><span class="chip"># 가성비좋은</span><span class="chip"># 숨은맛집</span>
+    </div>
+    <p class="note">방문목적: 간식 &gt; 점심 &gt; 저녁 &gt; 아이동반 &gt; 데이트 순 &nbsp;|&nbsp; ※ 다이닝코드 표본 적음</p>
+  </section>
+
+  <!-- 4 & 5. SWOT -->
+  <section>
+    <div class="sec-title"><span class="num">4·5</span><h2>핵심 강점 &amp; 약점</h2></div>
+    <div class="two-col">
+      <div class="sw s">
+        <h3>💪 Strength · 강점</h3>
+        <ul>
+          <li>20년 이상 개포동 대표 노포, "20년째 단골" 충성층</li>
+          <li>TV 방송 출연 이력 → 지역 맛집 인지도 확보</li>
+          <li>직접 뽑은 가래떡 쌀떡볶이 = 차별화 시그니처</li>
+          <li>어묵 10종 이상 = 전문성 · 콘텐츠 풍부</li>
+          <li>"추억의 학교 앞 떡볶이 맛" 감성 소구 포인트</li>
+          <li>가성비(어묵 1,000원 · 떡볶이 4,500원) + 양 많음</li>
+          <li>상인회 무료 주차권 → 원거리 유입 장벽 ↓</li>
+          <li>강남권(개포·대치·도곡) 구매력 배후 상권</li>
+        </ul>
+      </div>
+      <div class="sw w">
+        <h3>⚠️ Weakness · 약점</h3>
+        <ul>
+          <li>서서 먹는 구조 = 좌석 부재, 체류·데이트 불편</li>
+          <li>구두 주문 = 첫방문·외국인·MZ 진입장벽</li>
+          <li>일부 "단맛 강함" / "굳이 찾아올 맛집 아님" 평가</li>
+          <li>빨간오뎅 매운맛 호불호 → 안내 필요</li>
+          <li>가격 인상 → "간식이라기엔 부담" 포지션 재검토</li>
+          <li>상호 인지 약함 → 검색 상기도 손실 가능성</li>
+          <li>다이닝코드 표본 적음 → 네이버 외 리뷰 자산 부족</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 환경 -->
+  <section>
+    <div class="sec-title"><span class="num">6</span><h2>경쟁 / 주변 환경</h2></div>
+    <div class="env-list">
+      <div class="item"><span class="ic">🏪</span><span>개포시장·은마상가 일대 분식 경쟁점 존재 (예: 튀김아저씨 등)</span></div>
+      <div class="item"><span class="ic">🏘️</span><span>배후: 개포동·대치동·도곡동 (학원가·아파트 밀집, 가족·학생 수요 큼)</span></div>
+      <div class="item"><span class="ic">⭐</span><span>인근 다코 고평점: 피자느반(81) · 후토시(74) · 리애 돈가스(73) 등</span></div>
+    </div>
+  </section>
+
+  <!-- 7. 전략 -->
+  <section>
+    <div class="sec-title"><span class="num">7</span><h2>마케팅 관점 1차 가설 <span style="font-size:13px;color:#6b6560;font-weight:500">(컨설팅 방향 후보)</span></h2></div>
+    <div class="strat">
+      <div class="card"><span class="no">1</span><p><strong>시그니처 명확화</strong><br>'가래떡 쌀떡볶이'+'왕떡볶이'를 대표 메뉴로 키워드·사진·메뉴 상단 배치</p></div>
+      <div class="card"><span class="no">2</span><p><strong>어묵 10종 콘텐츠화</strong><br>'골라먹는 부산어묵' 비주얼 메뉴판, 매생이·톳 등 차별화</p></div>
+      <div class="card"><span class="no">3</span><p><strong>스토리 자산화</strong><br>'20년 노포 + TV 출연 + 추억의 맛'을 플레이스 소개글에 반영</p></div>
+      <div class="card"><span class="no">4</span><p><strong>매운맛 안내 동선</strong><br>빨간오뎅 매움 + 매생이 중화 추천 → 신규 고객 안심</p></div>
+      <div class="card"><span class="no">5</span><p><strong>주문법 안내</strong><br>주문 안내판·사진으로 첫방문·MZ·외국인 진입장벽 완화</p></div>
+      <div class="card"><span class="no">6</span><p><strong>주차 혜택 노출</strong><br>무료 주차권을 원거리 유입 후킹 포인트로 적극 활용</p></div>
+      <div class="card"><span class="no">7</span><p><strong>리뷰 자산 축적</strong><br>리뷰 이벤트로 영수증 리뷰·블로그 콘텐츠 지속 확보</p></div>
+      <div class="card"><span class="no">8</span><p><strong>포장 라인 강화</strong><br>좌석 부재 보완 → 포장(5개 5,000원)으로 객단가·테이크아웃 확대</p></div>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    ※ 영업시간·가격은 최근 변동 가능성이 있어, 실제 방문 또는 사장님 확인 후 확정이 필요합니다.
+  </div>
+
+  <footer>ⓒ 2026 빨간오뎅 부산어묵 네이버 마케팅 컨설팅 · 사전 리서치 자료</footer>
+
+</div>
+</body>
+</html>
