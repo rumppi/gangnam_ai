@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🥩 고깃집 인스타그램 마케팅 컨설팅</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --meat-red: #e63946;
+    --meat-dark: #b5171f;
+    --char: #1a1a1a;
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.8);
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #eef1f6;
+    color: #1a1a1a;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* 배경: 부드러운 스튜디오 라이팅 그라디언트 */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(230,57,70,0.18), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(255,183,94,0.22), transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), transparent 60%),
+      linear-gradient(135deg, #f3f5fa 0%, #e6eaf2 100%);
+    z-index: -2;
+  }
+  /* 떠다니는 유리 블롭 */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.5;
+    z-index: -1;
+    animation: float 14s ease-in-out infinite;
+  }
+  .blob.b1 { width: 380px; height: 380px; top: -80px; left: -60px;
+    background: radial-gradient(circle at 30% 30%, #ff8a94, #e63946); }
+  .blob.b2 { width: 300px; height: 300px; bottom: -60px; right: -40px;
+    background: radial-gradient(circle at 30% 30%, #ffd08a, #ff9a3c); animation-delay: -5s; }
+  .blob.b3 { width: 220px; height: 220px; top: 55%; left: 8%;
+    background: radial-gradient(circle at 30% 30%, #a8c0ff, #6b8cff); animation-delay: -9s; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) translateX(0) scale(1); }
+    50% { transform: translateY(-30px) translateX(20px) scale(1.08); }
+  }
+
+  /* 슬라이드 컨테이너 */
+  .deck {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    max-width: 1080px;
+    height: 640px;
+    animation: slideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .slide.active { display: flex; flex-direction: column; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* 글래스 카드 공통 */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 28px;
+    box-shadow:
+      0 20px 50px rgba(31, 38, 65, 0.15),
+      inset 0 1px 1px rgba(255,255,255,0.9),
+      inset 0 -20px 40px rgba(255,255,255,0.2);
+  }
+
+  .card-main {
+    flex: 1;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-main::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -20%;
+    width: 60%; height: 120%;
+    background: linear-gradient(105deg, rgba(255,255,255,0.6), transparent 70%);
+    transform: rotate(12deg);
+    pointer-events: none;
+  }
+
+  /* 헤더 */
+  .slide-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 26px;
+    z-index: 1;
+  }
+  .icon-3d {
+    width: 64px; height: 64px;
+    min-width: 64px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(255,255,255,0.3));
+    border: 1.5px solid rgba(255,255,255,0.9);
+    box-shadow:
+      0 8px 20px rgba(230,57,70,0.25),
+      inset 0 2px 4px rgba(255,255,255,0.95),
+      inset 0 -6px 12px rgba(230,57,70,0.12);
+  }
+  .slide-title {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--char);
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+  .slide-sub {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--meat-red);
+    margin-top: 4px;
+  }
+
+  .slide-body { flex: 1; z-index: 1; overflow-y: auto; }
+
+  /* 리스트 아이템 */
+  .glist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .glist li {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 16px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.8), 0 4px 12px rgba(31,38,65,0.06);
+    transition: transform 0.2s;
+  }
+  .glist li:hover { transform: translateX(6px); }
+  .glist li b { color: var(--meat-dark); font-weight: 700; }
+  .glist li .em { font-size: 20px; margin-right: 8px; }
+
+  /* 2단 그리드 */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* 강조 박스 */
+  .highlight {
+    margin-top: 16px;
+    background: linear-gradient(135deg, rgba(230,57,70,0.14), rgba(255,154,60,0.14));
+    border: 1.5px solid rgba(230,57,70,0.3);
+    border-radius: 16px;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--meat-dark);
+    box-shadow: inset 0 1px 3px rgba(255,255,255,0.7);
+  }
+
+  /* 발표 멘트 */
+  .note {
+    margin-top: 14px;
+    font-size: 13.5px;
+    font-style: italic;
+    color: #5a6270;
+    padding-left: 16px;
+    border-left: 3px solid var(--meat-red);
+    line-height: 1.5;
+  }
+
+  /* 테이블 */
+  table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+  th, td { padding: 11px 16px; text-align: left; font-size: 15px; }
+  th {
+    background: rgba(230,57,70,0.85); color: #fff; font-weight: 700;
+  }
+  th:first-child { border-radius: 12px 0 0 12px; }
+  th:last-child { border-radius: 0 12px 12px 0; }
+  td { background: rgba(255,255,255,0.55); font-weight: 500; }
+  td:first-child { border-radius: 12px 0 0 12px; font-weight: 700; color: var(--meat-dark); }
+  td:last-child { border-radius: 0 12px 12px 0; }
+
+  /* 표지 */
+  .cover { align-items: center; justify-content: center; text-align: center; }
+  .cover .icon-3d { width: 120px; height: 120px; font-size: 64px; border-radius: 32px; margin-bottom: 30px; }
+  .cover h1 { font-size: 52px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.15; }
+  .cover h1 .accent { color: var(--meat-red); }
+  .cover .tagline { font-size: 20px; font-weight: 500; color: #555; margin-top: 22px; }
+  .cover .quote {
+    margin-top: 34px; font-size: 17px; font-style: italic; color: var(--meat-dark);
+    padding: 14px 28px; background: rgba(255,255,255,0.5);
+    border-radius: 50px; border: 1px solid rgba(255,255,255,0.7);
+  }
+  .cover .credit { margin-top: 26px; font-size: 14px; color: #888; }
+
+  /* 로드맵 스텝 */
+  .roadmap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rstep {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 16px; padding: 14px 18px; font-size: 15.5px; font-weight: 600;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.8);
+  }
+  .rnum {
+    width: 40px; height: 40px; min-width: 40px; border-radius: 12px;
+    background: linear-gradient(145deg, var(--meat-red), var(--meat-dark));
+    color: #fff; font-weight: 900; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(230,57,70,0.35), inset 0 1px 2px rgba(255,255,255,0.4);
+  }
+
+  /* 알고리즘 3신호 */
+  .signals { display: flex; gap: 16px; margin: 10px 0; }
+  .signal {
+    flex: 1; text-align: center; padding: 22px 14px;
+    background: rgba(255,255,255,0.55); border: 1.5px solid rgba(255,255,255,0.8);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(31,38,65,0.08), inset 0 1px 2px rgba(255,255,255,0.9);
+  }
+  .signal .sig-icon { font-size: 42px; }
+  .signal .sig-name { font-size: 18px; font-weight: 900; color: var(--meat-dark); margin: 8px 0 4px; }
+  .signal .sig-desc { font-size: 13px; color: #555; line-height: 1.4; }
+
+  /* 체크리스트 (최종) */
+  .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .checklist li {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 14px; padding: 11px 16px; font-size: 14.5px; font-weight: 600;
+    list-style: none;
+  }
+  .checklist .chk {
+    width: 24px; height: 24px; min-width: 24px; border-radius: 8px;
+    background: linear-gradient(145deg, #2ec16b, #1a9d52); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+    box-shadow: 0 3px 8px rgba(46,193,107,0.35);
+  }
+
+  /* 네비게이션 */
+  .nav {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 18px; z-index: 100;
+    padding: 12px 22px; border-radius: 50px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(255,255,255,0.85);
+    box-shadow: 0 12px 30px rgba(31,38,65,0.15);
+  }
+  .nav button {
+    width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer;
+    background: linear-gradient(145deg, var(--meat-red), var(--meat-dark));
+    color: #fff; font-size: 20px;
+    box-shadow: 0 6px 14px rgba(230,57,70,0.4), inset 0 1px 2px rgba(255,255,255,0.4);
+    transition: transform 0.15s;
+  }
+  .nav button:hover { transform: scale(1.1); }
+  .nav button:disabled { opacity: 0.35; cursor: default; transform: none; }
+  .nav .counter { font-size: 15px; font-weight: 700; color: var(--char); min-width: 60px; text-align: center; }
+
+  /* 진행바 */
+  .progress {
+    position: fixed; top: 0; left: 0; height: 4px;
+    background: linear-gradient(90deg, var(--meat-red), #ff9a3c);
+    z-index: 100; transition: width 0.4s ease;
+    box-shadow: 0 0 10px rgba(230,57,70,0.5);
+  }
+
+  .badge {
+    display: inline-block; background: rgba(230,57,70,0.85); color:#fff;
+    font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
+    margin-left: auto;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-thumb { background: rgba(230,57,70,0.3); border-radius: 10px; }
+</style>
+</head>
+<body>
+<div class="bg-canvas"></div>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+<div class="progress" id="progress"></div>
+
+<div class="deck">
+
+  <!-- 1. 표지 -->
+  <section class="slide active">
+    <div class="glass card-main cover">
+      <div class="icon-3d">🥩</div>
+      <h1>우리 고깃집,<br><span class="accent">인스타그램</span>으로 손님 줄 세우기</h1>
+      <p class="tagline">사장님을 위한 인스타그램 실전 컨설팅</p>
+      <div class="quote">"불판 위 지글거리는 그 순간을, 매출로 바꾸는 법"</div>
+      <p class="credit">컨설턴트 [이름] · 2026</p>
+    </div>
+  </section>
+
+  <!-- 2. 왜 고깃집 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">🔥</div>
+        <div><div class="slide-title">왜 고깃집에 인스타그램인가?</div>
+        <div class="slide-sub">고깃집은 인스타그램에 가장 유리한 업종입니다</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li><span class="em">🔥</span><b>비주얼이 무기다</b> — 불판 위 고기, 마블링, 육즙만큼 '침 고이는' 콘텐츠는 없습니다</li>
+          <li><span class="em">📱</span>손님의 <b>76%</b>가 SNS에서 보고 매장을 방문합니다</li>
+          <li><span class="em">👥</span>회식·모임·데이트 → "어디 갈까?" 검색의 <b>1순위가 인스타그램</b></li>
+          <li><span class="em">💰</span>사진·영상만 잘 찍어도 <b>광고비 없이</b> 새 손님 유입 가능</li>
+        </ul>
+        <div class="note">"카페나 다른 업종보다 고깃집이 훨씬 유리합니다. 고기 굽는 장면 자체가 이미 최고의 광고 영상이거든요."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 로드맵 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">🗺️</div>
+        <div><div class="slide-title">오늘의 로드맵</div>
+        <div class="slide-sub">이 순서대로만 따라오시면 됩니다</div></div>
+      </div>
+      <div class="slide-body">
+        <div class="roadmap">
+          <div class="rstep"><div class="rnum">1</div>계정 만들기 & 비즈니스 전환</div>
+          <div class="rstep"><div class="rnum">2</div>프로필 = 우리 가게 간판 만들기</div>
+          <div class="rstep"><div class="rnum">3</div>알고리즘 이해하기</div>
+          <div class="rstep"><div class="rnum">4</div>고깃집 콘텐츠 10가지</div>
+          <div class="rstep"><div class="rnum">5</div>릴스 — 새 손님 부르는 무기</div>
+          <div class="rstep"><div class="rnum">6</div>해시태그 & 위치태그</div>
+          <div class="rstep"><div class="rnum">7</div>예약·매출로 연결하기</div>
+          <div class="rstep"><div class="rnum">8</div>운영 루틴 & 캘린더</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. STEP1 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">📲</div>
+        <div><div class="slide-title">STEP 1. 계정 만들기 & 비즈니스 전환</div>
+        <div class="slide-sub">첫 단추: 무조건 '비즈니스 계정'으로 (무료)</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li>✅ 아이디는 가게 이름으로: <b>@마포_왕소금구이</b> / <b>@hwaro_galbi</b></li>
+          <li>✅ <b>비즈니스 계정 전환</b> 시 열리는 기능:<br>&nbsp;&nbsp;• 방문자·조회수 통계 &nbsp;• 전화/길찾기/예약 버튼 &nbsp;• 주문·예약 스티커</li>
+        </ul>
+        <div class="highlight">📍 전환 경로: 프로필 → 메뉴(≡) → 설정 → 계정 유형 및 도구 → '프로페셔널 계정으로 전환'</div>
+        <div class="note">"이거 안 하면 반쪽짜리입니다. 5분이면 되니 오늘 바로 하세요."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. STEP2 프로필 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">🪧</div>
+        <div><div class="slide-title">STEP 2. 프로필 = 온라인 간판</div>
+        <div class="slide-sub">손님이 5초 안에 '가고 싶다' 느끼게</div></div>
+      </div>
+      <div class="slide-body">
+        <table>
+          <tr><th>항목</th><th>이렇게 채우세요</th></tr>
+          <tr><td>프로필 사진</td><td>로고 또는 마블링 클로즈업</td></tr>
+          <tr><td>소개글</td><td>강남역 5분 · 1++ 한우 · 16~24시 · ☎예약환영</td></tr>
+          <tr><td>링크</td><td>네이버 예약 / 지도 / 배달앱 링크</td></tr>
+          <tr><td>버튼</td><td>'전화하기' + '예약하기' 설정</td></tr>
+        </table>
+        <div class="highlight">💡 소개글에 '주차 가능' '단체석 완비' '룸 있음' 넣으면 회식 예약 문의가 늘어납니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. STEP3 알고리즘 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">🧠</div>
+        <div><div class="slide-title">STEP 3. 알고리즘 이해 (핵심!)</div>
+        <div class="slide-sub">⚠️ 이제 '좋아요'는 중요하지 않습니다</div></div>
+      </div>
+      <div class="slide-body">
+        <div class="signals">
+          <div class="signal"><div class="sig-icon">💾</div><div class="sig-name">저장</div><div class="sig-desc">"나중에 가봐야지"<br>→ 노출 폭발</div></div>
+          <div class="signal"><div class="sig-icon">📤</div><div class="sig-name">공유</div><div class="sig-desc">"우리 여기 회식하자"<br>→ 새 손님 유입</div></div>
+          <div class="signal"><div class="sig-icon">🎬</div><div class="sig-name">시청 시간</div><div class="sig-desc">끝까지 본 릴스<br>→ 알고리즘의 사랑</div></div>
+        </div>
+        <div class="highlight">👉 목표를 '좋아요 받기' → '저장·공유되기'로 바꾸세요</div>
+        <div class="note">"손님이 친구한테 우리 영상을 보내는 순간, 인스타그램이 공짜로 홍보를 대신 해줍니다."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 콘텐츠 1-5 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">📸</div>
+        <div><div class="slide-title">STEP 4. 고깃집 콘텐츠 10가지 ①~⑤</div>
+        <div class="slide-sub">매일 뭘 올릴지 고민 끝! 돌아가며 올리세요</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li><span class="em">🔥</span><b>① 불판 클로즈업 영상</b> — 지글지글, 육즙 튀는 순간</li>
+          <li><span class="em">🥩</span><b>② 마블링 클로즈업</b> — 생고기의 결, "군침 유발" 1순위</li>
+          <li><span class="em">✂️</span><b>③ 고기 잘라주는 컷</b> — 서비스 퀄리티 어필</li>
+          <li><span class="em">🧊</span><b>④ '고기 굽기 황금 타이밍' 정보</b> — 저장 많이 됨!</li>
+          <li><span class="em">🍚</span><b>⑤ 된장찌개·냉면·볶음밥 등 사이드</b> — 마무리 메뉴 자랑</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 콘텐츠 6-10 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">🎯</div>
+        <div><div class="slide-title">STEP 4. 고깃집 콘텐츠 10가지 ⑥~⑩</div>
+        <div class="slide-sub">사람·후기·이벤트로 신뢰와 재미를</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li><span class="em">👨‍🍳</span><b>⑥ 사장님·직원 소개</b> — 사람이 보이면 친근해짐</li>
+          <li><span class="em">📸</span><b>⑦ 손님 후기 리포스트</b> (허락받고) — 신뢰도 급상승</li>
+          <li><span class="em">🎉</span><b>⑧ 이벤트·신메뉴·오늘의 특선</b> 소식</li>
+          <li><span class="em">🏆</span><b>⑨ "우리집 인기 부위 TOP3"</b> 정보성 → 저장 유도</li>
+          <li><span class="em">🍺</span><b>⑩ 회식 분위기·단체석 현장</b> — 예약 문의 유발</li>
+        </ul>
+        <div class="highlight">📷 촬영 꿀팁: 밝은 조명 + 김이 모락모락 올라올 때 → 장비 없이도 먹음직스럽게!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 릴스 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">🎬</div>
+        <div><div class="slide-title">STEP 5. 릴스 = 최강 무기 <span class="badge">가장 중요</span></div>
+        <div class="slide-sub">고깃집 릴스, 조회수 터지는 공식</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li><span class="em">⏱️</span><b>길이 15~30초</b> — 짧게!</li>
+          <li><span class="em">🎯</span><b>첫 3초가 전부</b> — 불판에 고기 올려 '치이익~' 소리와 연기로 시작 (10만 뷰 릴스는 첫 3초가 거의 똑같음)</li>
+          <li><span class="em">🎵</span><b>인기 음악·효과</b> 사용 → 추천 노출 ↑</li>
+          <li><span class="em">🔊</span><b>소리(ASMR)</b> — 지글거리는 소리, 가위질 소리가 강력</li>
+        </ul>
+        <div class="highlight">💡 바이럴 아이디어: "고기 3초 뒤집기 챌린지" · "사장님 불쇼" · "1++ vs 1+ 눈으로 구별"</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. 해시태그 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">#️⃣</div>
+        <div><div class="slide-title">STEP 6. 해시태그 <span class="badge">2025.12 규칙변경</span></div>
+        <div class="slide-sub">⚠️ 이제 해시태그는 최대 5개까지만!</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li><span class="em">📍</span><b>지역태그 2개</b> (제일 중요) → #강남고깃집 #역삼동맛집</li>
+          <li><span class="em">🥩</span><b>메뉴태그 2개</b> → #한우오마카세 #숙성삼겹살</li>
+          <li><span class="em">🏷️</span><b>우리가게 전용 1개</b> → #마포왕소금구이</li>
+        </ul>
+        <div class="highlight">❌ #맛집(수천만개)은 몇 초 만에 묻힘 &nbsp;✅ 구체적일수록 진짜 손님 유입 (#고기 < #강남회식장소)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. 위치태그 & 스토리 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">📍</div>
+        <div><div class="slide-title">STEP 6+. 위치태그 & 스토리 스티커</div>
+        <div class="slide-sub">동네 손님 잡는 두 가지 필살기</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li><span class="em">📍</span><b>위치(장소) 태그 필수</b> — 게시물마다 등록 → 근처 손님이 지도 검색으로 발견</li>
+          <li><span class="em">📊</span><b>투표 스티커</b> — "다음 신메뉴 A vs B?"</li>
+          <li><span class="em">❓</span><b>질문 스티커</b> — "회식 예약 문의 받아요!"</li>
+          <li><span class="em">⏳</span><b>카운트다운</b> — "금요일 오픈 이벤트 D-2"</li>
+        </ul>
+        <div class="highlight">💡 손님이 반응할수록 알고리즘이 계정을 밀어줍니다</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. 하이라이트 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">⭐</div>
+        <div><div class="slide-title">STEP 6++. 하이라이트로 똑똑한 프로필</div>
+        <div class="slide-sub">프로필에 영구 고정 = 반복 문의 끝</div></div>
+      </div>
+      <div class="slide-body">
+        <div class="grid2">
+          <div class="rstep"><div class="rnum">📋</div>메뉴판</div>
+          <div class="rstep"><div class="rnum">💰</div>가격</div>
+          <div class="rstep"><div class="rnum">🚗</div>주차 안내</div>
+          <div class="rstep"><div class="rnum">🗺️</div>오시는 길</div>
+          <div class="rstep"><div class="rnum">👥</div>단체석 / 룸</div>
+          <div class="rstep"><div class="rnum">⭐</div>손님 후기</div>
+        </div>
+        <div class="highlight">👉 "주차 되나요?" "룸 있나요?" DM에 100번 답할 필요 없음!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. 예약·매출 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">💳</div>
+        <div><div class="slide-title">STEP 7. 예약·매출로 연결 (무료)</div>
+        <div class="slide-sub">예쁜 사진 → 바로 예약·주문으로</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li><span class="em">📅</span><b>① 프로필 '예약하기' 버튼</b> — 네이버 예약 연결</li>
+          <li><span class="em">🍽️</span><b>② 프로필 '음식 주문하기' 버튼</b> — 배달앱 우리 가게로 직결</li>
+          <li><span class="em">📲</span><b>③ 스토리 '음식 주문' 스티커</b> — 오늘의 특선에 붙이기</li>
+          <li><span class="em">💬</span><b>④ DM 예약 응대</b> — 빠른 답장 = 예약 전환율 ↑</li>
+        </ul>
+        <div class="highlight">💡 연말·송년회 시즌 전 "단체 예약 받습니다" 스토리 필수</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. 캘린더 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">📆</div>
+        <div><div class="slide-title">STEP 8. 주간 운영 캘린더</div>
+        <div class="slide-sub">작심삼일 방지! 부담 없는 주간 계획</div></div>
+      </div>
+      <div class="slide-body">
+        <table>
+          <tr><th>요일</th><th>콘텐츠</th></tr>
+          <tr><td>월</td><td>스토리: 이번 주 영업 안내</td></tr>
+          <tr><td>화</td><td>릴스: 불판 클로즈업 영상</td></tr>
+          <tr><td>수</td><td>피드: 마블링 사진 + 사이드 자랑</td></tr>
+          <tr><td>목</td><td>스토리: 투표(다음 신메뉴?)</td></tr>
+          <tr><td>금</td><td>릴스: 회식 분위기 / 챌린지</td></tr>
+          <tr><td>토</td><td>피드: 손님 후기 리포스트</td></tr>
+          <tr><td>매일</td><td>⭐ 5분 댓글·DM 답장</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. 실수 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">🚫</div>
+        <div><div class="slide-title">흔한 실수 5가지 (피하세요)</div>
+        <div class="slide-sub">이것만 안 해도 절반은 성공</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="glist">
+          <li>❌ 해시태그를 인기태그·매번 같은 5개로 도배 → <b>스팸 취급</b></li>
+          <li>❌ 댓글·DM 방치 → <b>소통 없으면 알고리즘이 안 밀어줌</b></li>
+          <li>❌ 좋아요 수에만 집착 → 지금은 <b>'저장·공유'가 왕</b></li>
+          <li>❌ 어두운 조명에서 흐릿한 고기 사진 → <b>낮 자연광이 무료 조명</b></li>
+          <li>❌ 완벽주의로 몇 주에 한 번 → <b>꾸준함 > 완성도</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. 요약 -->
+  <section class="slide">
+    <div class="glass card-main">
+      <div class="slide-header">
+        <div class="icon-3d">✅</div>
+        <div><div class="slide-title">한 장 요약 체크리스트</div>
+        <div class="slide-sub">🥩 "지글거리는 그 순간을, 매출로!"</div></div>
+      </div>
+      <div class="slide-body">
+        <ul class="checklist">
+          <li><span class="chk">✓</span>비즈니스 계정 전환</li>
+          <li><span class="chk">✓</span>프로필에 위치·시간·예약 버튼</li>
+          <li><span class="chk">✓</span>목표 = 저장·공유되는 콘텐츠</li>
+          <li><span class="chk">✓</span>불판·마블링 사진 주 3~4회</li>
+          <li><span class="chk">✓</span>릴스 주 2~3회 (첫 3초 '치이익')</li>
+          <li><span class="chk">✓</span>해시태그 5개 — 지역+메뉴</li>
+          <li><span class="chk">✓</span>스토리 실시간 소식 + 투표</li>
+          <li><span class="chk">✓</span>하이라이트에 메뉴·주차·룸</li>
+          <li><span class="chk">✓</span>예약·주문 버튼으로 매출 연결</li>
+          <li><span class="chk">✓</span>매일 5분 댓글·DM 답장</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" onclick="move(-1)">‹</button>
+  <span class="counter"><span id="cur">1</span> / <span id="total">16</span></span>
+  <button id="next" onclick="move(1)">›</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let idx = 0;
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    document.getElementById('cur').textContent = idx + 1;
+    document.getElementById('prev').disabled = idx === 0;
+    document.getElementById('next').disabled = idx === total - 1;
+    document.getElementById('progress').style.width = ((idx + 1) / total * 100) + '%';
+  }
+  function move(dir) {
+    idx = Math.min(Math.max(idx + dir, 0), total - 1);
+    render();
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') move(1);
+    if (e.key === 'ArrowLeft') move(-1);
+  });
+  render();
+</script>
+</body>
+</html>

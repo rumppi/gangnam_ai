@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>은곡상회 본점 · 네이버 마케팅 종합 컨설팅 보고서</title>
+<style>
+  :root{
+    --navy:#0f2b46; --blue:#1f6feb; --sky:#e8f1ff; --green:#12b886;
+    --amber:#f59f00; --red:#e03131; --gray:#5c6b7a; --line:#e3e8ef;
+    --bg:#f4f6fa; --card:#ffffff; --soft:#f8fafc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+    background:var(--bg);color:#1a2332;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px 80px;}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0f2b46 0%,#1f4e79 55%,#1f6feb 100%);
+    color:#fff;border-radius:0 0 28px 28px;padding:54px 40px 44px;position:relative;overflow:hidden;}
+  .hero::after{content:"🥩";position:absolute;right:34px;top:30px;font-size:120px;opacity:.10;}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.16);padding:5px 14px;
+    border-radius:20px;font-size:13px;letter-spacing:.5px;margin-bottom:16px;}
+  .hero h1{font-size:32px;font-weight:800;line-height:1.3;margin-bottom:10px;}
+  .hero p.sub{font-size:15px;opacity:.9;}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13.5px;opacity:.92;}
+  .hero .meta span b{opacity:.65;font-weight:500;margin-right:5px;}
+
+  /* SECTION */
+  section{background:var(--card);border-radius:18px;padding:32px 34px;margin-top:26px;
+    box-shadow:0 2px 14px rgba(15,43,70,.05);border:1px solid var(--line);}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+  .sec-num{flex:none;width:38px;height:38px;border-radius:10px;background:var(--navy);
+    color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;}
+  .sec-head h2{font-size:21px;font-weight:800;color:var(--navy);}
+  .sec-head .en{font-size:12px;color:var(--gray);font-weight:500;margin-top:2px;}
+
+  /* KPI CARDS */
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .kpi{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:18px 16px;text-align:center;}
+  .kpi .v{font-size:30px;font-weight:800;color:var(--blue);line-height:1;}
+  .kpi .v small{font-size:14px;font-weight:600;color:var(--gray);}
+  .kpi .l{font-size:12.5px;color:var(--gray);margin-top:8px;}
+  .kpi.alt .v{color:var(--green);}
+  .kpi.warn .v{color:var(--amber);}
+
+  /* INFO TABLE */
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  table th,table td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+  table th{background:var(--soft);color:var(--navy);font-weight:700;width:150px;white-space:nowrap;}
+  .badge{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:12px;font-weight:700;margin-left:6px;}
+  .b-check{background:#fff4e6;color:#e8590c;}
+  .b-ok{background:#ebfbee;color:#2b8a3e;}
+
+  /* AI BRIEF */
+  .ai-brief{background:linear-gradient(135deg,#eef4ff,#f5f9ff);border:1px solid #d0e0ff;
+    border-radius:14px;padding:22px 24px;position:relative;}
+  .ai-brief .lbl{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.5px;margin-bottom:8px;}
+  .ai-brief p{font-size:15px;color:#26374a;font-style:italic;}
+
+  /* KEYWORD CHIPS */
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px;}
+  .chip{background:var(--sky);color:var(--blue);border:1px solid #cfe0ff;
+    padding:6px 13px;border-radius:20px;font-size:13px;font-weight:600;}
+  .chip.neg{background:#fff0f0;color:var(--red);border-color:#ffd0d0;}
+
+  /* SWOT */
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .swot .cell{border-radius:14px;padding:18px 20px;border:1px solid var(--line);}
+  .swot .s{background:#ebfbee;border-color:#c3f0cd;}
+  .swot .w{background:#fff0f0;border-color:#ffd3d3;}
+  .swot .o{background:#eef4ff;border-color:#cfe0ff;}
+  .swot .t{background:#fff9db;border-color:#ffec99;}
+  .swot h4{font-size:15px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+  .swot .s h4{color:#2b8a3e;} .swot .w h4{color:#c92a2a;}
+  .swot .o h4{color:#1f6feb;} .swot .t h4{color:#e67700;}
+  .swot ul{list-style:none;}
+  .swot li{font-size:13.3px;padding-left:16px;position:relative;margin-bottom:7px;color:#33404f;}
+  .swot li::before{content:"•";position:absolute;left:3px;font-weight:800;opacity:.6;}
+  .swot li b{color:#111;}
+
+  /* MARKET */
+  .market-def{background:var(--navy);color:#fff;border-radius:14px;padding:22px 26px;margin-bottom:22px;}
+  .market-def .q{font-size:17px;font-weight:700;line-height:1.6;}
+  .market-def .q .hl{color:#7db8ff;}
+  .flow{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0;}
+  .flow .f{flex:1;min-width:260px;border-radius:12px;padding:16px 18px;font-size:13.5px;}
+  .flow .old{background:#f1f3f5;border:1px dashed #ced4da;}
+  .flow .new{background:#eef7 f0;background:#eafaf1;border:1.5px solid var(--green);}
+  .flow .f .t{font-weight:800;font-size:12px;letter-spacing:.5px;margin-bottom:8px;color:var(--gray);}
+  .flow .new .t{color:var(--green);}
+  .flow .seq{font-weight:700;color:var(--navy);}
+  .flow .old .seq{color:#868e96;text-decoration:line-through;}
+
+  .m-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:6px;}
+  .m-card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 16px;}
+  .m-card .ic{font-size:22px;}
+  .m-card h5{font-size:14px;font-weight:800;color:var(--navy);margin:6px 0 6px;}
+  .m-card p{font-size:12.8px;color:#455;}
+
+  /* STRATEGY AXES */
+  .axis{border-left:4px solid var(--blue);background:var(--soft);border-radius:0 12px 12px 0;
+    padding:20px 22px;margin-bottom:16px;}
+  .axis.a{border-color:var(--red);} .axis.b{border-color:var(--green);} .axis.c{border-color:var(--amber);}
+  .axis .top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .axis .aid{flex:none;width:44px;height:44px;border-radius:11px;color:#fff;font-weight:800;
+    font-size:20px;display:flex;align-items:center;justify-content:center;}
+  .axis.a .aid{background:var(--red);} .axis.b .aid{background:var(--green);} .axis.c .aid{background:var(--amber);}
+  .axis h4{font-size:16.5px;font-weight:800;color:var(--navy);}
+  .axis .pri{font-size:11.5px;font-weight:700;color:var(--red);}
+  .axis .row{font-size:13.5px;margin-bottom:6px;color:#37455a;}
+  .axis .row b{color:#111;}
+  .axis .kpi-line{margin-top:10px;font-size:12.3px;color:var(--gray);background:#fff;
+    border:1px dashed var(--line);border-radius:8px;padding:8px 12px;}
+
+  /* PRIORITY TIMELINE */
+  .pri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .pri-col{border-radius:14px;overflow:hidden;border:1px solid var(--line);}
+  .pri-col .h{padding:12px 16px;color:#fff;font-weight:800;font-size:14px;}
+  .p1 .h{background:var(--red);} .p2 .h{background:var(--blue);} .p3 .h{background:var(--green);}
+  .pri-col .body{padding:14px 16px;background:var(--soft);}
+  .pri-col .body ul{list-style:none;}
+  .pri-col li{font-size:13px;padding-left:18px;position:relative;margin-bottom:9px;color:#37455a;}
+  .pri-col li::before{content:"✓";position:absolute;left:0;color:inherit;font-weight:800;}
+  .p1 li::before{color:var(--red);} .p2 li::before{color:var(--blue);} .p3 li::before{color:var(--green);}
+
+  /* NOT TO DO */
+  .nots{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;}
+  .not{background:#fff5f5;border:1px solid #ffd6d6;border-radius:11px;padding:13px 16px;font-size:13.3px;color:#a02020;}
+  .not b{color:#801515;}
+  .not::before{content:"✕ ";font-weight:800;}
+
+  /* CHECKLIST */
+  .verify{background:#fffbea;border:1px solid #ffec99;border-radius:12px;padding:18px 22px;}
+  .verify li{font-size:13.7px;margin-bottom:9px;list-style:none;padding-left:26px;position:relative;color:#5c4d00;}
+  .verify li::before{content:"☐";position:absolute;left:0;font-size:16px;color:var(--amber);}
+  .verify li b{color:#111;}
+
+  /* SUMMARY QUOTE */
+  .summary{background:linear-gradient(135deg,#0f2b46,#1f6feb);color:#fff;border-radius:18px;
+    padding:34px 38px;margin-top:26px;text-align:center;}
+  .summary .lbl{font-size:12px;letter-spacing:2px;opacity:.7;margin-bottom:14px;}
+  .summary p{font-size:18px;font-weight:600;line-height:1.75;}
+  .summary p .hl{color:#ffd43b;font-weight:800;}
+
+  .note{font-size:12px;color:var(--gray);margin-top:28px;padding:16px 20px;
+    background:var(--soft);border-radius:10px;border:1px solid var(--line);line-height:1.7;}
+  h3.blk{font-size:15.5px;font-weight:800;color:var(--navy);margin:22px 0 12px;
+    padding-left:11px;border-left:4px solid var(--blue);}
+  .lead{font-size:14.5px;color:#37455a;margin-bottom:16px;}
+
+  @media(max-width:720px){
+    .kpi-grid,.m-grid,.pri-grid{grid-template-columns:1fr 1fr;}
+    .swot,.nots{grid-template-columns:1fr;}
+    .hero{padding:40px 24px;} .hero h1{font-size:24px;}
+    section{padding:24px 20px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="tag">NAVER MARKETING CONSULTING · 최종 통합 보고서</span>
+    <h1>은곡상회 본점<br>네이버 마케팅 종합 진단 &amp; 전략 방향</h1>
+    <p class="sub">세곡동 상권 분석 · 플레이스 실측 데이터 · 컨설팅 전략을 통합한 최종 리포트</p>
+    <div class="meta">
+      <span><b>업종</b>냉동삼겹살·미나리삼겹살 전문</span>
+      <span><b>위치</b>서울 강남구 세곡동 (헌릉로569길 21-30)</span>
+      <span><b>작성</b>2026.07.07 · 경력 15년 컨설턴트</span>
+    </div>
+  </div>
+
+  <!-- 1. 핵심 지표 -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">1</div>
+      <div><h2>플레이스 핵심 지표</h2><div class="en">Naver Place · Measured Data</div></div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="v">616</div><div class="l">방문자 리뷰</div></div>
+      <div class="kpi warn"><div class="v">35</div><div class="l">블로그 리뷰</div></div>
+      <div class="kpi alt"><div class="v">17.6<small>:1</small></div><div class="l">방문자 : 블로그 비율</div></div>
+      <div class="kpi"><div class="v">5<small>개</small></div><div class="l">테이블(소형 매장)</div></div>
+    </div>
+    <p class="lead" style="margin-top:18px;">
+      방문자 616 대비 블로그 35 구조는 <b>“이미 온 손님의 만족·재방문 엔진은 매우 강하지만,
+      검색 상단을 잡는 정보성 콘텐츠(신규 유입 엔진)는 약하다”</b>는 것을 뜻합니다.
+      소형 동네 고깃집에서 방문자 리뷰 616개는 이례적으로 높은 수준으로, 상품력·단골화가
+      이미 검증된 <b>‘살아남은 동네 강자’</b>임을 보여줍니다.
+    </p>
+  </section>
+
+  <!-- 2. 업체 기본 정보 -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">2</div>
+      <div><h2>업체 기본 정보</h2><div class="en">Business Profile</div></div>
+    </div>
+    <table>
+      <tr><th>상호 / 업종</th><td>은곡상회 본점 · 100% 국내산 한돈 돼지고기 전문(냉삼·미나리삼겹)</td></tr>
+      <tr><th>영업시간</th><td>평일 11:00~21:00(L.O 20:30) 추정 · 브레이크타임 약 14:00~16시대 · 토/공휴일 15:00~ 브레이크 없음
+        <span class="badge b-check">채널별 상이·확인 필요</span><br>
+        <span style="font-size:12.5px;color:#5c6b7a;">※ 저녁 단일 영업 아님 — 점심 영업 채널 존재. 마감시각·월요일 휴무 여부는 출처 엇갈림</span></td></tr>
+      <tr><th>주차</th><td>건물 지하주차장 무료 <span class="badge b-check">1h vs 2h 표기 상이</span>
+        <span style="font-size:12.5px;color:#5c6b7a;">(리뷰: 지하1층 한정, 만차 시 불편 언급)</span></td></tr>
+      <tr><th>결제</th><td>제로페이 · 고유가 피해지원금(신용·체크카드) <span class="badge b-ok">플레이스 정보탭 확인</span></td></tr>
+      <tr><th>서비스</th><td>18시 이전 방문 시 ‘냉삼 1인분’ 서비스(2인분 이상 주문 시) · 젊은 사장 초벌 서비스</td></tr>
+      <tr><th>대표 메뉴</th><td>급랭삼겹살 12,900~13,900 · 미나리생삼겹 15,900~17,900 · 통목살+통항정 28,900 · 껍데기 8,900 · 폭탄계란찜/된장찌개 등 사이드</td></tr>
+    </table>
+  </section>
+
+  <!-- 3. AI 브리핑 & 리뷰 -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">3</div>
+      <div><h2>네이버 AI 브리핑 &amp; 리뷰 분석</h2><div class="en">What the market already recognizes</div></div>
+    </div>
+    <div class="ai-brief">
+      <div class="lbl">🤖 네이버 AI가 검색자에게 노출하는 요약</div>
+      <p>“세곡동의 숨은 고기 맛집. 신선한 냉삼과 미나리 삼겹살, 다양한 밑반찬의 조화.
+        파채+계란장 소스, 볶음밥 등 창의적 메뉴. 지하주차 가능. 가족·친구 방문에 적합.”</p>
+    </div>
+    <h3 class="blk">리뷰가 반복 언급하는 강점 (=이미 인정된 자산)</h3>
+    <div class="chips">
+      <span class="chip">🔥 고기 품질·양·두께</span>
+      <span class="chip">🌿 미나리 신선함</span>
+      <span class="chip">⭐ 파채+계란장 (시그니처)</span>
+      <span class="chip">🍳 폭탄계란찜·된장찌개</span>
+      <span class="chip">🙋 젊은 사장 친절·초벌</span>
+      <span class="chip">🏆 “세곡동 고깃집 1등”</span>
+    </div>
+    <h3 class="blk">리뷰가 드러내는 불만 신호 (=관리 대상)</h3>
+    <div class="chips">
+      <span class="chip neg">🚪 공간 협소·웨이팅</span>
+      <span class="chip neg">🅿️ 주차 만차 불편</span>
+      <span class="chip neg">⏰ 오픈지연·조기마감 헛걸음</span>
+    </div>
+    <p class="lead" style="margin-top:16px;">
+      핵심은 네이버 AI와 손님 모두가 <b>‘파채+계란장’을 이미 시그니처로 인식</b>하고 있다는 점입니다.
+      새로 브랜딩을 만들 필요 없이, <b>이미 존재하는 자산을 공식화</b>하기만 하면 알고리즘과 정렬됩니다.
+    </p>
+  </section>
+
+  <!-- 4. SWOT -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">4</div>
+      <div><h2>SWOT 요약</h2><div class="en">Strength · Weakness · Opportunity · Threat</div></div>
+    </div>
+    <div class="swot">
+      <div class="cell s">
+        <h4>💪 강점 (S)</h4>
+        <ul>
+          <li>방문자 리뷰 <b>616개</b> = 검증된 상품력·재방문율</li>
+          <li>‘파채+계란장’ 시그니처 <b>시장 인정</b>(AI·리뷰)</li>
+          <li>강남권 대비 <b>가성비·양·두께</b> 경쟁력</li>
+          <li>점심~저녁 영업 + 직장인 점심 이벤트 이미 운영</li>
+        </ul>
+      </div>
+      <div class="cell w">
+        <h4>⚠️ 약점 (W)</h4>
+        <ul>
+          <li>블로그 35개 → <b>신규 검색 유입 취약</b></li>
+          <li>플레이스 답글·소식 등 <b>주인 관리 흔적 약함</b></li>
+          <li><b>영업시간 정보가 채널마다 제각각</b> → 헛걸음 유발</li>
+          <li>상호가 업종(고깃집)을 직관적으로 드러내지 못함</li>
+        </ul>
+      </div>
+      <div class="cell o">
+        <h4>🚀 기회 (O)</h4>
+        <ul>
+          <li>인정된 시그니처 <b>공식 브랜딩화</b> 시 즉시 시너지</li>
+          <li>‘세곡동·자곡동’ <b>지역 키워드 선점</b> 여지</li>
+          <li>점심 영업·직장인 이벤트 <b>정식 자산화</b></li>
+          <li>주말 재료 소진 → ‘한정판매’ 희소성 마케팅 전환</li>
+        </ul>
+      </div>
+      <div class="cell t">
+        <h4>🌩️ 위협 (T)</h4>
+        <ul>
+          <li>소형 매장 → <b>웨이팅이 매출 상한</b>(구조적)</li>
+          <li>인근 냉삼 경쟁점(냉삼옥·냉철한삼겹 등) 존재</li>
+          <li>영업정보 혼선이 <b>리뷰 신뢰 지속 훼손</b> 위험</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 상권 분석 -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">5</div>
+      <div><h2>세곡동 상권 심층 분석</h2><div class="en">Trade Area Analysis</div></div>
+    </div>
+    <div class="market-def">
+      <div class="q">세곡동은 <span class="hl">‘강남 안의 섬’</span> 같은 대규모 보금자리 주거지구로,
+        외부 유입이 적고 배후 거주민이 소비를 자체 완결하는 <span class="hl">전형적 배후수요형 로컬 상권</span>이다.</div>
+    </div>
+    <div class="m-grid">
+      <div class="m-card"><div class="ic">🏘️</div><h5>통째로 새로 생긴 동네</h5>
+        <p>2009년 그린벨트 해제 → 보금자리 개발. 인구 5천 명 → <b>4.6만 명(약 9배↑)</b></p></div>
+      <div class="m-card"><div class="ic">⚖️</div><h5>소셜믹스 · 가성비 지향</h5>
+        <p>공공임대+분양 혼합. 소득 스펙트럼 넓지만 <b>무게중심은 실속·가성비·가족단위</b></p></div>
+      <div class="m-card"><div class="ic">🚇</div><h5>지하철 역세권 아님</h5>
+        <p>수서·복정역에서 마을버스 환승. <b>외부 유동인구 거의 없음</b>(검색+차량 유입만)</p></div>
+      <div class="m-card"><div class="ic">📍</div><h5>은곡마을입구 사거리</h5>
+        <p>은곡상회 소재 = <b>세곡동 최대 상업지</b>. 스타벅스·SSM 밀집한 일상 소비 중심</p></div>
+      <div class="m-card"><div class="ic">🔄</div><h5>자영업 단명 잦은 상권</h5>
+        <p>“금방 닫는 가게 많다” → <b>살아남은 은곡상회 = 이미 강자</b></p></div>
+      <div class="m-card"><div class="ic">👨‍👩‍👧</div><h5>정주·가족 인구</h5>
+        <p>혁신초·8학군·대모산 녹지 → <b>재방문·가족외식 수요가 매출의 본질</b></p></div>
+    </div>
+  </section>
+
+  <!-- 6. 전략 방향 -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">6</div>
+      <div><h2>컨설팅 전략 방향</h2><div class="en">Strategy Direction (상권 반영)</div></div>
+    </div>
+
+    <h3 class="blk">성장 공식의 전환</h3>
+    <div class="flow">
+      <div class="f old"><div class="t">일반 상권 공식</div>
+        <div class="seq">노출↑ → 신규 방문↑ → 매출↑</div></div>
+      <div class="f new"><div class="t">✔ 세곡동(배후수요형) 공식</div>
+        <div class="seq">동네 점유율↑ → 재방문 빈도↑ → 객단가↑ → 매출↑</div></div>
+    </div>
+    <p class="lead">
+      메인 목표: <b>“세곡·자곡동 주민의 ‘고기 먹는 날 = 은곡상회’라는 디폴트 선택지가 되게 만든다
+      (동네 카테고리 1등 고착화).”</b> 새 손님을 멀리서 부르는 대신, 동네 안에서 대표성을
+      굳히고 단골을 더 자주·더 많이 쓰게 하는 것이 이 상권에서 이기는 방식입니다.
+    </p>
+
+    <h3 class="blk">3대 전략 축</h3>
+    <div class="axis a">
+      <div class="top">
+        <div class="aid">A</div>
+        <div><h4>동네 대표성 고착화 <span class="pri">· 최우선</span></h4></div>
+      </div>
+      <div class="row"><b>근거</b> : 배후수요 상권 + 자영업 단명 잦음 → ‘1등 타이틀’이 곧 해자</div>
+      <div class="row"><b>방향</b> : 지역 키워드·리뷰·AI브리핑 전 영역에서 ‘세곡·자곡동 1등 고깃집’ 고착 / 시그니처(파채+계란장) 공식 대표자산화 / 616개 리뷰 전건 답글</div>
+      <div class="kpi-line">📊 KPI · 지역 키워드 검색 노출 순위, 리뷰 답글률, 신규 리뷰 유입 속도</div>
+    </div>
+    <div class="axis b">
+      <div class="top">
+        <div class="aid">B</div>
+        <div><h4>단골 재방문 빈도↑</h4></div>
+      </div>
+      <div class="row"><b>근거</b> : 뜨내기 없는 정주·가족 인구 → 재방문이 매출의 본질</div>
+      <div class="row"><b>방향</b> : ‘가끔 오는 손님 → 월 N회 루틴’ 전환(단골 혜택·당근 커뮤니티) / ‘온 가족이 오는 집’ 메시지 / 주말·공휴일 가족외식 강화</div>
+      <div class="kpi-line">📊 KPI · 재방문율, 단골 고객 수, 주말 가족객 비중</div>
+    </div>
+    <div class="axis c">
+      <div class="top">
+        <div class="aid">C</div>
+        <div><h4>객단가·유휴시간 매출↑</h4></div>
+      </div>
+      <div class="row"><b>근거</b> : 테이블 5개 + 웨이팅 → ‘더 부르기’보다 ‘더 쓰게/빈 시간 채우기’가 효율적</div>
+      <div class="row"><b>방향</b> : 저녁 피크는 회전율·객단가(사이드·주류 세트, 예약/웨이팅) / 점심·브레이크 전후 유휴시간을 직장인·가족 런치로 / 영업정보 통일로 헛걸음 손실 회수</div>
+      <div class="kpi-line">📊 KPI · 객단가, 시간대별 좌석 점유율, 점심 매출 비중</div>
+    </div>
+  </section>
+
+  <!-- 7. 실행 우선순위 -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">7</div>
+      <div><h2>실행 우선순위</h2><div class="en">Action Priority · 방어 → 고착 → 확장</div></div>
+    </div>
+    <div class="pri-grid">
+      <div class="pri-col p1">
+        <div class="h">1순위 · 방어 (즉시·비용0)</div>
+        <div class="body"><ul>
+          <li>전 채널 영업정보 통일 (헛걸음 손실 차단)</li>
+          <li>리뷰 616건 전건 답글</li>
+          <li>주차·결제 정보 현실화</li>
+        </ul></div>
+      </div>
+      <div class="pri-col p2">
+        <div class="h">2순위 · 고착 (단기)</div>
+        <div class="body"><ul>
+          <li>시그니처(파채+계란장) 공식화·메뉴명 각인</li>
+          <li>‘세곡동·자곡동’ 지역 키워드 블로그 월 2~4건</li>
+          <li>단골 재방문 유인 설계</li>
+        </ul></div>
+      </div>
+      <div class="pri-col p3">
+        <div class="h">3순위 · 확장 (단기~중기)</div>
+        <div class="body"><ul>
+          <li>점심 매출 강화(런치 세트·직장인 이벤트)</li>
+          <li>객단가 상승(사이드·주류 세트)</li>
+          <li>예약·웨이팅앱으로 회전·노쇼 관리</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <h3 class="blk">🚫 하지 말아야 할 것 (상권 근거 Not-To-Do)</h3>
+    <div class="nots">
+      <div class="not"><b>광역·유동인구 겨냥 광고</b> — 세곡동은 유동 유입이 없어 예산 낭비</div>
+      <div class="not"><b>프리미엄 고급화 전환</b> — 상권 무게중심(가성비)에 역행</div>
+      <div class="not"><b>좌석 확대 없는 유입 캠페인</b> — 헛걸음·웨이팅 불만만 증가</div>
+      <div class="not"><b>트렌디 SNS 바이럴 과투자</b> — 정주 동네 상권엔 효율 낮음</div>
+    </div>
+  </section>
+
+  <!-- 8. 미팅 검증 -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">8</div>
+      <div><h2>1차 미팅에서 검증할 것</h2><div class="en">To confirm strategy intensity</div></div>
+    </div>
+    <div class="verify">
+      <ul>
+        <li><b>저녁 피크 실제 만석/웨이팅 정도</b> → 심하면 축 C(효율)로 무게중심 이동</li>
+        <li><b>점심 매출 현황·비중</b> → 낮으면 축 C의 ‘유휴시간 채우기’ 기회 큼</li>
+        <li><b>재방문(단골) 비중 체감</b> → 낮으면 축 B(리텐션) 강화 시급</li>
+        <li><b>실제 요일별 영업시간·정기휴무</b> → 축 A의 ‘영업정보 통일’ 실행 기준값 확정</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="lbl">ONE-LINE SUMMARY</div>
+    <p>“은곡상회의 싸움터는 <span class="hl">‘강남 전체’가 아니라 ‘세곡·자곡동’</span>이다.<br>
+      멀리서 새 손님을 끌어오기보다, 동네 안에서 <span class="hl">대표성을 고착화(A)</span>하고
+      단골을 <span class="hl">더 자주 오게(B)</span> 하며 한 번 올 때 <span class="hl">더 쓰고 빈 시간을 채우게(C)</span>
+      하는 것이 이 상권에서 이기는 방식이다.”</p>
+  </div>
+
+  <div class="note">
+    ※ 본 보고서는 네이버 플레이스 직접 크롤링(메타·AI브리핑·방문자리뷰·정보탭), 공식 인스타그램,
+    다이닝코드·식신·당근·네이버 블로그 및 상권 공개자료(나무위키·언론·강남구청·KOSIS 등)를 종합한
+    것입니다(2026-07-07 기준). 방문자/블로그 리뷰 수치는 플레이스 실측값(616/35)이며, 영업시간·주차
+    무료시간은 채널별 값이 상이하여 ‘확인 필요’ 상태입니다. 별점 세부수치·저장수·유입키워드·실매출·
+    시간대별 회전율/객단가는 스마트플레이스 관리자 데이터 및 1차 미팅 확인 시 정밀도가 크게 상승합니다.
+  </div>
+
+</div>
+</body>
+</html>
