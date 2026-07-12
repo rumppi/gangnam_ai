@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>그레이드원·세이노·수펙트럼 3사 경쟁 분석 리포트</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      background: #fffaf7;
+      color: #333;
+      line-height: 1.65;
+    }
+
+    .report {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 14px 40px rgba(120, 95, 80, 0.13);
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      padding: 28px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #e8e7ff, #ffe8f1, #e9fbf3);
+      color: #3f3d66;
+      font-size: 30px;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      margin-top: 42px;
+      padding-left: 14px;
+      border-left: 8px solid #b8b3ff;
+      color: #4c4974;
+      font-size: 23px;
+    }
+
+    h3 {
+      margin-top: 24px;
+      color: #625b8f;
+      font-size: 18px;
+    }
+
+    .sub {
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .card {
+      border-radius: 22px;
+      padding: 20px;
+      background: #f6f4ff;
+      border: 1px solid #e2ddff;
+    }
+
+    .card.pink {
+      background: #fff1f6;
+      border-color: #ffd1df;
+    }
+
+    .card.mint {
+      background: #effbf5;
+      border-color: #cceedd;
+    }
+
+    .card.yellow {
+      background: #fff8df;
+      border-color: #f0e2a5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+      white-space: nowrap;
+    }
+
+    .confirmed {
+      background: #dff6ec;
+      color: #22734f;
+    }
+
+    .assumed {
+      background: #fff0c9;
+      color: #876000;
+    }
+
+    .need {
+      background: #ffe1e1;
+      color: #983b3b;
+    }
+
+    .risk {
+      background: #eeeeff;
+      color: #474078;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 18px;
+      font-size: 15px;
+    }
+
+    th {
+      background: #e9e7ff;
+      color: #45406f;
+      text-align: left;
+      padding: 14px;
+      border-bottom: 1px solid #dcd8ff;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #fffdfb;
+    }
+
+    .highlight {
+      background: #fbfbff;
+      border: 1px dashed #b8b3ff;
+      border-radius: 18px;
+      padding: 18px 20px;
+      margin-top: 14px;
+    }
+
+    .positioning {
+      font-size: 20px;
+      font-weight: 800;
+      color: #45406f;
+    }
+
+    .keyword span {
+      display: inline-block;
+      background: #eef7ff;
+      color: #2f618d;
+      padding: 7px 12px;
+      border-radius: 999px;
+      margin: 5px;
+      font-size: 14px;
+    }
+
+    .todo {
+      background: #f6fbff;
+      border: 1px solid #d7ebff;
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 14px;
+    }
+
+    .warning {
+      background: #fff7f7;
+      border-left: 7px solid #ffb1b1;
+      border-radius: 18px;
+      padding: 18px 20px;
+      margin-top: 16px;
+    }
+
+    .score-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .score {
+      border-radius: 20px;
+      padding: 18px;
+      background: #fbfbff;
+      border: 1px solid #e4e1ff;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #eee;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #b8b3ff, #ffd1df);
+    }
+
+    .footer-note {
+      margin-top: 36px;
+      padding: 18px;
+      background: #f9f9f9;
+      border-radius: 18px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        padding: 16px;
+      }
+
+      .report {
+        padding: 22px;
+      }
+
+      .summary-grid,
+      .score-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="report">
+    <h1>그레이드원 · 세이노 · 수펙트럼 3사 경쟁 분석 리포트</h1>
+    <p class="sub">
+      분석 목적: 대치동·강남권 수학학원 경쟁 구도 안에서 수펙트럼 수학학원이 네이버 플레이스, 블로그, 상담 전환, 사진 콘텐츠에서 보완해야 할 방향을 정리합니다.
+    </p>
+
+    <h2>0. 한눈에 보는 3사 포지셔닝 요약</h2>
+    <div class="summary-grid">
+      <section class="card">
+        <h3>그레이드원 학원</h3>
+        <p><span class="confirmed badge">확인됨</span>대치동 1:1 과외식 수학학원 포지션이 강합니다.</p>
+        <p><span class="assumed badge">추정</span>학부모에게 “개별 밀착 관리”를 직관적으로 전달하는 경쟁사입니다.</p>
+      </section>
+
+      <section class="card pink">
+        <h3>세이노 학원</h3>
+        <p><span class="confirmed badge">확인됨</span>소수정예, 상위권, 강사진, 설명회 중심 메시지가 강합니다.</p>
+        <p><span class="assumed badge">추정</span>프리미엄·상위권·입시형 이미지를 선점한 경쟁사입니다.</p>
+      </section>
+
+      <section class="card mint">
+        <h3>수펙트럼 수학학원</h3>
+        <p><span class="confirmed badge">확인됨</span>대치동 선릉로 328 소재, 초중고 개별맞춤·1:1 집중관리 메시지가 확인됩니다.</p>
+        <p><span class="assumed badge">추정</span>“학생별 약점 진단 + 학교별 내신 관리”로 차별화하는 것이 적합합니다.</p>
+      </section>
+    </div>
+
+    <h2>1. 3사 핵심 비교표</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th>그레이드원 학원</th>
+          <th>세이노 학원</th>
+          <th>수펙트럼 수학학원</th>
+          <th>수펙트럼 보완 방향</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>대표 포지션</td>
+          <td>대치동 1:1 과외식 수학학원</td>
+          <td>상위권·소수정예·명품강의형 학원</td>
+          <td>초중고 개별맞춤 수학전문학원</td>
+          <td>“개별맞춤”을 넘어 “약점 진단 + 내신 관리 + 오답 피드백”으로 구체화</td>
+        </tr>
+        <tr>
+          <td>주요 고객</td>
+          <td>1:1 밀착 관리를 원하는 초중고 학생·학부모</td>
+          <td>상위권, 특강, 입시형 강의를 찾는 학생·학부모</td>
+          <td>개별 관리와 대치동식 수학 관리를 원하는 초중고 학생·학부모</td>
+          <td>중등 내신, 초등 고학년, 고등 선행 등 고객군을 나누어 설명</td>
+        </tr>
+        <tr>
+          <td>핵심 메시지</td>
+          <td>일대일, 초등 교과수학부터 중등·고등 내신·수능 관리</td>
+          <td>상위 1%, 소수정예, 학생 성향에 맞는 강사진</td>
+          <td>개별 맞춤, 1:1 집중 관리, 대형 학원과 다른 꼼꼼함</td>
+          <td>“수펙트럼 4단계 진단 관리”처럼 시스템 이름을 만들어야 함</td>
+        </tr>
+        <tr>
+          <td>수업 방식 전달력</td>
+          <td>1:1 과외식이라는 표현이 명확함</td>
+          <td>소수정예와 특강·시간표 중심 구조가 명확함</td>
+          <td>개별맞춤 문구는 있으나 실제 수업 구조는 추가 설명 필요</td>
+          <td>1:1인지, 소수정예인지, 개별 진도인지, 클리닉형인지 명확히 표시</td>
+        </tr>
+        <tr>
+          <td>신뢰 요소</td>
+          <td>공식 블로그, 후기, 성적관리 메시지</td>
+          <td>공식 홈페이지, 설명회, 시간표, 강사진 메시지</td>
+          <td>과학고 출신 원장, 대치동 경험, 맞춤 솔루션 메시지</td>
+          <td>원장 스토리와 수업 철학을 네이버 소개글·블로그에 구체화</td>
+        </tr>
+        <tr>
+          <td>콘텐츠 경쟁력</td>
+          <td>블로그와 특강 콘텐츠 활용 가능성이 큼</td>
+          <td>홈페이지, 설명회, 특강, SNS 연결 구조가 있음</td>
+          <td>현재는 플레이스·블로그 콘텐츠 축적이 더 필요함</td>
+          <td>네이버 플레이스 소식, 블로그, FAQ를 월 단위로 운영</td>
+        </tr>
+        <tr>
+          <td>사진·시각자료</td>
+          <td>인테리어·학습공간 이미지 노출 가능</td>
+          <td>홈페이지 중심의 브랜드 이미지 노출</td>
+          <td>외관·내부·상담·수업 장면 사진 보완 필요</td>
+          <td>상담 장면, 오답노트, 학습 플래너, 학교별 내신 자료 촬영</td>
+        </tr>
+        <tr>
+          <td>상담 전환 장치</td>
+          <td>블로그·홈페이지 연결</td>
+          <td>설명회, 시간표, 지점 안내, SNS</td>
+          <td>상담 가능 방식과 FAQ 보완 필요</td>
+          <td>상담 절차, 레벨 테스트, 대상 학년, 수업 방식 FAQ 등록</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>2. 포지셔닝 맵</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>축</th>
+          <th>그레이드원</th>
+          <th>세이노</th>
+          <th>수펙트럼</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>프리미엄·상위권 이미지</td>
+          <td>중간</td>
+          <td>높음</td>
+          <td>중간</td>
+        </tr>
+        <tr>
+          <td>개별 관리 이미지</td>
+          <td>높음</td>
+          <td>중간</td>
+          <td>높게 만들 수 있음</td>
+        </tr>
+        <tr>
+          <td>학교별 내신 대응 이미지</td>
+          <td>중간~높음</td>
+          <td>중간</td>
+          <td>강화 가능</td>
+        </tr>
+        <tr>
+          <td>브랜드 시스템화</td>
+          <td>1:1 과외식으로 직관적</td>
+          <td>소수정예·특강·설명회 구조</td>
+          <td>시스템 이름화 필요</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      <p class="positioning">
+        추천 포지셔닝: “수펙트럼은 대치동 선릉로에서 학생별 약점 진단과 학교별 내신을 함께 관리하는 초중고 개별 맞춤 수학학원”
+      </p>
+    </div>
+
+    <h2>3. 수펙트럼 경쟁력 점수 진단</h2>
+    <div class="score-wrap">
+      <div class="score">
+        <h3>키워드 잠재력</h3>
+        <p>대치동, 선릉로, 초중고, 개별맞춤, 중등내신 키워드 활용 가능성이 높습니다.</p>
+        <div class="bar"><span style="width: 82%;"></span></div>
+      </div>
+
+      <div class="score">
+        <h3>정보 완성도</h3>
+        <p>주소와 핵심 메시지는 좋지만, 수업 방식·상담 절차·FAQ 보강이 필요합니다.</p>
+        <div class="bar"><span style="width: 58%;"></span></div>
+      </div>
+
+      <div class="score">
+        <h3>콘텐츠 운영력</h3>
+        <p>경쟁사 대비 네이버 소식, 블로그, 사진 콘텐츠를 더 축적해야 합니다.</p>
+        <div class="bar"><span style="width: 45%;"></span></div>
+      </div>
+    </div>
+
+    <h2>4. 그레이드원 대비 수펙트럼 보완점</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>그레이드원 강점</th>
+          <th>수펙트럼이 가져올 수 있는 시사점</th>
+          <th>실행 문구 예시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1:1 과외식 수학학원이라는 메시지가 명확함</td>
+          <td>수펙트럼도 실제 수업 형태를 구체화해야 함</td>
+          <td>“학생별 이해도와 오답 패턴을 기준으로 수업 방향을 설계합니다.”</td>
+        </tr>
+        <tr>
+          <td>초등부터 고등까지 이어지는 수학 관리 범위 제시</td>
+          <td>학년별 프로그램을 분리해 보여줘야 함</td>
+          <td>“초등 기초 점검, 중등 내신 대비, 고등 선행·심화 학습을 단계별로 안내합니다.”</td>
+        </tr>
+        <tr>
+          <td>공식 블로그와 후기성 콘텐츠 활용</td>
+          <td>수펙트럼도 학부모 검색용 콘텐츠를 축적해야 함</td>
+          <td>“대치동 수학학원 상담 전 확인할 7가지” 같은 블로그 발행</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5. 세이노 대비 수펙트럼 보완점</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>세이노 강점</th>
+          <th>수펙트럼이 가져올 수 있는 시사점</th>
+          <th>실행 문구 예시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>상위권·소수정예·명품강의 메시지가 선명함</td>
+          <td>수펙트럼은 상위권 경쟁보다 진단·관리형으로 차별화</td>
+          <td>“상위권 진도만 빠르게 나가는 수업이 아니라, 학생이 어디서 막히는지 먼저 확인합니다.”</td>
+        </tr>
+        <tr>
+          <td>홈페이지, 시간표, 설명회, 강사진 소개 구조 보유</td>
+          <td>수펙트럼도 상담 전 정보 탐색 구조를 만들어야 함</td>
+          <td>“상담 절차, 수업 대상, 레벨 테스트 여부를 FAQ로 안내합니다.”</td>
+        </tr>
+        <tr>
+          <td>특강과 설명회 콘텐츠로 활동성 전달</td>
+          <td>방학특강·내신대비·오답관리 콘텐츠 운영 필요</td>
+          <td>“중등 내신 대비 4주 관리 포인트” 같은 시즌형 콘텐츠 발행</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>6. 수펙트럼이 바로 강화해야 할 핵심 메시지</h2>
+    <div class="keyword">
+      <span>대치동 개별맞춤 수학</span>
+      <span>학생별 약점 진단</span>
+      <span>학교별 내신 관리</span>
+      <span>오답 패턴 분석</span>
+      <span>초중고 수학 전문</span>
+      <span>대형 학원과 다른 꼼꼼한 관리</span>
+      <span>수학 자신감 회복</span>
+      <span>학부모 상담형 수업 설계</span>
+    </div>
+
+    <h2>7. 네이버 플레이스 개선안</h2>
+
+    <h3>한 줄 소개</h3>
+    <div class="highlight">
+      대치동 선릉로에서 학생별 약점 진단과 학교별 내신을 함께 관리하는 초중고 개별 맞춤 수학학원입니다.
+    </div>
+
+    <h3>업체 소개글</h3>
+    <div class="highlight">
+      수펙트럼 수학학원은 서울 강남구 대치동 선릉로에 위치한 초중고 수학 전문 학원입니다.
+      학생마다 다른 개념 이해도와 오답 패턴을 확인하고, 학교 진도와 학습 목표에 맞춰 개별 학습 방향을 설계합니다.
+      초등수학 기초 점검부터 중등 내신 대비, 고등수학 선행과 심화 학습까지 학생에게 필요한 부분을 꼼꼼히 관리하는 것을 지향합니다.
+      대형 학원식 일괄 진도보다 학생별 약점 보완, 오답 관리, 학습 습관 형성이 필요한 학부모님께 적합한 수학 학습 선택지가 되겠습니다.
+    </div>
+
+    <h2>8. 사진 콘텐츠 보완 우선순위</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>우선순위</th>
+          <th>촬영 컷</th>
+          <th>목적</th>
+          <th>활용 위치</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>건물 외관과 3층 입구</td>
+          <td>첫 방문 신뢰와 길 찾기 편의성 확보</td>
+          <td>네이버 플레이스 대표·외부 사진</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>상담 테이블과 진단표</td>
+          <td>개별 진단형 학원 이미지 강화</td>
+          <td>소개글, 블로그, 상담 안내</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>강의실과 칠판 수업 장면</td>
+          <td>학습 환경과 전문성 전달</td>
+          <td>네이버 플레이스 내부 사진</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>오답노트·학습 플래너</td>
+          <td>꼼꼼한 관리와 피드백 이미지 전달</td>
+          <td>블로그, SNS, 상세페이지</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>학교별 내신 대비 자료</td>
+          <td>대치동 학부모 검색 의도 대응</td>
+          <td>블로그, 플레이스 소식</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>9. 네이버 소식·블로그 콘텐츠 제안</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>콘텐츠 제목</th>
+          <th>목적</th>
+          <th>추천 채널</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>대치동 수학학원 선택 전, 1:1과 소수정예의 차이</td>
+          <td>그레이드원·세이노 비교 검색 고객 흡수</td>
+          <td>블로그</td>
+        </tr>
+        <tr>
+          <td>수펙트럼 수학학원은 어떤 학생에게 맞을까요?</td>
+          <td>학원 포지션 명확화</td>
+          <td>네이버 플레이스 소식</td>
+        </tr>
+        <tr>
+          <td>중등 수학 내신 대비, 학교별 진도 관리가 중요한 이유</td>
+          <td>중등 학부모 상담 전환</td>
+          <td>블로그</td>
+        </tr>
+        <tr>
+          <td>수학 오답을 반복하는 학생에게 필요한 관리 방식</td>
+          <td>문제 해결형 키워드 확보</td>
+          <td>블로그·SNS</td>
+        </tr>
+        <tr>
+          <td>수펙트럼 상담은 이렇게 진행됩니다</td>
+          <td>문의 전 불안감 해소</td>
+          <td>플레이스 소식·FAQ</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>10. 확인 필요 항목</h2>
+    <div class="warning">
+      <ul>
+        <li><span class="need badge">확인 필요</span>수펙트럼의 실제 수업 형태: 1:1, 소수정예, 개별 진도, 클리닉형 여부</li>
+        <li><span class="need badge">확인 필요</span>학년별 운영 반: 초등·중등·고등 세부 프로그램</li>
+        <li><span class="need badge">확인 필요</span>레벨 테스트, 학부모 상담, 피드백 주기</li>
+        <li><span class="need badge">확인 필요</span>학교별 내신 대비 실제 운영 학교명</li>
+        <li><span class="need badge">확인 필요</span>네이버 플레이스 리뷰, 사진, 소식 등록 현황</li>
+      </ul>
+    </div>
+
+    <h2>11. 실행 체크리스트</h2>
+
+    <div class="todo">
+      <h3>오늘 바로 할 일</h3>
+      <ol>
+        <li>네이버 플레이스 한 줄 소개를 “학생별 약점 진단 + 학교별 내신 관리” 중심으로 수정합니다.</li>
+        <li>수업 방식이 1:1인지, 소수정예인지, 개별 진도인지 내부적으로 확정합니다.</li>
+        <li>FAQ 5개를 먼저 작성합니다: 대상 학년, 상담 방식, 레벨 테스트, 내신 대비, 수업 정원.</li>
+      </ol>
+    </div>
+
+    <div class="todo">
+      <h3>이번 주 할 일</h3>
+      <ol>
+        <li>“수펙트럼 4단계 진단 관리” 문구와 이미지 초안을 만듭니다.</li>
+        <li>외관, 입구, 상담실, 강의실, 오답노트 사진을 촬영합니다.</li>
+        <li>“대치동 수학학원 비교 기준” 블로그 글을 1개 발행합니다.</li>
+        <li>학교별 내신 대비 콘텐츠를 최소 3개 작성합니다.</li>
+        <li>원장·강사진의 교육 철학을 500자 내외로 정리합니다.</li>
+      </ol>
+    </div>
+
+    <div class="todo">
+      <h3>이번 달 할 일</h3>
+      <ol>
+        <li>네이버 플레이스 소식을 월 4~8개 이상 운영합니다.</li>
+        <li>초등·중등·고등 대상별 소개 콘텐츠를 각각 제작합니다.</li>
+        <li>방학특강 또는 내신 대비 프로그램이 있다면 별도 상세페이지를 구성합니다.</li>
+        <li>실제 학부모 리뷰가 쌓이면 정중한 리뷰 답변 템플릿으로 관리합니다.</li>
+        <li>경쟁사와 다른 수펙트럼만의 진단·오답·피드백 시스템을 시각화합니다.</li>
+      </ol>
+    </div>
+
+    <div class="footer-note">
+      본 리포트는 공개 검색에서 확인 가능한 정보와 학원 업종·대치동 상권 맥락을 바탕으로 작성되었습니다.
+      확인되지 않은 수업 방식, 수강료, 시간표, 정원, 주차, 리뷰 내용은 사실로 단정하지 않았으며,
+      실제 운영 정보 확인 후 네이버 플레이스와 콘텐츠에 반영하는 것을 권장합니다.
+    </div>
+  </main>
+</body>
+</html>
