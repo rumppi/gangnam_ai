@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세곡동 상권 정밀 분석 및 자산 컨설팅</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #FDFBF7;
+            color: #2D2D2D;
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        .gradient-header {
+            background: linear-gradient(135deg, #7C9070 0%, #A27B5C 100%);
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #7C9070;
+            color: #7C9070;
+            font-weight: 700;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .bg-neutral-light {
+            background-color: #F2EFE9;
+        }
+    </style>
+</head>
+<body class="p-0 m-0">
+
+    <!-- Header Section -->
+    <header class="gradient-header text-white py-12 px-6 shadow-lg">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">세곡동 상권 정밀 분석 및 자산 컨설팅</h1>
+            <p class="text-lg opacity-90">강남의 독립적 자족형 상권, 미래 가치와 실천적 자산 전략을 제시합니다.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-10">
+        
+        <!-- Summary Stats Section -->
+        <section class="mb-12">
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">
+                <h2 class="text-2xl font-bold mb-6 flex items-center">
+                    <span class="w-2 h-8 bg-sage-600 bg-[#7C9070] mr-3 rounded-full"></span>
+                    세곡 상권 핵심 데이터
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-neutral-light p-6 rounded-xl text-center">
+                        <p class="text-stone-500 text-sm mb-1">총 상주 인구</p>
+                        <p class="text-3xl font-bold text-[#A27B5C]">약 46,151명</p>
+                        <p class="text-xs mt-2 text-stone-400">강남구 대치2동 상회 수준</p>
+                    </div>
+                    <div class="bg-neutral-light p-6 rounded-xl text-center">
+                        <p class="text-stone-500 text-sm mb-1">배후 세대수</p>
+                        <p class="text-3xl font-bold text-[#A27B5C]">19,894세대</p>
+                        <p class="text-xs mt-2 text-stone-400">서울 평균의 약 2배 규모</p>
+                    </div>
+                    <div class="bg-neutral-light p-6 rounded-xl text-center">
+                        <p class="text-stone-500 text-sm mb-1">주요 타깃 연령</p>
+                        <p class="text-3xl font-bold text-[#A27B5C]">3040 & 60+</p>
+                        <p class="text-xs mt-2 text-stone-400">자녀 교육 및 자산가 실버층</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spatial Analysis Section -->
+        <section class="mb-16">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-3">상권의 지리적 특성 및 핵심 거점</h2>
+                <p class="text-stone-600 leading-relaxed">
+                    세곡동은 대모산과 탄천에 가로막힌 전형적인 <strong>독립식 항아리 상권</strong>입니다. 
+                    현재 철도 교통망은 없으나 수서역과 인접하여 외부 유출과 내부 결집이 공존하는 독특한 환경을 갖추고 있습니다.
+                </p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex border-b border-stone-200 mb-6 overflow-x-auto whitespace-nowrap">
+                <button onclick="switchTab('jagok')" id="btn-jagok" class="tab-active py-3 px-6 transition-all duration-200">자곡사거리</button>
+                <button onclick="switchTab('eungok')" id="btn-eungok" class="py-3 px-6 transition-all duration-200">은곡마을입구</button>
+                <button onclick="switchTab('segok')" id="btn-segok" class="py-3 px-6 transition-all duration-200">세곡동사거리</button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="content-jagok" class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-50">
+                <div>
+                    <h3 class="text-xl font-bold text-[#7C9070] mb-4">자곡사거리 상권 : 젊음과 일상의 조화</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-lg mr-3">🏢</span>
+                            <div>
+                                <p class="font-bold">고밀도 오피스텔 단지</p>
+                                <p class="text-sm text-stone-500">더샵라르고, 힐스테이트에코 등 1인 가구 밀집</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-lg mr-3">🩺</span>
+                            <div>
+                                <p class="font-bold">생활 밀착형 소비</p>
+                                <p class="text-sm text-stone-500">클리닉, 약국, 프랜차이즈 F&B, 휘트니스 중심</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-lg mr-3">📍</span>
+                            <div>
+                                <p class="font-bold">입지 특징</p>
+                                <p class="text-sm text-stone-500">지구 내 가장 활발한 일상 소비 중심지 형성</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-stone-50 rounded-xl p-6 flex flex-col justify-center border border-stone-100">
+                    <p class="text-stone-600 italic">"오피스텔 하부 상업시설이 조밀하게 들어차며 세곡지구의 중심 상권 역할을 수행하고 있습니다."</p>
+                </div>
+            </div>
+
+            <div id="content-eungok" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-50">
+                <div>
+                    <h3 class="text-xl font-bold text-[#7C9070] mb-4">은곡마을입구 상권 : 주거 밀착형 로컬</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-lg mr-3">🏠</span>
+                            <div>
+                                <p class="font-bold">주거 동선 중첩</p>
+                                <p class="text-sm text-stone-500">아파트 단지 및 기존 단독주택 주민의 주 이동 경로</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-lg mr-3">📚</span>
+                            <div>
+                                <p class="font-bold">가족 단위 필수 시설</p>
+                                <p class="text-sm text-stone-500">학원가, 동네 의원, 소매점 중심의 커뮤니티 성격</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-stone-50 rounded-xl p-6 flex flex-col justify-center border border-stone-100">
+                    <p class="text-stone-600 italic">"주민들의 실생활과 가장 밀접한 상권으로 높은 충성도를 보이는 구역입니다."</p>
+                </div>
+            </div>
+
+            <div id="content-segok" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-50">
+                <div>
+                    <h3 class="text-xl font-bold text-[#7C9070] mb-4">세곡동사거리 상권 : 교통의 관문</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-lg mr-3">🚗</span>
+                            <div>
+                                <p class="font-bold">차량 유동의 핵심</p>
+                                <p class="text-sm text-stone-500">성남 및 헌릉로 방면 진출입 차량이 교차하는 지점</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-lg mr-3">🛠️</span>
+                            <div>
+                                <p class="font-bold">특수 업종 분포</p>
+                                <p class="text-sm text-stone-500">차량 정비, 주유 시설, 대형 외식업소 등이 주를 이룸</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-stone-50 rounded-xl p-6 flex flex-col justify-center border border-stone-100">
+                    <p class="text-stone-600 italic">"보행자 중심의 소비보다는 광역 교통망을 이용하는 차량 수요에 특화되어 있습니다."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demographics & Consumption Section -->
+        <section class="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <h2 class="text-xl font-bold mb-2">상주 인구 규모 비교</h2>
+                <p class="text-sm text-stone-500 mb-6">강남구 주요 주거 행정동 인구수 비교 (단위: 명)</p>
+                <div class="chart-container">
+                    <canvas id="popChart"></canvas>
+                </div>
+                <p class="text-sm mt-4 text-stone-500 leading-relaxed">
+                    세곡동은 개포2동이나 대치2동보다 많은 상주 인구를 보유하고 있어, 탄탄한 내수 시장을 형성하고 있습니다.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <h2 class="text-xl font-bold mb-2">소비 트렌드 및 연령 구조</h2>
+                <p class="text-sm text-stone-500 mb-6">연령대별 비중 및 점심 시간대 소비 비중 변화</p>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <p class="text-sm mt-4 text-stone-500 leading-relaxed">
+                    점심 시간대 소비 비중이 37%로 상승하며 낮 활동 인구의 저력을 보여줍니다. 특히 3040 가구와 실버 가구가 주축입니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- Development & Value Section -->
+        <section class="mb-16">
+            <div class="bg-[#2D2D2D] text-white p-8 rounded-2xl shadow-xl">
+                <h2 class="text-2xl font-bold mb-8 flex items-center">
+                    <span class="text-[#7C9070] mr-3">◈</span>
+                    거시적 호재 및 부동산 가치 분석
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-lg leading-relaxed mb-6">
+                            수서역세권 개발(신세계백화점 등)과 위례과천선 확정은 세곡동의 고립성을 해소할 핵심 동력입니다. 하지만 수서동과의 가격 상승률 격차는 아직 존재합니다.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="bg-white/10 p-4 rounded-lg border border-white/10">
+                                <p class="text-sm opacity-70">수서역세권 개발</p>
+                                <p class="font-bold text-[#7C9070]">신세계백화점 (2029년 예정) - '빨대 효과' 유의</p>
+                            </div>
+                            <div class="bg-white/10 p-4 rounded-lg border border-white/10">
+                                <p class="text-sm opacity-70">교통망 확충</p>
+                                <p class="font-bold text-[#7C9070]">위례과천선 루프선 형태 확정 - 역세권 전환 기대</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl">
+                        <p class="text-black font-bold mb-4 text-center">지역별 부동산 가격 상승률 비교 (%)</p>
+                        <div class="chart-container h-64">
+                            <canvas id="priceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Asset Diagnostic Section -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold mb-8">상가 공실 원인 분석 및 자산 진단</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl border-l-4 border-[#A27B5C] shadow-sm card-hover">
+                    <p class="text-2xl mb-2">📐</p>
+                    <h3 class="font-bold mb-2">부정형 구조</h3>
+                    <p class="text-xs text-stone-500">기둥의 동선 방해나 삼각형/역L자형 등의 특이 구조로 레이아웃 활용 저하</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border-l-4 border-[#A27B5C] shadow-sm card-hover">
+                    <p class="text-2xl mb-2">🚇</p>
+                    <h3 class="font-bold mb-2">터널형 평면</h3>
+                    <p class="text-xs text-stone-500">전면 폭이 좁고 깊이가 너무 깊어 고객 가시성과 개방감이 떨어지는 구조</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border-l-4 border-[#A27B5C] shadow-sm card-hover">
+                    <p class="text-2xl mb-2">🏙️</p>
+                    <h3 class="font-bold mb-2">낮은 층고</h3>
+                    <p class="text-xs text-stone-500">천장고가 낮아 배관 설치나 고품격 인테리어 연출에 제약이 있는 상가</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border-l-4 border-[#A27B5C] shadow-sm card-hover">
+                    <p class="text-2xl mb-2">📦</p>
+                    <h3 class="font-bold mb-2">협소 분할</h3>
+                    <p class="text-xs text-stone-500">15㎡ 이하의 협소한 평면으로 F&B나 뷰티 테넌트 유치가 불가한 경우</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consulting Strategy Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-8 text-center">세곡동 상가 활성화를 위한 컨설팅 가이드</h2>
+            <div class="space-y-6">
+                <!-- Strategy 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100 flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-20 h-20 rounded-full bg-[#7C9070]/10 flex items-center justify-center text-3xl shrink-0">🧒</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">3040 키즈 & 60대 실버 듀얼 MD 전략</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            패밀리 에듀케이션 벨트(전문 학원 + 소아과)를 상층부에 배치하고, 자산층 시니어를 위한 웰니스 & 프리미엄 메디컬 케어(내과, 에스테틱)를 유치하여 안정적인 주간 매출 체계를 확보하십시오. 1층은 반려동물 동반이 가능한 카페 등 로컬 집객력을 강화하는 브랜드가 유리합니다.
+                        </p>
+                    </div>
+                </div>
+                <!-- Strategy 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100 flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-20 h-20 rounded-full bg-[#A27B5C]/10 flex items-center justify-center text-3xl shrink-0">🧱</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">물리적 가치 개조 및 합필 임차 제안</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            좁은 상가는 인접 필지와 칸막이를 제거하는 합필 임차를 과감히 제안하십시오. 내부 기둥의 데드스페이스를 빌트인 수납장으로 감추고, 노출 천장 시공을 통해 가시적 층고를 극대화하는 선투자로 우량 임차인의 진입 장벽을 낮추는 것이 핵심입니다.
+                        </p>
+                    </div>
+                </div>
+                <!-- Strategy 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-100 flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-20 h-20 rounded-full bg-[#7C9070]/10 flex items-center justify-center text-3xl shrink-0">🏷️</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">골목형 상점가 지정을 통한 공공 연계</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            임대인과 임차인이 협력하여 '골목형 상점가' 지정을 신청하십시오. 온누리상품권 가맹 승인과 구청의 상권 활성화 지원사업(간판 정비, 로컬 축제 등)을 활용하면 개별 상가의 마케팅 한계를 효율적으로 극복하고 지역의 매력도를 높일 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-100 py-10 px-6 border-t border-stone-200">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-stone-500 text-sm">© 2024 세곡동 상권 정밀 분석 및 자산 컨설팅 전략 리포트</p>
+            <p class="text-xs text-stone-400 mt-2">본 대시보드는 제공된 데이터를 바탕으로 제작된 컨설팅 제안서입니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching logic
+        function switchTab(tabId) {
+            const contents = ['jagok', 'eungok', 'segok'];
+            contents.forEach(id => {
+                document.getElementById('content-' + id).classList.add('hidden');
+                document.getElementById('btn-' + id).classList.remove('tab-active');
+            });
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            document.getElementById('content-' + tabId).classList.add('grid');
+            document.getElementById('btn-' + tabId).classList.add('tab-active');
+        }
+
+        // Charts initialization
+        window.onload = function() {
+            // Chart 1: Population
+            const ctxPop = document.getElementById('popChart').getContext('2d');
+            new Chart(ctxPop, {
+                type: 'bar',
+                data: {
+                    labels: ['세곡동', '개포2동', '대치2동', '서초3동(평균군)'],
+                    datasets: [{
+                        label: '상주 인구수',
+                        data: [46151, 42249, 38075, 30500],
+                        backgroundColor: ['#7C9070', '#A27B5C', '#E2E2E2', '#E2E2E2'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Chart 2: Consumption Trend
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctxTrend, {
+                type: 'line',
+                data: {
+                    labels: ['2022년', '2023년', '2024년(전망)'],
+                    datasets: [{
+                        label: '점심시간 소비 비중(%)',
+                        data: [34, 35.5, 37],
+                        borderColor: '#7C9070',
+                        backgroundColor: 'rgba(124, 144, 112, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: {
+                        y: { min: 30, max: 40, grid: { color: '#F2EFE9' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Chart 3: Price Growth
+            const ctxPrice = document.getElementById('priceChart').getContext('2d');
+            new Chart(ctxPrice, {
+                type: 'bar',
+                indexAxis: 'y',
+                data: {
+                    labels: ['수서동', '세곡동', '자곡동', '율현동'],
+                    datasets: [{
+                        label: '가격 상승률 (%)',
+                        data: [18.5, 7.9, 6.6, 1.2],
+                        backgroundColor: ['#7C9070', '#A27B5C', '#A27B5C', '#D1D1D1'],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, grid: { display: false } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
