@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소상공인 컨설팅 A to Z · AI 기반 경영·디지털 전환</title>
+<style>
+  :root{
+    --paper:#F5F6F8; --card:#FFFFFF; --ink:#1B1F29; --muted:#6A7180; --faint:#9AA1AF;
+    --line:#E4E7ED;
+    --gather:#43608F;   /* 01 진단 */
+    --gate:#5A3EA8;     /* 02 전략 (관문) */
+    --digital:#127F86;  /* 실행 A */
+    --biz:#A5692B;      /* 실행 B */
+    --close:#3B8560;    /* 마무리 */
+    --new:#1B1F29;      /* 신규 칩 */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased; padding:22px 14px 60px;
+  }
+  .mono{font-family:"SF Mono",ui-monospace,"JetBrains Mono","Courier New",monospace;font-variant-numeric:tabular-nums;}
+  .wrap{max-width:880px;margin:0 auto}
+
+  /* ---- hero ---- */
+  .hero{padding:6px 2px 20px;border-bottom:2px solid var(--ink);margin-bottom:22px}
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gate);font-weight:800}
+  .hero h1{font-size:28px;line-height:1.18;font-weight:800;letter-spacing:-.02em;margin:9px 0 6px}
+  .hero .subtitle{font-size:15px;font-weight:700;color:var(--ink);margin:0 0 10px}
+  .thesis{font-size:14.5px;color:var(--muted);max-width:60ch}
+  .thesis b{color:var(--ink);font-weight:700}
+
+  /* ---- legend ---- */
+  .legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:18px 0 26px}
+  .lg{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);font-weight:600}
+  .dot{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
+
+  /* ---- flow / spine ---- */
+  .flow{position:relative}
+  .arrow{display:flex;justify-content:center;align-items:center;height:26px;color:var(--faint);font-size:15px}
+  .arrow.narrow{font-weight:700;color:var(--gate)}
+
+  .stage{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    border-left:5px solid var(--line);padding:15px 16px 16px;box-shadow:0 1px 2px rgba(20,25,40,.04)}
+  .stage + .arrow{margin-top:0}
+
+  .s-head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:3px}
+  .s-num{font-size:13px;font-weight:800;letter-spacing:.02em}
+  .s-title{font-size:16.5px;font-weight:800;letter-spacing:-.01em}
+  .s-sub{font-size:12.5px;color:var(--muted);margin-bottom:11px}
+  .badge{font-size:10px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:20px;color:#fff;white-space:nowrap}
+
+  .gather{border-left-color:var(--gather)} .gather .s-num,.gather .s-title{color:var(--gather)}
+  .close{border-left-color:var(--close)} .close .s-num,.close .s-title{color:var(--close)}
+
+  /* group labels */
+  .grouplabel{display:flex;align-items:center;gap:8px;justify-content:center;
+    font-size:11.5px;font-weight:800;letter-spacing:.04em;color:var(--muted);margin:6px 0 12px;text-align:center}
+  .grouplabel .par{font-family:"SF Mono",monospace;color:var(--faint)}
+
+  /* subhead inside a stage */
+  .sub{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);
+    margin:13px 0 6px;padding-top:11px;border-top:1px dashed var(--line)}
+  .sub:first-of-type{border-top:0;padding-top:0;margin-top:4px}
+
+  /* item rows */
+  .item{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid #F1F3F6}
+  .item:last-child{border-bottom:0}
+  .nm{flex:1 1 auto;font-size:13.5px}
+  .h{font-size:12px;color:var(--muted);flex:0 0 auto}
+  .chips{display:inline-flex;gap:4px;flex-wrap:wrap;vertical-align:middle}
+  .c{font-size:9.5px;font-weight:800;letter-spacing:.02em;padding:1px 6px;border-radius:20px;white-space:nowrap;line-height:1.6}
+  .c-new{background:var(--new);color:#fff}
+  .c-req{background:#EEE9FB;color:var(--gate)}
+  .c-opt{background:#fff;color:var(--faint);border:1px solid var(--line)}
+  .c-cond{background:#EAF0F7;color:var(--gather)}
+  .c-note{background:#F3EEE6;color:var(--biz)}
+
+  /* gate emphasis */
+  .gate-wrap{border-radius:16px;background:linear-gradient(180deg,#5A3EA8,#4A3390);
+    padding:2px;box-shadow:0 8px 22px rgba(74,51,144,.28)}
+  .gate{background:#fff;border-radius:14px;border:0;border-left:0;padding:15px 16px 16px}
+  .gate-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:900;letter-spacing:.14em;
+    color:#fff;background:rgba(255,255,255,.16);padding:3px 9px;border-radius:20px;margin:0 0 -6px 4px}
+  .gate .s-num,.gate .s-title{color:var(--gate)}
+  .gate-note{font-size:12px;color:var(--gate);font-weight:700;background:#F4F1FC;border-radius:9px;
+    padding:8px 10px;margin-top:11px}
+
+  /* parallel execution */
+  .parallel{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .rail{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px 15px;
+    box-shadow:0 1px 2px rgba(20,25,40,.04)}
+  .rail.digital{border-top:4px solid var(--digital)}
+  .rail.biz{border-top:4px solid var(--biz)}
+  .rail-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+  .rail-h .k{font-size:15px;font-weight:800}
+  .digital .k{color:var(--digital)} .biz .k{color:var(--biz)}
+  .rail-sub{font-size:11.5px;color:var(--muted);margin-bottom:10px}
+
+  /* digital block chips */
+  .blockchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .bchip{font-size:12px;font-weight:600;background:#EAF5F5;color:#0E6d73;border:1px solid #D5EBEB;
+    padding:5px 9px;border-radius:9px}
+
+  /* digital sub-block (A군) */
+  .dblock{border:1px solid var(--line);border-radius:10px;padding:9px 10px;margin-top:9px;background:#F8FCFC}
+  .dblock:first-of-type{margin-top:2px}
+  .db-h{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+  .db-n{font-size:11px;font-weight:800;color:var(--digital);font-family:"SF Mono",monospace}
+  .db-t{font-size:13px;font-weight:800}
+  .dblock .item{padding:3px 0;border-color:#E7F1F1}
+  .dblock .nm{font-size:12.5px}
+
+  /* biz sub-block */
+  .bblock{border:1px solid var(--line);border-radius:10px;padding:9px 10px;margin-top:9px;background:#FDFBF8}
+  .bblock:first-of-type{margin-top:2px}
+  .bb-h{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+  .bb-n{font-size:11px;font-weight:800;color:var(--biz);font-family:"SF Mono",monospace}
+  .bb-t{font-size:13px;font-weight:800}
+  .bblock .item{padding:3px 0;border-color:#F3EDE4}
+  .bblock .nm{font-size:12.5px}
+
+  /* terminal sub-blocks */
+  .tblock{border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin-top:11px;background:#FAFCFB}
+  .tblock:first-of-type{margin-top:4px}
+  .tb-h{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin-bottom:5px}
+  .tb-t{font-size:14px;font-weight:800;color:var(--close)}
+
+  /* loopback */
+  .loop{margin-top:14px;border:1.5px dashed var(--close);border-radius:12px;background:#F1F8F4;
+    padding:12px 14px;display:flex;align-items:center;gap:11px}
+  .loop .ico{font-size:20px;color:var(--close);flex:0 0 auto}
+  .loop .tx{font-size:12.5px;color:#2C6B4B;font-weight:600}
+  .loop .tx b{color:var(--close)}
+
+  /* aarrr payoff */
+  .aarrr{margin-top:26px;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:15px 16px}
+  .aarrr h3{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:800;margin-bottom:10px}
+  .amap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .acell{border:1px solid var(--line);border-radius:9px;padding:8px 9px;background:#FAFBFC}
+  .acell .s{font-size:11px;font-weight:800;color:var(--gather)}
+  .acell .m{font-size:12px;color:var(--muted);margin-top:2px}
+  .acell.ret{border-color:#CDBBF0;background:#F6F2FD}
+  .acell.ret .s{color:var(--gate)}
+
+  /* ---- AS-IS (현행) ---- */
+  .partbar{display:flex;align-items:center;gap:10px;margin:6px 0 16px}
+  .partbar .n{font-family:"SF Mono",monospace;font-size:11px;font-weight:800;letter-spacing:.12em;
+    color:#fff;background:var(--ink);padding:4px 9px;border-radius:5px;flex:0 0 auto}
+  .partbar .t{font-size:16px;font-weight:800;letter-spacing:-.01em;flex:0 0 auto}
+  .partbar .rule{flex:1 1 auto;height:1px;background:var(--line)}
+  .partbar.tobe .n{background:var(--gate)}
+  .partdesc{font-size:13px;color:var(--muted);margin:-8px 0 18px;max-width:62ch}
+
+  .asis{background:#EFF1F4;border:1px solid #E0E3E9;border-radius:14px;padding:14px 14px 16px}
+  .asis-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+  .ablk{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+  .ablk .ah{display:flex;align-items:baseline;gap:7px;margin-bottom:2px}
+  .ablk .an{font-family:"SF Mono",monospace;font-size:11px;font-weight:800;color:var(--faint)}
+  .ablk .at{font-size:13.5px;font-weight:800}
+  .ablk .ad{font-size:11px;color:var(--faint);margin-bottom:6px}
+  .ablk .item{padding:3px 0;border-color:#F2F4F7}
+  .ablk .nm{font-size:12.5px;color:#3D4351}
+  .ablk .h{font-size:11px}
+  .gapbox{margin-top:12px;border:1.5px dashed #C6553F;background:#FCF2F0;border-radius:11px;padding:11px 13px}
+  .gapbox .gh{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#C6553F;margin-bottom:6px}
+  .gapbox ul{list-style:none;display:grid;gap:4px}
+  .gapbox li{font-size:12.5px;color:#7C3A2C;padding-left:14px;position:relative}
+  .gapbox li:before{content:"✕";position:absolute;left:0;color:#C6553F;font-size:10px;font-weight:800}
+  .gapbox li b{color:#5E2A20}
+
+  .bridge{margin:24px 0;padding:14px 16px;border-radius:12px;background:var(--ink);color:#fff;
+    display:flex;align-items:center;gap:12px}
+  .bridge .ar{font-size:22px;font-weight:700;color:#A99BE0;flex:0 0 auto}
+  .bridge .bt{font-size:13px;line-height:1.55}
+  .bridge .bt b{color:#C7BCF2}
+
+  /* notes */
+  .notes{margin-top:20px;font-size:12px;color:var(--muted);line-height:1.7}
+  .notes b{color:var(--ink)}
+  .foot{margin-top:22px;padding-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)}
+
+  @media (max-width:600px){
+    .hero h1{font-size:22px}
+    .parallel{grid-template-columns:1fr}
+    .amap{grid-template-columns:1fr}
+    .asis-grid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .stage,.gate-wrap,.rail,.aarrr,.loop{animation:rise .5s ease both}
+    .flow > *:nth-child(n){animation-delay:.02s}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">AI 기반 경영 · 디지털 전환</div>
+    <h1>소상공인 컨설팅 A&thinsp;to&thinsp;Z</h1>
+    <p class="subtitle">진단부터 사후관리까지 — 한 바퀴가 도는 컨설팅 프로세스 맵</p>
+    <p class="thesis">모든 걸 다 하지 않는다 — <b>01 진단</b>이 병목을 찾고, <b>02 전략</b>이 관문에서 실행을 켜고, 실행은 <b>디지털·사업 두 갈래로 병렬</b>, 결과는 다시 <b>02로 되돌아온다.</b></p>
+  </header>
+
+  <div class="legend">
+    <span class="lg"><span class="dot" style="background:var(--gather)"></span>진단 · 수집·종합</span>
+    <span class="lg"><span class="dot" style="background:var(--gate)"></span>전략 · 관문(GATE)</span>
+    <span class="lg"><span class="dot" style="background:var(--digital)"></span>실행 A · 디지털 툴</span>
+    <span class="lg"><span class="dot" style="background:var(--biz)"></span>실행 B · 사업·운영</span>
+    <span class="lg"><span class="dot" style="background:var(--close)"></span>마무리 · 점검·이관</span>
+    <span class="lg"><span class="c c-new" style="padding:1px 7px">신규</span>이번 개편 추가</span>
+  </div>
+
+  <!-- ============ PART 1 · AS-IS ============ -->
+  <div class="partbar"><span class="n">AS&#8209;IS</span><span class="t">현행 메뉴판 (7블록)</span><span class="rule"></span></div>
+  <p class="partdesc">진단 다음 바로 실행으로 넘어가고, 실행은 전부 디지털 툴이며, 마지막은 교육에서 끝난다. <b>전략도, 사업·운영 실행도, 성과 점검도 없다.</b></p>
+
+  <div class="asis">
+    <div class="asis-grid">
+
+      <div class="ablk">
+        <div class="ah"><span class="an">01</span><span class="at">사전조사 · 진단</span></div>
+        <div class="ad">고객 반응과 상권을 먼저 확인합니다.</div>
+        <div class="item"><span class="nm">네이버 리뷰 분석</span><span class="h mono">1.5h</span></div>
+        <div class="item"><span class="nm">배민 리뷰 분석</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">쿠팡이츠 리뷰 분석</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">상권 분석</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">스마트플레이스 진단</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">AI 디지털 친숙도 진단</span><span class="h mono">0.5h</span></div>
+        <div class="item"><span class="nm">업종·트렌드 분석</span><span class="h mono">1.5h</span></div>
+      </div>
+
+      <div class="ablk">
+        <div class="ah"><span class="an">02</span><span class="at">네이버 스마트플레이스 최적화</span></div>
+        <div class="ad">검색 고객에게 매장의 강점을 잘 보이게 세팅합니다.</div>
+        <div class="item"><span class="nm">소개문구 개선</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">대문 사진 개선</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">메뉴사진 개선</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">메뉴 추가</span><span class="h mono">0.7h</span></div>
+        <div class="item"><span class="nm">쿠폰 추가</span><span class="h mono">0.7h</span></div>
+        <div class="item"><span class="nm">리뷰 이벤트 문구</span><span class="h mono">0.7h</span></div>
+      </div>
+
+      <div class="ablk">
+        <div class="ah"><span class="an">03</span><span class="at">리뷰 최적화</span></div>
+        <div class="ad">리뷰 답글과 리뷰 이벤트 운영을 돕습니다.</div>
+        <div class="item"><span class="nm">리뷰 챗봇 세팅</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">리뷰 답글 템플릿</span><span class="h mono">0.7h</span></div>
+        <div class="item"><span class="nm">리뷰 답글 실습</span><span class="h mono">0.5h</span></div>
+        <div class="item"><span class="nm">네이버 리뷰 대응 가이드</span><span class="h mono">0.5h</span></div>
+        <div class="item"><span class="nm">배달앱 리뷰 대응 가이드</span><span class="h mono">0.5h</span></div>
+      </div>
+
+      <div class="ablk">
+        <div class="ah"><span class="an">04</span><span class="at">인스타그램 세팅 · 운영</span></div>
+        <div class="ad">인스타그램을 시작하고 운영 방향을 잡습니다.</div>
+        <div class="item"><span class="nm">계정 개설·세팅</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">운영 방향 설정</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">콘텐츠 캘린더</span><span class="h mono">1.5h</span></div>
+        <div class="item"><span class="nm">콘텐츠 주제 기획</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">릴스 아이디어</span><span class="h mono">1h</span></div>
+      </div>
+
+      <div class="ablk">
+        <div class="ah"><span class="an">05</span><span class="at">오프라인 홍보물</span></div>
+        <div class="ad">매장 안에서 바로 활용할 수 있는 홍보물을 기획합니다.</div>
+        <div class="item"><span class="nm">메뉴판 시안</span><span class="h mono">1.5h</span></div>
+        <div class="item"><span class="nm">쿠폰 시안</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">리뷰 이벤트 안내문</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">추천 조합 안내문</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">일본어 메뉴 안내</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">주변 맛집 지도</span><span class="h mono">1.5h</span></div>
+      </div>
+
+      <div class="ablk">
+        <div class="ah"><span class="an">06</span><span class="at">영상 · 디지털 콘텐츠</span></div>
+        <div class="ad">짧은 홍보영상과 촬영 가이드를 준비합니다.</div>
+        <div class="item"><span class="nm">홍보영상 기획</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">캡컷 홍보영상 제작</span><span class="h mono">2h</span></div>
+        <div class="item"><span class="nm">쇼츠·릴스 기획</span><span class="h mono">1.5h</span></div>
+        <div class="item"><span class="nm">사진·영상 촬영 가이드</span><span class="h mono">0.7h</span></div>
+      </div>
+
+      <div class="ablk">
+        <div class="ah"><span class="an">07</span><span class="at">교육 · 실습</span></div>
+        <div class="ad">사장님이 직접 운영할 수 있도록 실습합니다.</div>
+        <div class="item"><span class="nm">스마트플레이스 이해 강의</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">인스타그램 이해 강의</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">AI 활용 기초 강의</span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">리뷰 답글 실전 강의</span><span class="h mono">0.7h</span></div>
+      </div>
+
+    </div>
+
+    <div class="gapbox">
+      <div class="gh">구조적 공백 — 이번 개편이 메우는 것</div>
+      <ul>
+        <li><b>전략 단계 부재</b> — 진단 → 곧바로 실행. 무엇을 왜 하는지 결정하는 관문이 없다.</li>
+        <li><b>실행이 디지털 툴 100%</b> — 상품·가격·운영·판로·CRM 처방이 나와도 갈 메뉴가 없다.</li>
+        <li><b>성과 점검·피드백 없음</b> — 교육으로 끝나 루프가 닫히지 않는다(일회성).</li>
+        <li><b>진단이 F&amp;B 편향</b> — 배민·쿠팡이츠가 코어. 부동산·미용 등에선 빈 항목.</li>
+        <li><b>진단↔실행 짝 불일치</b> — 인스타·블로그·경쟁사·가격은 실행만 있고 진단 항목이 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <span class="ar">↓</span>
+    <span class="bt">개편의 골자 — <b>진단을 넓히고</b>, 그 뒤에 <b>전략(관문)</b>을 끼우고, 실행을 <b>디지털·사업 두 갈래로 병렬</b>화하고, 마지막에 <b>성과 점검</b>을 붙여 <b>루프를 닫는다.</b></span>
+  </div>
+
+  <!-- ============ PART 2 · TO-BE ============ -->
+  <div class="partbar tobe"><span class="n">TO&#8209;BE</span><span class="t">개편안 · A to Z 프로세스</span><span class="rule"></span></div>
+
+  <div class="flow">
+
+    <!-- 01 진단 -->
+    <section class="stage gather">
+      <div class="s-head"><span class="s-num">01</span><span class="s-title">사전조사 · 진단</span></div>
+      <div class="s-sub">공개데이터로 현황을 수집하고, 마지막에 퍼널로 종합해 병목을 도출한다.</div>
+
+      <div class="sub">코어 · 전 업종 공통</div>
+      <div class="item"><span class="nm">네이버 리뷰 분석 <span class="chips"><span class="c c-note">+시계열</span></span></span><span class="h mono">1.5h</span></div>
+      <div class="item"><span class="nm">상권 분석</span><span class="h mono">1h</span></div>
+      <div class="item"><span class="nm">스마트플레이스 진단</span><span class="h mono">1h</span></div>
+      <div class="item"><span class="nm">AI 디지털 친숙도 진단</span><span class="h mono">0.5h</span></div>
+      <div class="item"><span class="nm">업종·트렌드 분석</span><span class="h mono">1.5h</span></div>
+      <div class="item"><span class="nm">상품·서비스·가격 구조 분석 <span class="chips"><span class="c c-new">신규</span></span></span><span class="h mono">1h</span></div>
+      <div class="item"><span class="nm">경쟁사 벤치마크 분석 <span class="chips"><span class="c c-new">신규</span></span></span><span class="h mono">1h</span></div>
+      <div class="item"><span class="nm">인스타·SNS 현황 진단 <span class="chips"><span class="c c-new">신규</span></span></span><span class="h mono">0.5h</span></div>
+      <div class="item"><span class="nm">블로그·검색 노출 진단 <span class="chips"><span class="c c-new">신규</span></span></span><span class="h mono">0.5h</span></div>
+      <div class="item"><span class="nm">AARRR 퍼널 종합 진단(추정) <span class="chips"><span class="c c-new">신규</span><span class="c c-note">종결→02로</span></span></span><span class="h mono">0.5h</span></div>
+
+      <div class="sub">조건부 · 트리거 충족 시만</div>
+      <div class="item"><span class="nm">배달앱 리뷰 분석 <span class="chips"><span class="c c-cond">배달</span></span></span><span class="h mono">채널당 0.5h</span></div>
+      <div class="item"><span class="nm">가맹 정보공개서 확인 <span class="chips"><span class="c c-cond">프랜차이즈</span></span></span><span class="h mono">0.5h</span></div>
+      <div class="item"><span class="nm">당근마켓 지역 활용 현황 <span class="chips"><span class="c c-cond">지역상권</span></span></span><span class="h mono">0.5h</span></div>
+      <div class="item"><span class="nm">결제·정책채널 점검 <span class="chips"><span class="c c-cond">공공·임대</span></span></span><span class="h mono">0.3h</span></div>
+    </section>
+
+    <div class="arrow narrow">▼ &nbsp;병목이 관문으로 좁혀짐</div>
+
+    <!-- 02 전략 (게이트) -->
+    <div class="gate-wrap">
+      <div class="gate-tag">● GATE · 실행 선택의 관문</div>
+      <section class="gate">
+        <div class="s-head"><span class="s-num">02</span><span class="s-title">전략수립 · 방향설정</span><span class="badge" style="background:var(--gate)">신설</span></div>
+        <div class="s-sub">진단 결과를 실행 방향으로 전환한다. <b>채널 전략이 아래 실행(A·B)의 on/off를 결정.</b></div>
+
+        <div class="sub">필수 · 백본</div>
+        <div class="item"><span class="nm">핵심 과제 정의 <span class="chips"><span class="c c-req">★필수</span></span></span><span class="h mono">0.5h</span></div>
+        <div class="item"><span class="nm">채널 전략 수립 <span class="chips"><span class="c c-req">★필수</span><span class="c c-note">실행 on/off</span></span></span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">목표·KPI·로드맵 설정 <span class="chips"><span class="c c-req">★필수</span></span></span><span class="h mono">0.5h</span></div>
+
+        <div class="sub">선택 · 범위</div>
+        <div class="item"><span class="nm">타겟·포지셔닝 정의 <span class="chips"><span class="c c-opt">선택</span></span></span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">브랜드 메시지·컨셉 설계 <span class="chips"><span class="c c-opt">선택</span></span></span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">판촉·오퍼 설계 <span class="chips"><span class="c c-opt">선택</span></span></span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">객단가·수익단가 전략 <span class="chips"><span class="c c-opt">선택</span></span></span><span class="h mono">0.5h</span></div>
+
+        <div class="gate-note">시간은 견적이 아닌 가이드 — 상담 방식(워크숍/단독정리)에 따라 변동.</div>
+      </section>
+    </div>
+
+    <div class="arrow">▼ &nbsp;두 갈래로 분기</div>
+
+    <div class="grouplabel"><span class="par">┃∥┃</span> 실행 · 병렬 (02에서 켠 항목만 선택 실행) <span class="par">┃∥┃</span></div>
+
+    <!-- 실행 병렬 -->
+    <div class="parallel">
+      <!-- A군 -->
+      <section class="rail digital">
+        <div class="rail-h"><span class="k">실행 A</span><span class="badge" style="background:var(--digital)">디지털 툴</span></div>
+        <div class="rail-sub">고객이 디지털 적용을 원할 때. 기존 블록 유지(번호만 이동).</div>
+
+        <div class="dblock">
+          <div class="db-h"><span class="db-n">03</span><span class="db-t">네이버 스마트플레이스 최적화</span></div>
+          <div class="item"><span class="nm">소개문구 개선</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">대문 사진 개선</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">메뉴사진 개선</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">메뉴 추가</span><span class="h mono">0.7h</span></div>
+          <div class="item"><span class="nm">쿠폰 추가</span><span class="h mono">0.7h</span></div>
+          <div class="item"><span class="nm">리뷰 이벤트 문구</span><span class="h mono">0.7h</span></div>
+        </div>
+
+        <div class="dblock">
+          <div class="db-h"><span class="db-n">04</span><span class="db-t">리뷰 최적화</span></div>
+          <div class="item"><span class="nm">리뷰 챗봇 세팅</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">리뷰 답글 템플릿</span><span class="h mono">0.7h</span></div>
+          <div class="item"><span class="nm">리뷰 답글 실습</span><span class="h mono">0.5h</span></div>
+          <div class="item"><span class="nm">네이버 리뷰 대응 가이드</span><span class="h mono">0.5h</span></div>
+          <div class="item"><span class="nm">배달앱 리뷰 대응 가이드</span><span class="h mono">0.5h</span></div>
+        </div>
+
+        <div class="dblock">
+          <div class="db-h"><span class="db-n">05</span><span class="db-t">오프라인 홍보물</span></div>
+          <div class="item"><span class="nm">메뉴판 시안</span><span class="h mono">1.5h</span></div>
+          <div class="item"><span class="nm">쿠폰 시안</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">리뷰 이벤트 안내문</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">추천 조합 안내문</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">일본어 메뉴 안내</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">주변 맛집 지도</span><span class="h mono">1.5h</span></div>
+        </div>
+
+        <div class="dblock">
+          <div class="db-h"><span class="db-n">06</span><span class="db-t">영상 · 디지털 콘텐츠</span></div>
+          <div class="item"><span class="nm">홍보영상 기획</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">캡컷 홍보영상 제작</span><span class="h mono">2h</span></div>
+          <div class="item"><span class="nm">쇼츠·릴스 기획</span><span class="h mono">1.5h</span></div>
+          <div class="item"><span class="nm">사진·영상 촬영 가이드</span><span class="h mono">0.7h</span></div>
+        </div>
+
+        <div class="dblock">
+          <div class="db-h"><span class="db-n">07</span><span class="db-t">인스타그램 세팅 · 운영</span></div>
+          <div class="item"><span class="nm">계정 개설·세팅</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">운영 방향 설정</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">콘텐츠 캘린더</span><span class="h mono">1.5h</span></div>
+          <div class="item"><span class="nm">콘텐츠 주제 기획</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">릴스 아이디어</span><span class="h mono">1h</span></div>
+        </div>
+      </section>
+
+      <!-- B군 -->
+      <section class="rail biz">
+        <div class="rail-h"><span class="k">실행 B</span><span class="badge" style="background:var(--biz)">사업·운영</span><span class="c c-new">신설 군</span></div>
+        <div class="rail-sub">디지털 외 전략 처방을 실행하는 갈래.</div>
+
+        <div class="bblock">
+          <div class="bb-h"><span class="bb-n">09</span><span class="bb-t">상품·서비스·가격</span></div>
+          <div class="item"><span class="nm">상품·메뉴·서비스 라인 리뉴얼</span><span class="h mono">1.5h</span></div>
+          <div class="item"><span class="nm">가격·세트·업셀 구조 재설계</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">원가·마진 기반 상품 재배치 <span class="chips"><span class="c c-opt">선택</span></span></span><span class="h mono">1h</span></div>
+        </div>
+        <div class="bblock">
+          <div class="bb-h"><span class="bb-n">10</span><span class="bb-t">매장·운영·서비스</span></div>
+          <div class="item"><span class="nm">공간·동선·사이니지 개선안</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">운영 프로세스·회전 개선</span><span class="h mono">0.5h</span></div>
+          <div class="item"><span class="nm">접객·서비스 매뉴얼</span><span class="h mono">0.5h</span></div>
+        </div>
+        <div class="bblock">
+          <div class="bb-h"><span class="bb-n">11</span><span class="bb-t">판로·제휴·자원</span></div>
+          <div class="item"><span class="nm">신규 판매채널 진출 설계</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">지역·업종 제휴 설계</span><span class="h mono">0.5h</span></div>
+          <div class="item"><span class="nm">B2B·납품·도매 판로 <span class="chips"><span class="c c-opt">선택</span></span></span><span class="h mono">0.5h</span></div>
+          <div class="item"><span class="nm">소상공인 지원정책·정책자금 안내 <span class="chips"><span class="c c-new">신규</span></span></span><span class="h mono">0.5h</span></div>
+        </div>
+        <div class="bblock">
+          <div class="bb-h"><span class="bb-n">12</span><span class="bb-t">고객관리·리텐션(CRM)</span></div>
+          <div class="item"><span class="nm">고객 데이터·CRM 체계 구축</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">로열티·적립·멤버십 프로그램 설계</span><span class="h mono">1h</span></div>
+          <div class="item"><span class="nm">재방문·단골 유도 캠페인</span><span class="h mono">0.5h</span></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="arrow">▼ &nbsp;다시 합류</div>
+
+    <!-- 마무리 -->
+    <section class="stage close">
+      <div class="s-head"><span class="s-num">■</span><span class="s-title">마무리 · 루프를 닫는 단계</span></div>
+      <div class="s-sub">02의 KPI로 측정하고, 넘겨주고, 다음 사이클로 되돌린다.</div>
+
+      <div class="tblock">
+        <div class="tb-h"><span class="tb-t">T1. 성과 점검·피드백</span><span class="c c-new">신규</span><span class="c c-note">후속 회차</span></div>
+        <div class="item"><span class="nm">성과 측정·KPI 리뷰 <span class="chips"><span class="c c-req">★필수</span></span></span><span class="h mono">1h</span></div>
+        <div class="item"><span class="nm">채널·항목별 실행 회고 <span class="chips"><span class="c c-req">★필수</span></span></span><span class="h mono">0.5h</span></div>
+        <div class="item"><span class="nm">다음 사이클 전략 재수립 <span class="chips"><span class="c c-opt">선택</span><span class="c c-note">→02 루프백</span></span></span><span class="h mono">0.5h</span></div>
+      </div>
+
+      <div class="tblock">
+        <div class="tb-h"><span class="tb-t">T2. 교육·이관·사후관리</span><span class="c c-note">기존 교육·실습 확장</span></div>
+        <div class="item"><span class="nm">스마트플레이스·인스타·AI기초·리뷰답글 강의 <span class="chips"><span class="c c-cond">적용 툴 한정</span></span></span><span class="h mono">1~0.5h</span></div>
+        <div class="item"><span class="nm">운영 매뉴얼·SOP 이관 <span class="chips"><span class="c c-new">신규</span></span></span><span class="h mono">0.5h</span></div>
+        <div class="item"><span class="nm">정기 사후관리 체계 설계 <span class="chips"><span class="c c-new">신규</span><span class="c c-note">리테이너 접점</span></span></span><span class="h mono">0.5h</span></div>
+      </div>
+
+      <div class="loop">
+        <span class="ico">↩</span>
+        <span class="tx"><b>루프백.</b> T1에서 도출한 다음 사이클 방향이 <b>02 전략수립</b>으로 되돌아가 재기획 → 컨설팅이 일회성이 아니라 순환 구조가 된다.</span>
+      </div>
+    </section>
+
+  </div><!-- /flow -->
+
+  <!-- AARRR payoff -->
+  <div class="aarrr">
+    <h3>검증 — AARRR 병목 ↔ 실행 대응 (빈 단계 없음)</h3>
+    <div class="amap">
+      <div class="acell"><div class="s">Acquisition 유입</div><div class="m">실행 A · 11 판로</div></div>
+      <div class="acell"><div class="s">Activation 첫경험</div><div class="m">09 상품 · 10 운영</div></div>
+      <div class="acell ret"><div class="s">Retention 재방문</div><div class="m">12 CRM · 로열티 (공백 해소)</div></div>
+      <div class="acell"><div class="s">Referral 추천</div><div class="m">04 리뷰 · 12 CRM</div></div>
+      <div class="acell"><div class="s">Revenue 매출</div><div class="m">09 가격·업셀</div></div>
+      <div class="acell"><div class="s">종합·측정</div><div class="m">01 종결 · T1 점검</div></div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <b>읽는 법.</b> 실행 A·B는 <b>병렬</b> — 전부 하는 게 아니라 02에서 켠 항목만 선택 실행한다. 시간은 견적이 아닌 가이드다.<br>
+    <b>두 이음매.</b> ① 01 AARRR 종합(병목) → 02 핵심 과제 / ② 02 채널 전략 → 실행 on/off / ③ 02 KPI → T1 성과 측정. 이 세 배턴이 끊기면 "방향 없는 실행"이 된다.<br>
+    <b>구현 조건.</b> 조건부 표시·필수/선택 로직을 앱이 지원하면 그대로, 미지원 시 <b>말머리(</b>[배달]·[프랜차이즈]<b>)</b>와 <b>★</b> 표기로 대체.
+  </div>
+
+  <div class="foot">소상공인 컨설팅 A to Z · AI 기반 경영·디지털 전환 · v1 &nbsp;|&nbsp; 신규=이번 개편 추가 · 이동=위치 변경</div>
+
+</div>
+</body>
+</html>
