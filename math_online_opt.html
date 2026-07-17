@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수펙트럼수학학원 온라인 채널 최적화 진단</title>
+  <style>
+    :root {
+      --navy: #17324d;
+      --blue: #2f6fb0;
+      --sky: #eef6fc;
+      --line: #d9e3ec;
+      --text: #263238;
+      --muted: #667785;
+      --danger: #b3261e;
+      --warning: #9a6700;
+      --success: #1f7a4d;
+      --white: #ffffff;
+      --soft: #f7f9fb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      color: var(--text);
+      background: #f3f6f9;
+      line-height: 1.72;
+      word-break: keep-all;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 10px 30px rgba(23,50,77,.08);
+    }
+
+    header {
+      padding: 54px 56px 42px;
+      background: linear-gradient(135deg, #17324d 0%, #2f6fb0 100%);
+      color: #fff;
+    }
+
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.3;
+    }
+
+    header p {
+      margin: 0;
+      opacity: .92;
+      font-size: 16px;
+    }
+
+    main {
+      padding: 42px 56px 70px;
+    }
+
+    h2 {
+      margin: 48px 0 18px;
+      padding-left: 14px;
+      border-left: 6px solid var(--blue);
+      color: var(--navy);
+      font-size: 26px;
+      line-height: 1.35;
+    }
+
+    h3 {
+      margin: 30px 0 14px;
+      color: var(--navy);
+      font-size: 20px;
+    }
+
+    h4 {
+      margin: 24px 0 10px;
+      color: var(--blue);
+      font-size: 17px;
+    }
+
+    p { margin: 10px 0 16px; }
+
+    .lead {
+      font-size: 17px;
+      background: var(--sky);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin: 0 0 26px;
+    }
+
+    .notice {
+      margin: 20px 0;
+      padding: 18px 20px;
+      border-radius: 10px;
+      background: #fff8e8;
+      border-left: 5px solid #d49a00;
+    }
+
+    .critical {
+      margin: 20px 0;
+      padding: 18px 20px;
+      border-radius: 10px;
+      background: #fff2f0;
+      border-left: 5px solid var(--danger);
+    }
+
+    .success {
+      margin: 20px 0;
+      padding: 18px 20px;
+      border-radius: 10px;
+      background: #eef9f3;
+      border-left: 5px solid var(--success);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0 30px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 13px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: var(--soft);
+    }
+
+    ul, ol {
+      margin: 10px 0 20px 24px;
+      padding: 0;
+    }
+
+    li { margin: 7px 0; }
+
+    blockquote {
+      margin: 16px 0 24px;
+      padding: 18px 22px;
+      background: #f7f9fb;
+      border-left: 5px solid var(--blue);
+      color: #32475a;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0 28px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 17px;
+    }
+
+    .priority {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .p1 { background: #fde7e5; color: var(--danger); }
+    .p2 { background: #fff3cd; color: var(--warning); }
+    .p3 { background: #e9f2fb; color: var(--blue); }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .source-list {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .summary-box {
+      margin-top: 44px;
+      padding: 26px;
+      background: linear-gradient(135deg, #f0f6fb, #f8fbfd);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .summary-box h2 {
+      margin-top: 0;
+    }
+
+    footer {
+      padding: 26px 56px;
+      background: #edf2f6;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      header, main, footer { padding-left: 24px; padding-right: 24px; }
+      header h1 { font-size: 28px; }
+      .card-grid { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+      th, td { padding: 10px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .wrap { box-shadow: none; max-width: none; }
+      a { color: inherit; text-decoration: none; }
+      h2, h3 { page-break-after: avoid; }
+      table, blockquote, .notice, .critical, .success, .card { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>수펙트럼수학학원 온라인 채널 최적화 진단</h1>
+      <p>스마트플레이스 · 네이버 블로그 · 인스타그램 통합 개선안</p>
+      <p>진단 기준일: 2026년 7월 12일</p>
+    </header>
+
+    <main>
+      <div class="lead">
+        스마트플레이스의 홈·정보·소식·예약·리뷰·대표사진을 확인하고, 블로그는 스마트플레이스 연동 게시물과 검색 노출 자료, 인스타그램은 공개 검색 인덱스와 프로필 정보를 교차 확인했습니다.
+      </div>
+
+      <div class="notice">
+        <strong>진단 범위 안내</strong><br>
+        네이버 블로그 전체 본문과 인스타그램 전체 게시물은 플랫폼의 로봇 차단·로그인 제한으로 모든 이미지, 댓글, 조회수, 저장수까지 직접 열람하지 못했습니다. 따라서 본 결과는 외부에서 공개 확인 가능한 정보 기준의 정밀 진단입니다.
+      </div>
+
+      <h2>1. 종합 진단</h2>
+
+      <p>
+        수펙트럼수학학원은 콘텐츠가 부족한 학원이 아닙니다. 과학고 출신 원장, 개별진도, 오답 반복 관리,
+        학부모 피드백, 수펙UP 모의고사, 입시 세미나 참여 등 마케팅에 활용할 수 있는 자산이 충분합니다.
+      </p>
+      <p>
+        현재 가장 큰 문제는 이러한 강점이 세 채널에서 일관된 언어와 증거로 정리되지 않고,
+        일정 공지와 일반적인 홍보 문구 사이에 흩어져 있다는 점입니다.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:12%">우선순위</th>
+            <th style="width:38%">핵심 문제</th>
+            <th>필요한 조치</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="priority p1">최우선</span></td>
+            <td>학원 인터넷 광고 필수 표시사항 점검 필요</td>
+            <td>플레이스·블로그·인스타에 등록명칭, 등록번호, 교습과정·과목, 교습비 등을 교육청 등록내용 그대로 표시</td>
+          </tr>
+          <tr>
+            <td><span class="priority p1">최우선</span></td>
+            <td>인스타그램 계정 주소 불일치</td>
+            <td>제공된 @soo_pectrum과 검색 노출 계정 @sptr.lemont 중 실제 운영 계정을 확인하고 모든 링크·QR 통일</td>
+          </tr>
+          <tr>
+            <td><span class="priority p2">상</span></td>
+            <td>방문자리뷰가 적고 표현이 지나치게 유사</td>
+            <td>자연스러운 실제 학부모·학생 리뷰를 지속 확보하고 복사형 리뷰 요청 중단</td>
+          </tr>
+          <tr>
+            <td><span class="priority p2">상</span></td>
+            <td>플레이스 대표사진이 로고·빈 강의실 위주</td>
+            <td>원장 수업, 오답 첨삭, 학습관리표, 상담 모습 등 수업의 실체가 보이는 사진으로 재구성</td>
+          </tr>
+          <tr>
+            <td><span class="priority p2">상</span></td>
+            <td>블로그 일정 공지 비중이 높음</td>
+            <td>학교별 내신, 오답관리, 학년별 고민 해결 콘텐츠를 핵심으로 전환</td>
+          </tr>
+          <tr>
+            <td><span class="priority p2">상</span></td>
+            <td>초·중·고, 입시, 특성화고, AI교과서 등 메시지가 넓음</td>
+            <td>주력 학생군과 대표 문제를 명확하게 정의</td>
+          </tr>
+          <tr>
+            <td><span class="priority p3">중</span></td>
+            <td>예약상품이 일반 상담 1개뿐</td>
+            <td>학년·상담 목적별 예약상품 세분화</td>
+          </tr>
+          <tr>
+            <td><span class="priority p3">중</span></td>
+            <td>채널별 역할이 구분되지 않음</td>
+            <td>블로그는 신뢰, 인스타는 발견, 플레이스는 상담 전환으로 역할 분담</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>2. 법정 표시사항 점검</h2>
+
+      <div class="critical">
+        <strong>가장 먼저 조치해야 할 항목입니다.</strong><br>
+        네이버 플레이스, 블로그, 인스타그램 등에서 학습자 모집 목적의 광고를 할 경우 교육청 등록사항과 일치하는 필수 정보를 표시해야 합니다.
+      </div>
+
+      <ul>
+        <li>교육청에 등록한 학원 명칭</li>
+        <li>학원 등록번호</li>
+        <li>교습과정 또는 교습과목</li>
+        <li>교습비 등</li>
+      </ul>
+
+      <p>
+        교습비 항목이 많으면 교육청에 등록된 교습비등 게시표를 이미지로 첨부하는 방식을 검토할 수 있습니다.
+        표시 누락이나 거짓 표시는 과태료와 벌점 대상이 될 수 있으므로 단순한 마케팅 문제가 아니라 운영 리스크입니다.
+      </p>
+
+      <h3>권장 공통 표기 형식</h3>
+      <blockquote>
+        수펙트럼수학학원<br>
+        강남서초교육지원청 제14884호<br>
+        교습과정·교습과목: 관할 교육청 등록내용과 동일하게 기재<br>
+        교습비 등: 교육청 등록 교습비 전체 기재 또는 교습비등 게시표 이미지 첨부
+      </blockquote>
+
+      <p>
+        블로그의 모든 모집성 게시물 하단, 인스타그램 모집 게시물 캡션 하단,
+        플레이스 상세설명 또는 사진 영역에 같은 형식으로 적용하는 것이 안전합니다.
+      </p>
+
+      <h2>3. 스마트플레이스 진단</h2>
+
+      <h3>현재 잘된 부분</h3>
+      <ul>
+        <li>주소, 한티역 접근 안내, 주차, 네이버 예약, 톡톡, 블로그와 인스타그램 연결이 설정되어 있음</li>
+        <li>과학고 출신 원장, 초·중·고 개별 맞춤 수업, 진단과 맞춤 솔루션 등 핵심 강점이 소개되어 있음</li>
+        <li>내신 및 교과 지도, 학습 습관 관리, 2022 개정 교육과정 대응 내용이 포함되어 있음</li>
+      </ul>
+
+      <h3>주요 문제점과 조치사항</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:18%">점검항목</th>
+            <th style="width:42%">현재 문제</th>
+            <th>필요 조치</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>업체 소개</td>
+            <td>초·중·고, 입시, AI교과서, 고교학점제까지 한 번에 설명해 핵심이 흐림</td>
+            <td>대상 학생, 관리 방식, 수업 결과를 구체적인 순서로 재작성</td>
+          </tr>
+          <tr>
+            <td>대표키워드</td>
+            <td>대치특성화고내신이 실제 핵심 고객군인지 불분명하며 한티역 키워드가 없음</td>
+            <td>실제 등록 학생 비중을 기준으로 한티역·중등·내신·개별진도 키워드 검토</td>
+          </tr>
+          <tr>
+            <td>대표사진</td>
+            <td>첫 이미지가 전화번호가 들어간 로고이고 이후 사진도 입구와 빈 강의실 위주</td>
+            <td>수업과 관리 시스템을 보여주는 사진으로 교체</td>
+          </tr>
+          <tr>
+            <td>방문자리뷰</td>
+            <td>전체 리뷰 수 대비 방문자리뷰가 적고 키워드 통계도 아직 미공개</td>
+            <td>실제 재원생 보호자의 자연스러운 방문자리뷰를 꾸준히 확보</td>
+          </tr>
+          <tr>
+            <td>리뷰 신뢰성</td>
+            <td>오답 반복, 원활한 소통, 등하원 환대 등의 문장이 거의 동일하게 반복</td>
+            <td>리뷰 문구를 제공하지 말고 각자의 실제 경험을 자유롭게 작성하도록 안내</td>
+          </tr>
+          <tr>
+            <td>소식</td>
+            <td>월별 일정과 휴강 공지가 반복적으로 노출</td>
+            <td>모집, 학습관리, 시험분석, 상담 사례 콘텐츠를 플레이스 소식으로 직접 발행</td>
+          </tr>
+          <tr>
+            <td>예약</td>
+            <td>무료 상담예약 1개만 존재</td>
+            <td>초등·중등·고등 또는 진단상담·입학상담·방학단기상담으로 구분</td>
+          </tr>
+          <tr>
+            <td>찾아오는 길</td>
+            <td>한티역 도보 설명은 좋지만 버스와 자차 설명이 분리되지 않음</td>
+            <td>도보·대중교통·자차 및 주차로 구분</td>
+          </tr>
+          <tr>
+            <td>주차</td>
+            <td>비용, 발렛, 관리인 근무시간이 혼재되어 이해가 어려움</td>
+            <td>고객이 실제로 행동할 수 있도록 4~5문장으로 간소화</td>
+          </tr>
+          <tr>
+            <td>운영시간</td>
+            <td>공휴일 수업 여부가 조건형 문구로 표시</td>
+            <td>요일별 상담 가능 시간과 수업시간을 명확히 분리</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>대표사진 권장 구성</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:10%">순서</th>
+            <th>권장 사진</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>원장이 칠판이나 태블릿으로 학생을 지도하는 실제 수업 장면</td></tr>
+          <tr><td>2</td><td>오답 첨삭 전후가 보이는 교재 또는 노트</td></tr>
+          <tr><td>3</td><td>개인별 진도·학습관리 시스템</td></tr>
+          <tr><td>4</td><td>수펙UP 모의고사 진행 모습</td></tr>
+          <tr><td>5</td><td>학부모 상담 또는 학습 피드백 자료</td></tr>
+          <tr><td>6</td><td>원장 프로필과 교육 철학</td></tr>
+          <tr><td>7</td><td>강의실 전체 모습</td></tr>
+          <tr><td>8</td><td>자습 공간</td></tr>
+          <tr><td>9</td><td>학원 입구</td></tr>
+          <tr><td>10</td><td>건물 외관과 1층 출입구</td></tr>
+          <tr><td>11</td><td>한티역부터 학원까지 이동 동선</td></tr>
+          <tr><td>12</td><td>주차장 입구와 이용방법</td></tr>
+        </tbody>
+      </table>
+
+      <div class="notice">
+        학생 얼굴이나 성적 자료는 반드시 사전 동의를 받고 개인정보를 가려야 합니다.
+      </div>
+
+      <h3>대표키워드 수정안</h3>
+
+      <h4>중·고등 내신 중심인 경우</h4>
+      <ul>
+        <li>대치동수학학원</li>
+        <li>한티역수학학원</li>
+        <li>대치동중등수학</li>
+        <li>대치동고등수학</li>
+        <li>대치동내신수학</li>
+      </ul>
+
+      <h4>개별진도와 인근 초·중등 중심인 경우</h4>
+      <ul>
+        <li>대치동수학학원</li>
+        <li>한티역수학학원</li>
+        <li>대치동개별진도</li>
+        <li>도성초수학</li>
+        <li>역삼중수학</li>
+      </ul>
+
+      <h3>스마트플레이스 소개문 수정 예시</h3>
+      <blockquote>
+        수펙트럼수학학원은 한티역 1번 출구에서 도보 약 5분 거리에 있는 초·중·고 수학전문학원입니다.
+        과학고 출신 원장이 학생의 개념 이해도, 풀이 과정, 오답 유형과 현재 진도를 진단한 뒤 개인별 학습계획을 설계합니다.
+        매 수업 기출 테스트와 오답 재점검, 수펙UP 실전 모의고사, 학부모 학습 피드백을 통해 단순한 선행보다
+        스스로 문제를 해결할 수 있는 수학 실력을 만드는 데 집중합니다.
+        선행은 했지만 문제 적용이 어려운 학생, 학교별 내신 대비가 필요한 학생,
+        방학 동안 단기 집중학습이 필요한 학생은 네이버 예약에 학교, 학년, 현재 진도와 고민을 남겨주세요.
+      </blockquote>
+
+      <h2>4. 방문자리뷰 최적화</h2>
+
+      <p>
+        현재 리뷰에서 반복적으로 확인되는 강점은 오답 반복 관리, 풀이 과정 첨삭,
+        학부모 피드백, 정돈된 강의실과 자습실, 원장의 친절한 응대, 수펙UP 모의고사 등입니다.
+      </p>
+
+      <div class="critical">
+        같은 표현이 반복되면 실제 리뷰라도 이용자에게 복사형 리뷰처럼 보일 수 있습니다.
+        리뷰 문구를 정해 제공하기보다 실제 경험을 자유롭게 작성하도록 안내해야 합니다.
+      </div>
+
+      <h3>안전한 리뷰 요청 방식</h3>
+
+      <h4>피해야 할 방식</h4>
+      <blockquote>
+        오답관리, 꼼꼼한 수업, 친절한 원장님이라는 내용을 꼭 넣어주세요.
+      </blockquote>
+
+      <h4>권장 방식</h4>
+      <blockquote>
+        수업을 경험하시면서 아이에게 실제로 도움이 되었던 점, 수업 전후 달라진 점,
+        상담이나 피드백에서 좋았던 점을 솔직하게 남겨주시면 학원 운영에 큰 도움이 됩니다.
+      </blockquote>
+
+      <p>
+        리뷰 확보 후에는 모든 리뷰에 개별 답글을 달되 학생 이름, 학교, 성적은 공개하지 않아야 합니다.
+      </p>
+
+      <h2>5. 블로그 진단</h2>
+
+      <h3>블로그의 강점</h3>
+      <ul>
+        <li>꾸준한 발행 기록이 있음</li>
+        <li>원장의 교육 연수와 입시 세미나 참여가 확인됨</li>
+        <li>기말고사 이후 오답 분석과 같은 학부모 관심 주제가 있음</li>
+        <li>수학 스펙트럼의 확장이라는 슬로건이 반복되어 브랜드 일관성이 있음</li>
+        <li>수펙UP 모의고사라는 자체 프로그램명이 있음</li>
+      </ul>
+
+      <h3>개선이 필요한 부분</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:18%">점검항목</th>
+            <th style="width:42%">현재 문제</th>
+            <th>필요 조치</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>콘텐츠 비중</td>
+            <td>일정·휴강 공지가 검색형 콘텐츠보다 자주 노출</td>
+            <td>일정 공지는 월 1회로 통합하고 교육 콘텐츠 비중 확대</td>
+          </tr>
+          <tr>
+            <td>제목</td>
+            <td>브랜드명 중심의 일반 제목 사용</td>
+            <td>지역·학년·문제상황이 포함된 검색형 제목 사용</td>
+          </tr>
+          <tr>
+            <td>타깃</td>
+            <td>초·중·고 전체를 폭넓게 다룸</td>
+            <td>주력 학년과 핵심 고민별 카테고리 분리</td>
+          </tr>
+          <tr>
+            <td>전문성 증거</td>
+            <td>원장 경력은 소개하지만 실제 수업 시스템 증거가 부족</td>
+            <td>오답관리, 진단, 피드백, 모의고사 운영과정 공개</td>
+          </tr>
+          <tr>
+            <td>지역성</td>
+            <td>대치동은 언급하지만 학교별 콘텐츠가 적음</td>
+            <td>역삼중·진선여중·진선여고 등 실제 대상 학교별 콘텐츠 제작</td>
+          </tr>
+          <tr>
+            <td>상담 전환</td>
+            <td>게시물 말미에 문의 문구만 반복</td>
+            <td>네이버 예약, 톡톡, 관련 글 링크를 명확하게 배치</td>
+          </tr>
+          <tr>
+            <td>AEO 구조</td>
+            <td>질문에 대한 답이 긴 도입 뒤에 나오는 형태</td>
+            <td>첫 문단에 직접 답변하고 이후 이유·사례·FAQ 제공</td>
+          </tr>
+          <tr>
+            <td>문장 검수</td>
+            <td>공개 스니펫에서 일부 오탈자 확인</td>
+            <td>게시 전 맞춤법·날짜·휴강일 검수 절차 적용</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>권장 블로그 카테고리</h3>
+      <ol>
+        <li>수펙트럼수학 소개</li>
+        <li>초등 수학 학습법</li>
+        <li>중등 내신·선행</li>
+        <li>고등 내신·입시</li>
+        <li>학교별 시험분석</li>
+        <li>오답관리·학습관리</li>
+        <li>수펙UP 모의고사</li>
+        <li>입시·교육과정 정보</li>
+        <li>학원 일정·공지</li>
+        <li>상담·위치·교습비 안내</li>
+      </ol>
+
+      <h3>블로그 제목 개선 예시</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:38%">기존 유형</th>
+            <th>개선 제목</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>기말고사 끝난 시점, 수학 지금부터가 중요하다</td>
+            <td>대치동 중등수학 기말고사 후 반드시 해야 할 오답 분석 4단계</td>
+          </tr>
+          <tr>
+            <td>입시 세미나</td>
+            <td>2028 대입개편, 중학생 수학 준비에서 달라져야 할 3가지</td>
+          </tr>
+          <tr>
+            <td>수펙UP 모의고사</td>
+            <td>대치동 수학 내신 대비 수펙UP 모의고사는 어떻게 진행될까요</td>
+          </tr>
+          <tr>
+            <td>7월 일정 안내</td>
+            <td>수펙트럼수학학원 7월 수업 일정과 여름방학 특강 안내</td>
+          </tr>
+          <tr>
+            <td>강사소개</td>
+            <td>대치동 개별진도 수학학원 과학고 출신 원장의 수업 원칙</td>
+          </tr>
+          <tr>
+            <td>학원소개</td>
+            <td>한티역 수학학원 수펙트럼의 진단 수업과 오답관리 시스템</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>우선 작성할 검색형 콘텐츠 8개</h3>
+      <ol>
+        <li>선행은 했는데 문제가 안 풀리는 학생의 공통 원인</li>
+        <li>중학교 수학 내신에서 서술형 감점을 줄이는 방법</li>
+        <li>기말고사 직후 오답 분석을 해야 하는 이유</li>
+        <li>초등 고학년이 중등 선행 전에 점검할 내용</li>
+        <li>역삼중 수학 내신 대비에서 자주 놓치는 부분</li>
+        <li>진선여중·진선여고 학생의 학기별 수학 준비법</li>
+        <li>수펙UP 모의고사 진행 과정과 시험 후 피드백</li>
+        <li>개별진도 수업과 일반 강의식 수업의 차이</li>
+      </ol>
+
+      <div class="success">
+        <strong>권장 글 구조</strong><br>
+        질문형 제목 → 3줄 직접 답변 → 학생이 어려워하는 이유 → 수펙트럼의 관리방법 →
+        실제 사례 또는 자료 → 자주 묻는 질문 → 상담예약
+      </div>
+
+      <h2>6. 인스타그램 진단</h2>
+
+      <p>
+        제공된 주소는 @soo_pectrum이지만, 검색 결과에서 수펙트럼수학학원으로 확인되는 계정은 @sptr.lemont입니다.
+        실제 계정명이 변경된 것인지, 기존 주소가 잘못 전달된 것인지 관리자 화면에서 우선 확인해야 합니다.
+      </p>
+
+      <h3>가장 먼저 확인할 항목</h3>
+      <ul>
+        <li>스마트플레이스에 연결된 인스타그램 주소</li>
+        <li>블로그 프로필과 게시물에 삽입된 인스타그램 주소</li>
+        <li>명함, 현수막, 안내문, QR코드의 계정 주소</li>
+        <li>Threads와 Instagram의 계정 연결 상태</li>
+        <li>기존 @soo_pectrum이 비활성 계정인지 리디렉션 계정인지 여부</li>
+      </ul>
+
+      <h3>프로필 개선사항</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:18%">점검항목</th>
+            <th style="width:38%">현재 상태</th>
+            <th>필요 조치</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>사용자 이름</td>
+            <td>검색 노출 계정과 제공 계정 불일치</td>
+            <td>실제 계정 하나로 통일</td>
+          </tr>
+          <tr>
+            <td>표시 이름</td>
+            <td>대치동 수펙트럼 수학학원</td>
+            <td>한티역 또는 개별진도 핵심어를 자연스럽게 보완</td>
+          </tr>
+          <tr>
+            <td>신뢰 정보</td>
+            <td>등록번호와 원장 이력 노출</td>
+            <td>교습과목과 교습비 표시 추가</td>
+          </tr>
+          <tr>
+            <td>타깃</td>
+            <td>초·중·고 대상이 명확하게 구분되지 않음</td>
+            <td>핵심 학생군과 해결 문제 명시</td>
+          </tr>
+          <tr>
+            <td>행동 유도</td>
+            <td>예약 CTA 확인이 어려움</td>
+            <td>네이버 예약 또는 톡톡 링크를 대표 링크로 지정</td>
+          </tr>
+          <tr>
+            <td>하이라이트</td>
+            <td>전체 구성은 외부에서 확인 제한</td>
+            <td>학원소개·수업방식·학년별·후기·위치·상담으로 통일</td>
+          </tr>
+          <tr>
+            <td>고정 게시물</td>
+            <td>확인 제한</td>
+            <td>학원소개·수업시스템·상담안내 3개를 상단 고정</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>인스타그램 바이오 예시</h3>
+      <blockquote>
+        수펙트럼수학학원<br>
+        대치동·한티역 초중고 개별진도 수학<br>
+        과학고 출신 원장｜내신·오답·학습관리<br>
+        강남서초교육지원청 제14884호<br>
+        교습과목·교습비 안내 및 상담예약 ↓
+      </blockquote>
+
+      <h3>권장 하이라이트</h3>
+      <div class="card-grid">
+        <div class="card"><strong>학원소개</strong>원장 이력, 교육철학, 등록정보</div>
+        <div class="card"><strong>수업방식</strong>진단, 개별진도, 테스트, 오답관리</div>
+        <div class="card"><strong>초등수학</strong>초등 고학년과 중등 선행</div>
+        <div class="card"><strong>중등내신</strong>학교별 내신, 서술형, 시험대비</div>
+        <div class="card"><strong>고등수학</strong>고등 내신, 수학Ⅰ·Ⅱ, 미적분</div>
+        <div class="card"><strong>수펙UP</strong>모의고사 운영과 피드백</div>
+        <div class="card"><strong>학습후기</strong>개인정보를 가린 학부모 피드백</div>
+        <div class="card"><strong>위치주차</strong>한티역 동선과 주차 안내</div>
+        <div class="card"><strong>상담예약</strong>상담 대상, 절차, 예약 링크</div>
+        <div class="card"><strong>교습비</strong>교육청 등록 교습비 게시표</div>
+      </div>
+
+      <h3>인스타그램 콘텐츠 운영안</h3>
+
+      <h4>주 2회 릴스</h4>
+      <ul>
+        <li>선행했는데 문제를 못 푸는 이유</li>
+        <li>오답노트를 만들어도 성적이 안 오르는 이유</li>
+        <li>중학생이 수학시험 후 가장 먼저 해야 할 일</li>
+        <li>서술형에서 감점되는 풀이 습관</li>
+        <li>수펙UP 모의고사 15초 현장</li>
+        <li>원장이 실제 첨삭하는 과정</li>
+      </ul>
+
+      <h4>주 1회 카드뉴스</h4>
+      <ul>
+        <li>중등 내신 준비 체크리스트</li>
+        <li>기말고사 후 오답 유형 4가지</li>
+        <li>초등에서 중등 선행으로 넘어가는 기준</li>
+        <li>개별진도 수업이 필요한 학생 유형</li>
+        <li>2028 대입개편과 수학 준비</li>
+      </ul>
+
+      <h4>스토리</h4>
+      <ul>
+        <li>오늘의 기출문제</li>
+        <li>학부모 질문 투표</li>
+        <li>수업 전후 학원 모습</li>
+        <li>상담 가능 시간</li>
+        <li>시험기간 수펙UP 진행상황</li>
+      </ul>
+
+      <h2>7. 세 채널 역할 분담</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:18%">채널</th>
+            <th style="width:30%">핵심 역할</th>
+            <th>올려야 할 콘텐츠</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>스마트플레이스</td>
+            <td>검색 후 상담 전환</td>
+            <td>정확한 정보, 대표사진, 리뷰, 예약, 위치, 모집 소식</td>
+          </tr>
+          <tr>
+            <td>블로그</td>
+            <td>전문성과 신뢰 증명</td>
+            <td>학교별 내신, 학습법, 오답관리, 교육과정, 사례</td>
+          </tr>
+          <tr>
+            <td>인스타그램</td>
+            <td>신규 발견과 친밀감</td>
+            <td>짧은 교육팁, 수업 현장, 원장 캐릭터, 카드뉴스</td>
+          </tr>
+          <tr>
+            <td>톡톡·예약</td>
+            <td>상담 접수</td>
+            <td>학교·학년·진도·고민 수집과 상담 일정 확정</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="success">
+        <strong>콘텐츠 재활용 예시</strong><br>
+        블로그: 기말고사 후 오답 분석 1,500자<br>
+        인스타 릴스: 시험 후 하지 말아야 할 행동 3가지<br>
+        인스타 카드뉴스: 오답 유형 4가지<br>
+        플레이스 소식: 시험지 진단상담 예약 안내
+      </div>
+
+      <h2>8. 30일 실행계획</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:14%">기간</th>
+            <th style="width:48%">실행내용</th>
+            <th>완료 기준</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1주차</td>
+            <td>법정 표시사항, 계정 주소, 전화번호, 등록명칭 통일</td>
+            <td>세 채널에서 같은 정보 확인 가능</td>
+          </tr>
+          <tr>
+            <td>1주차</td>
+            <td>플레이스 대표키워드와 상세설명 수정</td>
+            <td>타깃과 수업방식이 첫 화면에서 이해됨</td>
+          </tr>
+          <tr>
+            <td>2주차</td>
+            <td>대표사진 12장 신규 촬영·등록</td>
+            <td>수업·오답·상담·위치 사진 확보</td>
+          </tr>
+          <tr>
+            <td>2주차</td>
+            <td>상담예약 상품 세분화</td>
+            <td>학년 또는 상담 목적별 예약 가능</td>
+          </tr>
+          <tr>
+            <td>3주차</td>
+            <td>블로그 카테고리 정리와 핵심글 4개 발행</td>
+            <td>일정 공지가 아닌 검색형 글 확보</td>
+          </tr>
+          <tr>
+            <td>3주차</td>
+            <td>블로그 대표글과 상담안내 글 고정</td>
+            <td>처음 방문한 학부모가 학원 시스템 이해</td>
+          </tr>
+          <tr>
+            <td>4주차</td>
+            <td>인스타 바이오·하이라이트·고정게시물 정비</td>
+            <td>프로필에서 수업·등록정보·예약 확인 가능</td>
+          </tr>
+          <tr>
+            <td>4주차</td>
+            <td>실제 방문자리뷰 요청 프로세스 운영</td>
+            <td>복사 문구 없이 자연스러운 리뷰 증가</td>
+          </tr>
+          <tr>
+            <td>매월</td>
+            <td>플레이스·블로그·인스타 성과 점검</td>
+            <td>전화, 길찾기, 예약, 저장, 문의 데이터를 기록</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary-box">
+        <h2>최종 결론</h2>
+        <p>
+          수펙트럼수학학원은 <strong>과학고 출신 원장의 개별 맞춤 수업, 반복 오답관리,
+          학부모 피드백, 수펙UP 모의고사</strong>라는 차별점이 이미 있습니다.
+          문제는 이 강점이 현재 온라인상에서 구체적인 증거보다 일반 홍보문구와 일정 공지로 더 많이 보인다는 점입니다.
+        </p>
+
+        <h3>가장 먼저 해야 할 세 가지</h3>
+        <ol>
+          <li>등록번호·교습과목·교습비 등 법정 표시사항 정비</li>
+          <li>인스타그램 계정 주소와 세 채널의 명칭·연락처 통일</li>
+          <li>플레이스 대표사진과 방문자리뷰의 신뢰도 개선</li>
+        </ol>
+
+        <p>
+          이후 블로그와 인스타그램을 “수펙트럼은 어떤 학생을 어떤 방식으로 변화시키는 학원인가”라는
+          하나의 메시지로 연결해야 합니다. 이를 적용하면 단순 일정 안내 채널에서 벗어나,
+          검색한 학부모가 수업의 차이를 이해하고 상담예약까지 진행하는 구조로 개선할 수 있습니다.
+        </p>
+      </div>
+
+      <h2>참고 링크</h2>
+      <ul class="source-list">
+        <li><a href="https://m.place.naver.com/place/1269288551/home?entry=pll" target="_blank">수펙트럼수학학원 네이버 스마트플레이스</a></li>
+        <li><a href="https://blog.naver.com/pulvisculus" target="_blank">수펙트럼수학학원 네이버 블로그</a></li>
+        <li><a href="https://www.instagram.com/soo_pectrum/" target="_blank">제공된 인스타그램 계정</a></li>
+        <li><a href="https://www.instagram.com/sptr.lemont/" target="_blank">검색 노출 인스타그램 계정</a></li>
+        <li><a href="https://bbedu.sen.go.kr/CMS/adminfo/adminfo03/adminfo0301/1348471_4973.html" target="_blank">서울특별시교육청 학원 광고 관련 안내</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      본 문서는 공개 확인 가능한 온라인 정보와 앞서 작성된 진단 내용을 기준으로 구성되었습니다.
+      실제 관리자 통계, 비공개 게시물, 상담 전환 데이터 확인 시 세부 우선순위는 달라질 수 있습니다.
+    </footer>
+  </div>
+</body>
+</html>
