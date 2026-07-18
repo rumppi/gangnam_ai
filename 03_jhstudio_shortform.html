@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JH 스튜디오 관장님을 위한 숏폼 초간단 제작 매뉴얼</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root{
+    --ink:#1E2233;
+    --sub:#4A4F63;
+    --violet:#7C5CFF;
+    --pink:#FF6BAA;
+    --cyan:#3FD8E8;
+    --line:rgba(255,255,255,.55);
+    --glass:rgba(255,255,255,.42);
+    --glass-strong:rgba(255,255,255,.62);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{
+    font-family:'Pretendard Variable',Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    color:var(--ink);
+    line-height:1.75;
+    font-size:14.5px;
+    word-break:keep-all;
+    background:#E8ECFF;
+  }
+  /* 페이지 자체가 그라데이션 배경 + 블롭 */
+  .page{
+    width:210mm;
+    min-height:297mm;
+    margin:10mm auto;
+    padding:18mm 16mm;
+    position:relative;
+    overflow:hidden;
+    background:
+      linear-gradient(135deg,#EAF0FF 0%,#F6ECFF 45%,#FFF0F6 100%);
+    box-shadow:0 10px 40px rgba(80,70,160,.18);
+    border-radius:4px;
+  }
+  /* 배경 블롭 (유리 뒤에 비치는 색) */
+  .page::before,.page::after{
+    content:'';position:absolute;border-radius:50%;filter:blur(10px);z-index:0;
+  }
+  .page::before{
+    width:340px;height:340px;right:-90px;top:-70px;
+    background:radial-gradient(circle at 40% 40%,rgba(124,92,255,.55),rgba(124,92,255,0) 70%);
+  }
+  .page::after{
+    width:320px;height:320px;left:-100px;bottom:-90px;
+    background:radial-gradient(circle at 50% 50%,rgba(63,216,232,.5),rgba(63,216,232,0) 70%);
+  }
+  .blob-pink{
+    position:absolute;width:260px;height:260px;border-radius:50%;
+    left:38%;top:42%;z-index:0;filter:blur(12px);
+    background:radial-gradient(circle,rgba(255,107,170,.35),rgba(255,107,170,0) 70%);
+  }
+  .wrap{position:relative;z-index:2;}
+
+  @media print{
+    body{background:#E8ECFF;}
+    .page{margin:0;page-break-after:always;border-radius:0;}
+    .page:last-child{page-break-after:auto;}
+  }
+  @page{size:A4;margin:0;}
+
+  /* ===== 유리 표지 ===== */
+  .cover-band{
+    background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,.25));
+    -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:36px 34px 30px;
+    position:relative;overflow:hidden;
+    box-shadow:0 8px 32px rgba(90,70,180,.18), inset 0 1px 0 rgba(255,255,255,.7);
+  }
+  .cover-tag{
+    display:inline-block;
+    background:rgba(124,92,255,.14);
+    border:1px solid rgba(124,92,255,.35);
+    color:#5a3fd6;
+    border-radius:999px;
+    padding:5px 16px;
+    font-size:12px;letter-spacing:.1em;font-weight:700;
+    margin-bottom:14px;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  }
+  .cover-band h1{
+    font-size:28px;font-weight:800;line-height:1.4;letter-spacing:-.01em;
+    background:linear-gradient(120deg,#5a3fd6,#ff6baa 60%,#3fd8e8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .cover-band h1 .hl{
+    -webkit-text-fill-color:#5a3fd6;color:#5a3fd6;
+  }
+  .cover-sub{margin-top:12px;font-size:14px;color:var(--sub);font-weight:500;}
+  .accent-strip{
+    display:flex;height:8px;border-radius:99px;overflow:hidden;margin:22px 0 0;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.06);
+  }
+  .accent-strip span{flex:1;}
+  .s-v{background:linear-gradient(90deg,#7C5CFF,#9b7bff);}
+  .s-p{background:linear-gradient(90deg,#ff6baa,#ff9ac5);}
+  .s-c{background:linear-gradient(90deg,#3fd8e8,#7fe9f3);}
+
+  /* ===== 섹션 공통 ===== */
+  section{margin-top:26px;}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .num-badge{
+    flex:none;width:48px;height:48px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:19px;color:#fff;line-height:1;
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 6px 18px rgba(90,70,180,.28), inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .nb-violet{background:linear-gradient(135deg,rgba(124,92,255,.92),rgba(124,92,255,.7));}
+  .nb-pink{background:linear-gradient(135deg,rgba(255,107,170,.92),rgba(255,107,170,.7));}
+  .nb-cyan{background:linear-gradient(135deg,rgba(63,216,232,.92),rgba(63,216,232,.7));color:#0d5560;}
+  .sec-head h2{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.01em;}
+  section p{margin-bottom:10px;color:var(--sub);}
+  strong{color:#5a3fd6;}
+  .accent{color:var(--pink);font-weight:800;}
+
+  /* ===== 유리 카드/박스 ===== */
+  .glass{
+    background:var(--glass);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:0 6px 24px rgba(90,70,180,.12), inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .tip-box{
+    padding:14px 18px;margin:14px 0;font-weight:600;color:#6b3fa0;
+    background:linear-gradient(135deg,rgba(124,92,255,.16),rgba(255,255,255,.32));
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    border:1px solid rgba(124,92,255,.28);border-radius:16px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .warn-box{
+    padding:14px 18px;margin:14px 0;font-weight:600;color:#0d6b74;
+    background:linear-gradient(135deg,rgba(63,216,232,.18),rgba(255,255,255,.32));
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    border:1px solid rgba(63,216,232,.35);border-radius:16px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .step-card{padding:16px 20px;margin-bottom:12px;}
+  .step-card h3{font-size:15.5px;font-weight:800;color:var(--ink);margin-bottom:8px;}
+  .step-card h3 .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:24px;height:24px;border-radius:8px;
+    background:linear-gradient(135deg,#7C5CFF,#ff6baa);color:#fff;
+    font-size:13px;font-weight:800;margin-right:8px;vertical-align:2px;
+    box-shadow:0 2px 8px rgba(124,92,255,.4);
+  }
+  ul{padding-left:20px;margin-bottom:8px;}
+  li{margin-bottom:6px;color:var(--sub);}
+  li::marker{color:var(--violet);}
+  ol{padding-left:22px;}
+  ol li{margin-bottom:8px;color:var(--sub);}
+
+  /* ===== 해시태그 ===== */
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px;}
+  .tag{
+    background:rgba(255,255,255,.55);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.7);
+    color:#3d4257;border-radius:999px;padding:5px 13px;
+    font-size:12.5px;font-weight:700;
+    box-shadow:0 2px 8px rgba(90,70,180,.1);
+  }
+  .tag.hot{background:rgba(255,107,170,.18);color:#c93b78;border-color:rgba(255,107,170,.45);}
+  .tag.key{background:rgba(63,216,232,.18);color:#0d7a86;border-color:rgba(63,216,232,.45);}
+
+  .final-msg{
+    margin-top:20px;padding:26px;text-align:center;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,rgba(124,92,255,.28),rgba(255,107,170,.2));
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,.6);border-radius:22px;
+    box-shadow:0 8px 30px rgba(90,70,180,.2), inset 0 1px 0 rgba(255,255,255,.7);
+  }
+  .final-msg .big{
+    font-size:16.5px;font-weight:800;line-height:1.6;margin-bottom:8px;
+    background:linear-gradient(120deg,#5a3fd6,#c93b78);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .final-msg p{color:var(--sub);margin:0;font-size:13.5px;}
+
+  .divider-note{text-align:center;color:#8b8fa6;font-size:13px;margin:20px 0 0;font-weight:500;}
+  .page-footer{
+    position:absolute;bottom:10mm;left:16mm;right:16mm;z-index:2;
+    display:flex;justify-content:space-between;
+    font-size:11px;color:#9195ad;font-weight:600;
+    border-top:1px solid rgba(255,255,255,.6);padding-top:8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="page">
+  <div class="blob-pink"></div>
+  <div class="wrap">
+
+  <div class="cover-band">
+    <span class="cover-tag">JH STUDIO · 편집부터 업로드까지</span>
+    <h1>JH 스튜디오 관장님을 위한<br>숏폼<span class="hl">(클립/캡컷)</span> 초간단 제작 매뉴얼</h1>
+    <div class="cover-sub">복잡한 편집 없이, 스마트폰 하나로 1분 만에 완성하는 스튜디오 홍보 영상</div>
+    <div class="accent-strip">
+      <span class="s-v"></span><span class="s-p"></span><span class="s-c"></span>
+    </div>
+  </div>
+
+  <!-- 준비: 엔딩 로고 설정 -->
+  <section>
+    <div class="sec-head">
+      <div class="num-badge nb-cyan">★</div>
+      <h2>[준비] 캡컷 '엔딩 로고' 평생 안 나오게 설정하기</h2>
+    </div>
+    <p>편집을 시작하기 전에 딱 한 가지만 미리 설정해 두세요. 매번 영상 끝에 붙는 캡컷 로고를 수동으로 지우는 번거로움이 사라집니다. <strong>딱 한 번만 설정해 두면 평생이 편해집니다.</strong></p>
+    <div class="glass step-card">
+      <ol>
+        <li><strong>캡컷 실행:</strong> 앱을 열고 첫 화면(홈 화면)으로 들어갑니다.</li>
+        <li><strong>설정 진입:</strong> 화면 우측 상단의 <strong>톱니바퀴 모양(설정) 아이콘</strong>을 누릅니다.</li>
+        <li><strong>기본 엔딩 해제:</strong> 메뉴 중 <strong>[기본 엔딩 추가]</strong> 항목의 활성화 버튼을 눌러 끕니다.</li>
+        <li><strong>최종 확인:</strong> 팝업창이 뜨면 <span class="accent">[버리기]</span>를 선택합니다.</li>
+      </ol>
+    </div>
+    <div class="tip-box">💡 "딱 한 번만 설정하면 평생 편합니다!" 이제 매번 엔딩을 삭제하는 수고 없이 바로 편집을 시작하세요.</div>
+    <p class="divider-note">준비가 끝났다면, 이제 1분 만에 끝내는 캡컷 편집 3단계를 시작합니다. 🏋️</p>
+  </section>
+
+  <!-- 1단계 캡컷 편집 -->
+  <section>
+    <div class="sec-head">
+      <div class="num-badge nb-violet">1</div>
+      <h2>[1단계] 캡컷 편집: 1분 만에 완성하는 실전 편집술</h2>
+    </div>
+    <p>편집은 딱 세 가지만 기억하세요. 관장님의 시간을 아껴주는 가장 효율적인 순서입니다. 촬영 시에는 스마트폰을 <span class="accent">반드시 '세로'</span>로 세워 찍어야 클립에 최적화됩니다.</p>
+
+    <div class="glass step-card">
+      <h3><span class="num">1</span>컷 편집: 핵심만 남기기</h3>
+      <ul>
+        <li><strong>[새 프로젝트]</strong>로 촬영한 영상을 불러옵니다.</li>
+        <li>불필요한 앞뒤 부분은 가위 모양 <strong>[분할]</strong> 도구를 누른 뒤 <strong>[삭제]</strong>하여 과감히 잘라냅니다.</li>
+        <li>전체 분량은 <span class="accent">15초~30초</span>로 짧고 강렬하게 구성하는 것이 시선을 잡기에 가장 좋습니다.</li>
+      </ul>
+    </div>
+
+    <div class="glass step-card">
+      <h3><span class="num">2</span>음악 넣기: 분위기 살리기</h3>
+      <ul>
+        <li><strong>[오디오] → [음악]</strong> 메뉴에서 '비트'나 '트렌드' 탭을 활용해 영상 성격에 맞는 곡을 고릅니다.</li>
+        <li><strong>음악 선택 기준:</strong> 활기찬 운동 장면에는 신나는 곡을, 자세 교정·재활 케어처럼 차분한 장면에는 잔잔한 배경음악을 선택하세요.</li>
+        <li><strong>핵심 노하우:</strong> 현장 소리(코칭 멘트 등)가 묻히지 않도록 <span class="accent">[음악 볼륨을 20 정도]</span>로 조절하면 현장감이 살아나 신뢰도가 올라갑니다.</li>
+      </ul>
+    </div>
+
+    <div class="glass step-card">
+      <h3><span class="num">3</span>엔딩 지우기 (수동)</h3>
+      <ul>
+        <li>혹시 앞의 설정을 미리 못 하셨다면, 영상 맨 끝의 검은색 'CapCut' 로고 조각을 터치해 직접 <strong>[삭제]</strong>해 주세요.</li>
+      </ul>
+    </div>
+    <p class="divider-note">편집이 끝난 영상을 네이버 클립에 전략적으로 올리는 방법을 살펴볼까요? 🚀</p>
+  </section>
+
+  </div>
+  <div class="page-footer"><span>JH 스튜디오 숏폼(클립/캡컷) 제작 매뉴얼</span><span>1 / 2</span></div>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="page">
+  <div class="blob-pink" style="left:50%;top:20%;"></div>
+  <div class="wrap">
+
+  <!-- 2단계 네이버 클립 등록 -->
+  <section style="margin-top:0;">
+    <div class="sec-head">
+      <div class="num-badge nb-pink">2</div>
+      <h2>[2단계] 네이버 클립 등록: 조회수와 유입을 높이는 '필살기'</h2>
+    </div>
+    <p>영상을 올릴 때는 네이버 블로그 앱의 <strong>[클립 만들기]</strong> 기능을 활용하세요. 단순히 영상만 올리는 것이 아니라, <span class="accent">고객이 바로 연락·예약할 수 있는 '장치'를 설치하는 것</span>이 핵심입니다.</p>
+
+    <div class="glass step-card">
+      <h3>📌 업로드 기본 순서</h3>
+      <ul>
+        <li><strong>영상 불러오기:</strong> 캡컷으로 완성한 영상을 클립에 불러옵니다.</li>
+        <li><strong>음악:</strong> 이미 넣었다면 생략, 클립 자체 음악을 쓸 경우 중복 삽입에 주의하세요.</li>
+        <li><strong>장소 태그:</strong> 'JH STUDIO' <span class="accent">1개만</span> 정확히 등록합니다.</li>
+        <li><strong>해시태그:</strong> 지역+종목 키워드를 넣습니다. (아래 3단계 참고)</li>
+        <li><strong>카테고리:</strong> <strong>[근력운동]</strong> 또는 <strong>[건강·의학]</strong>으로 지정합니다.</li>
+      </ul>
+    </div>
+
+    <div class="glass step-card">
+      <h3>📍 장소 스티커: 클릭 한 번으로 위치·전화 연결</h3>
+      <p style="margin-bottom:6px;color:var(--sub);">장소 스티커는 단순한 장식이 아닌 강력한 <strong>'전환 도구'</strong>입니다.</p>
+      <ul>
+        <li><strong>전환 효과:</strong> 시청자가 스티커를 클릭하면 단 한 번의 터치로 스튜디오 위치 확인은 물론, 바로 전화·예약 문의로 이어질 수 있습니다.</li>
+        <li><strong>설정법:</strong> 편집 화면에서 <strong>[스티커] → [장소]</strong>를 선택하고, <strong>'JH STUDIO'</strong>를 검색해 등록하세요.</li>
+      </ul>
+    </div>
+
+    <div class="warn-box">💡 참고: 네이버 클립에서 만든 영상과 인스타·유튜브 영상은 서로 호환이 제한적입니다. 여러 플랫폼에 함께 쓰려면 <strong>캡컷 등 외부 앱으로 완성한 영상</strong>을 각 플랫폼에 올리는 것이 좋습니다. 또 반영(검수)에는 시간차가 있을 수 있습니다.</div>
+    <p class="divider-note">마지막으로, JH 스튜디오에 딱 맞는 해시태그 세트를 정리했습니다. ✍️</p>
+  </section>
+
+  <!-- 3단계 해시태그 -->
+  <section>
+    <div class="sec-head">
+      <div class="num-badge nb-violet">3</div>
+      <h2>[3단계] JH 스튜디오가 넣으면 좋을 해시태그</h2>
+    </div>
+    <p>모든 태그를 다 넣기보다, 그 영상의 성격에 맞는 것 위주로 <strong>10~15개 내외</strong>를 조합하세요. 각 태그 사이는 <span class="accent">띄어쓰기로 구분</span>해야 정상 인식됩니다.</p>
+
+    <div class="glass step-card">
+      <h3>① 지역 타깃팅 <span class="accent">(가장 중요! · 고정)</span></h3>
+      <div class="tags">
+        <span class="tag hot">#세곡동PT</span><span class="tag hot">#자곡동PT</span><span class="tag hot">#세곡동헬스</span><span class="tag hot">#자곡동헬스</span><span class="tag hot">#율현동PT</span><span class="tag hot">#세곡동사거리</span>
+      </div>
+    </div>
+
+    <div class="glass step-card">
+      <h3>② 종목·프로그램</h3>
+      <div class="tags">
+        <span class="tag">#세곡동필라테스</span><span class="tag">#자곡동필라테스</span><span class="tag">#기구필라테스</span><span class="tag">#1대1PT</span><span class="tag">#개인레슨</span><span class="tag">#근력운동</span>
+      </div>
+    </div>
+
+    <div class="glass step-card">
+      <h3>③ 목적·가치 키워드</h3>
+      <div class="tags">
+        <span class="tag key">#세곡동체형교정</span><span class="tag key">#자곡동체형교정</span><span class="tag key">#세곡동다이어트</span><span class="tag key">#자곡동다이어트</span><span class="tag key">#자세교정</span><span class="tag key">#통증케어</span>
+      </div>
+    </div>
+
+    <div class="glass step-card">
+      <h3>④ 프리미엄·브랜드</h3>
+      <div class="tags">
+        <span class="tag">#세곡동프리미엄PT</span><span class="tag">#자곡동프리미엄PT</span><span class="tag">#JHSTUDIO</span><span class="tag">#세곡동운동</span><span class="tag">#자곡동운동</span>
+      </div>
+    </div>
+
+    <div class="warn-box">⚠️ 주의: '치료'처럼 의료행위로 오인될 수 있는 표현 대신 <strong>'케어 / 관리'</strong>를 사용하세요. (예: #통증케어 O / #통증치료 X)</div>
+
+    <div class="final-msg">
+      <div class="big">"현장감 있는 영상, 어울리는 배경음악,<br>그리고 정확한 장소·지역 태그"</div>
+      <p>이 세 가지만 기억하세요. 완벽한 편집보다 중요한 것은 관장님의 진심 어린 기록입니다.<br>지금 바로 가벼운 마음으로 첫 번째 클립을 올려보세요! 🥂</p>
+    </div>
+  </section>
+
+  </div>
+  <div class="page-footer"><span>JH 스튜디오 숏폼(클립/캡컷) 제작 매뉴얼</span><span>2 / 2</span></div>
+</div>
+
+</body>
+</html>
