@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>네이버 리뷰 수집기 — 설치</title>
+<style>
+  :root{
+    --ink:#1c2420; --paper:#f7f5ef; --card:#ffffff; --line:#e2ddd0;
+    --moss:#3d5a45; --moss-soft:#e7ede8; --clay:#c8553d; --dim:#6b7069;
+    --mono:'SF Mono',Consolas,'Nanum Gothic Coding',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);
+    font:15px/1.75 'Apple SD Gothic Neo','Pretendard','Noto Sans KR',sans-serif;
+    padding:40px 20px 80px}
+  .wrap{max-width:720px;margin:0 auto}
+  header{margin-bottom:36px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;color:var(--moss);font-weight:700;margin-bottom:8px}
+  h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  h1 small{display:block;font-size:14px;font-weight:400;color:var(--dim);margin-top:6px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:24px 26px;margin-bottom:18px}
+  h2{font-size:16px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .step-no{display:inline-flex;align-items:center;justify-content:center;
+    width:24px;height:24px;border-radius:50%;background:var(--moss);color:#fff;
+    font-size:13px;font-weight:700;flex:none}
+  p{margin-bottom:10px}
+  p:last-child{margin-bottom:0}
+  .bm-zone{background:var(--moss-soft);border:2px dashed var(--moss);border-radius:12px;
+    padding:22px;text-align:center;margin:14px 0}
+  .bm-link{display:inline-block;background:var(--moss);color:#fff;text-decoration:none;
+    padding:12px 26px;border-radius:10px;font-weight:800;font-size:15px;
+    cursor:grab;box-shadow:0 3px 10px rgba(61,90,69,.3)}
+  .bm-hint{font-size:13px;color:var(--dim);margin-top:12px}
+  .url-box{background:#f0ede4;border-radius:8px;padding:10px 14px;font-family:var(--mono);
+    font-size:13px;word-break:break-all;margin:8px 0}
+  ol{padding-left:22px}
+  ol li{margin-bottom:8px}
+  .note{border-left:3px solid var(--clay);background:#faf1ee;padding:12px 16px;
+    border-radius:0 8px 8px 0;font-size:14px;margin-top:12px}
+  .note b{color:var(--clay)}
+  details{margin-top:10px}
+  summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--moss)}
+  textarea{width:100%;height:160px;font-family:var(--mono);font-size:11.5px;
+    border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:10px;
+    background:#fbfaf6;resize:vertical}
+  .copy-btn{margin-top:8px;background:var(--ink);color:#fff;border:0;padding:8px 18px;
+    border-radius:8px;cursor:pointer;font-size:13px;font-weight:700}
+  .copy-btn.done{background:var(--moss)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+  td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+  td:first-child{font-weight:700;white-space:nowrap;color:var(--moss)}
+  footer{text-align:center;font-size:12.5px;color:var(--dim);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">CONSULTING TOOLKIT</div>
+    <h1>네이버 플레이스 리뷰 수집기
+      <small>미팅 전 사전조사용 · 리뷰 전체를 JSON 파일로 저장합니다</small>
+    </h1>
+  </header>
+
+  <section>
+    <h2><span class="step-no">1</span>수집기 설치 (최초 1회)</h2>
+    <p>아래 초록색 버튼을 <b>브라우저 북마크바로 드래그</b>하세요. 끝입니다.</p>
+    <div class="bm-zone">
+      <a class="bm-link" href="javascript:(function%20()%20%7B%0A'use%20strict'%3B%0Aif%20(window.__npCollectorRunning)%20%7B%0Aalert('%EC%88%98%EC%A7%91%EA%B8%B0%EA%B0%80%20%EC%9D%B4%EB%AF%B8%20%EC%8B%A4%ED%96%89%20%EC%A4%91%EC%9E%85%EB%8B%88%EB%8B%A4.')%3B%0Areturn%3B%0A%7D%0Awindow.__npCollectorRunning%20%3D%20true%3B%0Avar%20CONFIG%20%3D%20%7B%0Aversion%3A%20'v1.4%20(2026-08-02)'%2C%0AmaxRounds%3A%20400%2C%20%20%20%20%20%20%0AdelayMs%3A%20800%2C%20%20%20%20%20%20%20%20%0AidleLimit%3A%208%20%20%20%20%20%20%20%20%20%0A%7D%3B%0Afunction%20diagnose(items%2C%20ctx)%20%7B%0Avar%20w%20%3D%20%5B%5D%3B%0Avar%20total%20%3D%20items.length%3B%0Aif%20(total%20%3D%3D%3D%200)%20%7B%0Aw.push('%EB%A6%AC%EB%B7%B0%20%ED%95%AD%EB%AA%A9%EC%9D%84%20%ED%95%98%EB%82%98%EB%8F%84%20%EC%B0%BE%EC%A7%80%20%EB%AA%BB%ED%96%88%EC%8A%B5%EB%8B%88%EB%8B%A4%20(%EB%AA%A9%EB%A1%9D%20%EA%B5%AC%EC%A1%B0%20%EB%B3%80%EA%B2%BD%20%EC%9D%98%EC%8B%AC)')%3B%0Areturn%20w%3B%0A%7D%0Avar%20dated%20%3D%20items.filter(function%20(r)%20%7B%20return%20r.visitDate%3B%20%7D).length%3B%0Aif%20(dated%20%2F%20total%20%3C%200.8)%20%7B%0Aw.push('%EB%B0%A9%EB%AC%B8%EC%9D%BC%20%EC%9D%B8%EC%8B%9D%EB%A5%A0%20'%20%2B%20Math.round(100%20*%20dated%20%2F%20total)%20%2B%20'%25%20(%EB%82%A0%EC%A7%9C%20%ED%91%9C%EA%B8%B0%20%ED%98%95%EC%8B%9D%20%EB%B3%80%EA%B2%BD%20%EC%9D%98%EC%8B%AC)')%3B%0A%7D%0Avar%20withLabel%20%3D%20items.filter(function%20(r)%20%7B%20return%20%2F%EB%B0%A9%EB%AC%B8%EC%9D%BC%2F.test(r.rawText)%3B%20%7D).length%3B%0Aif%20(withLabel%20%2F%20total%20%3C%200.8)%20%7B%0Aw.push(%22%EB%A6%AC%EB%B7%B0%20%EC%B9%B4%EB%93%9C%EC%97%90%EC%84%9C%20'%EB%B0%A9%EB%AC%B8%EC%9D%BC'%20%EB%9D%BC%EB%B2%A8%20%EB%AF%B8%EA%B2%80%EC%B6%9C%20%EB%8B%A4%EC%88%98%20(%EC%B9%B4%EB%93%9C%20%EA%B5%AC%EC%A1%B0%20%EB%B3%80%EA%B2%BD%20%EC%9D%98%EC%8B%AC)%22)%3B%0A%7D%0Aif%20(!ctx.moreButtonEverFound%20%26%26%20total%20%3C%3D%2012)%20%7B%0Aw.push(%22'%EB%8D%94%EB%B3%B4%EA%B8%B0'%20%EB%B2%84%ED%8A%BC%EC%9D%84%20%ED%95%9C%20%EB%B2%88%EB%8F%84%20%EC%B0%BE%EC%A7%80%20%EB%AA%BB%ED%95%9C%20%EC%B1%84%20%22%20%2B%20total%20%2B%20'%EA%B0%9C%EB%A1%9C%20%EC%A2%85%EB%A3%8C%20(%EB%B2%84%ED%8A%BC%20%EB%AC%B8%EA%B5%AC%2F%EA%B5%AC%EC%A1%B0%20%EB%B3%80%EA%B2%BD%20%EC%9D%98%EC%8B%AC)')%3B%0A%7D%0Aif%20(total%20%3E%3D%2030)%20%7B%0Avar%20starred%20%3D%20items.filter(function%20(r)%20%7B%20return%20%2F%EB%B3%84%EC%A0%90%2F.test(r.rawText)%3B%20%7D).length%3B%0Aif%20(starred%20%3D%3D%3D%200)%20w.push('%EB%B3%84%EC%A0%90%20%ED%91%9C%EA%B8%B0%EA%B0%80%20%EC%A0%84%ED%98%80%20%EA%B2%80%EC%B6%9C%EB%90%98%EC%A7%80%20%EC%95%8A%EC%9D%8C%20(%EB%B3%84%EC%A0%90%20%EA%B5%AC%EC%A1%B0%20%EB%B3%80%EA%B2%BD%20%EC%9D%98%EC%8B%AC)')%3B%0A%7D%0Avar%20lens%20%3D%20items.map(function%20(r)%20%7B%20return%20r.rawText.length%3B%20%7D).sort(function%20(a%2C%20b)%20%7B%20return%20a%20-%20b%3B%20%7D)%3B%0Avar%20median%20%3D%20lens%5BMath.floor(lens.length%20%2F%202)%5D%3B%0Aif%20(median%20%3C%2060)%20%7B%0Aw.push('%EB%A6%AC%EB%B7%B0%20%ED%85%8D%EC%8A%A4%ED%8A%B8%20%EA%B8%B8%EC%9D%B4%20%EC%A4%91%EC%95%99%EA%B0%92%20'%20%2B%20median%20%2B%20'%EC%9E%90%20(%EB%B3%B8%EB%AC%B8%20%EB%AF%B8%EC%88%98%EC%A7%91%20%EC%9D%98%EC%8B%AC)')%3B%0A%7D%0Aif%20(ctx.endReason%20%3D%3D%3D%20'maxRounds')%20%7B%0Aw.push('%EC%B5%9C%EB%8C%80%20%ED%9A%8C%EC%B0%A8('%20%2B%20CONFIG.maxRounds%20%2B%20'%ED%9A%8C)%EC%97%90%20%EB%8F%84%EB%8B%AC%ED%95%B4%20%EC%A4%91%EB%8B%A8%EB%90%A8%20(%EB%A6%AC%EB%B7%B0%EA%B0%80%20%EB%8D%94%20%EB%82%A8%EC%95%98%EC%9D%84%20%EC%88%98%20%EC%9E%88%EC%9D%8C)')%3B%0A%7D%0Areturn%20w%3B%0A%7D%0Avar%20ov%20%3D%20document.createElement('div')%3B%0Aov.style.cssText%20%3D%20'position%3Afixed%3Bbottom%3A16px%3Bright%3A16px%3Bz-index%3A2147483647%3B'%20%2B%0A'background%3A%2314201c%3Bcolor%3A%23f2efe6%3Bpadding%3A14px%2016px%3Bborder-radius%3A12px%3B'%20%2B%0A'font%3A13px%2F1.6%20-apple-system%2Csans-serif%3Bbox-shadow%3A0%206px%2024px%20rgba(0%2C0%2C0%2C.35)%3B'%20%2B%0A'max-width%3A250px%3B'%3B%0Aov.innerHTML%20%3D%0A'%3Cdiv%20style%3D%22font-weight%3A700%3Bmargin-bottom%3A4px%22%3E%EB%A6%AC%EB%B7%B0%20%EC%88%98%EC%A7%91%EA%B8%B0%3C%2Fdiv%3E'%20%2B%0A'%3Cdiv%20id%3D%22npc-status%22%3E%EC%A4%80%EB%B9%84%20%EC%A4%91%E2%80%A6%3C%2Fdiv%3E'%20%2B%0A'%3Cbutton%20id%3D%22npc-stop%22%20style%3D%22margin-top%3A10px%3Bbackground%3A%23c8553d%3Bcolor%3A%23fff%3B'%20%2B%0A'border%3A0%3Bpadding%3A6px%2012px%3Bborder-radius%3A8px%3Bcursor%3Apointer%3Bfont-size%3A12px%22%3E'%20%2B%0A'%EC%A7%80%EA%B8%88%EA%B9%8C%EC%A7%80%20%EC%88%98%EC%A7%91%EB%B6%84%20%EC%A0%80%EC%9E%A5%3C%2Fbutton%3E'%3B%0Adocument.body.appendChild(ov)%3B%0Avar%20statusEl%20%3D%20ov.querySelector('%23npc-status')%3B%0Avar%20stopped%20%3D%20false%3B%0Aov.querySelector('%23npc-stop').onclick%20%3D%20function%20()%20%7B%20stopped%20%3D%20true%3B%20%7D%3B%0Afunction%20setStatus(t)%20%7B%20statusEl.textContent%20%3D%20t%3B%20%7D%0Afunction%20sleep(ms)%20%7B%20return%20new%20Promise(function%20(r)%20%7B%20setTimeout(r%2C%20ms)%3B%20%7D)%3B%20%7D%0Afunction%20visible(el)%20%7B%20return%20!!(el.offsetParent%20!%3D%3D%20null)%3B%20%7D%0Afunction%20normText(el)%20%7B%20return%20(el.innerText%20%7C%7C%20'').trim()%3B%20%7D%0Avar%20DATE_RE%20%3D%20%2F%5Cd%7B4%7D%EB%85%84%5Cs*%5Cd%7B1%2C2%7D%EC%9B%94%5Cs*%5Cd%7B1%2C2%7D%EC%9D%BC%7C%5Cd%7B1%2C2%7D%5C.%5Cs%3F%5Cd%7B1%2C2%7D%5C.%5Cs%3F%5B%EC%9B%94%ED%99%94%EC%88%98%EB%AA%A9%EA%B8%88%ED%86%A0%EC%9D%BC%5D%2F%3B%0Afunction%20getReviewList()%20%7B%0Avar%20uls%20%3D%20Array.prototype.slice.call(document.querySelectorAll('ul'))%3B%0Avar%20best%20%3D%20null%2C%20bestScore%20%3D%200%3B%0Auls.forEach(function%20(ul)%20%7B%0Avar%20lis%20%3D%20Array.prototype.filter.call(ul.children%2C%20function%20(c)%20%7B%0Areturn%20c.tagName%20%3D%3D%3D%20'LI'%3B%0A%7D)%3B%0Aif%20(lis.length%20%3C%202)%20return%3B%0Avar%20hits%20%3D%200%3B%0Alis.slice(0%2C%2012).forEach(function%20(li)%20%7B%0Avar%20t%20%3D%20li.innerText%20%7C%7C%20''%3B%0Aif%20(DATE_RE.test(t))%20hits%2B%2B%3B%0Aif%20(t.indexOf('%EB%B0%A9%EB%AC%B8')%20!%3D%3D%20-1)%20hits%20%2B%3D%200.5%3B%0A%7D)%3B%0Avar%20score%20%3D%20hits%20*%20Math.log(lis.length%20%2B%201)%3B%0Aif%20(score%20%3E%20bestScore)%20%7B%20bestScore%20%3D%20score%3B%20best%20%3D%20ul%3B%20%7D%0A%7D)%3B%0Areturn%20best%3B%0A%7D%0Afunction%20getItems(listUl)%20%7B%0Aif%20(!listUl)%20return%20%5B%5D%3B%0Areturn%20Array.prototype.filter.call(listUl.children%2C%20function%20(c)%20%7B%0Areturn%20c.tagName%20%3D%3D%3D%20'LI'%3B%0A%7D)%3B%0A%7D%0Afunction%20findListMoreButton(listUl)%20%7B%0Aif%20(!listUl)%20return%20null%3B%0Avar%20ok%20%3D%20function%20(el)%20%7B%0Avar%20t%20%3D%20normText(el).replace(%2F%5B%5Cs%E2%88%A8%E2%8C%84%CB%85v%3E%E2%80%BA%5D%2B%2Fgi%2C%20'')%3B%0Aif%20(!%2F%EB%8D%94%EB%B3%B4%EA%B8%B0%24%2F.test(t)%20%7C%7C%20t.length%20%3E%208)%20return%20false%3B%0Aif%20(!visible(el))%20return%20false%3B%0Aif%20(listUl.contains(el))%20return%20false%3B%20%0Avar%20href%20%3D%20el.getAttribute('href')%20%7C%7C%20''%3B%0Aif%20(%2F%5C%2F(photo%7Cmenu%7Chome%7Cinformation%7Cprice%7Cbooking)%2F.test(href))%20return%20false%3B%20%0Aif%20(!(listUl.compareDocumentPosition(el)%20%26%204%20%2F*%20FOLLOWING%20*%2F))%20return%20false%3B%0Areturn%20true%3B%0A%7D%3B%0Avar%20node%20%3D%20listUl.parentElement%2C%20depth%20%3D%200%3B%0Awhile%20(node%20%26%26%20depth%20%3C%204)%20%7B%0Avar%20cands%20%3D%20node.querySelectorAll('a%2Cbutton')%3B%0Afor%20(var%20i%20%3D%200%3B%20i%20%3C%20cands.length%3B%20i%2B%2B)%20if%20(ok(cands%5Bi%5D))%20return%20cands%5Bi%5D%3B%0Anode%20%3D%20node.parentElement%3B%20depth%2B%2B%3B%0A%7D%0Avar%20all%20%3D%20document.querySelectorAll('a%2Cbutton')%3B%0Afor%20(var%20j%20%3D%200%3B%20j%20%3C%20all.length%3B%20j%2B%2B)%20if%20(ok(all%5Bj%5D))%20return%20all%5Bj%5D%3B%0Areturn%20null%3B%0A%7D%0Afunction%20expandTruncated(listUl)%20%7B%0Aif%20(!listUl)%20return%200%3B%0Avar%20btns%20%3D%20Array.prototype.slice.call(listUl.querySelectorAll('a%2Cbutton'))%0A.filter(function%20(el)%20%7B%0Avar%20t%20%3D%20normText(el).replace(%2F%5Cs%2B%2Fg%2C%20'')%3B%0Areturn%20(t%20%3D%3D%3D%20'%EB%8D%94%EB%B3%B4%EA%B8%B0'%20%7C%7C%20t%20%3D%3D%3D%20'%EB%82%B4%EC%9A%A9%EB%8D%94%EB%B3%B4%EA%B8%B0')%20%26%26%20visible(el)%3B%0A%7D)%3B%0Abtns.forEach(function%20(b)%20%7B%20try%20%7B%20b.click()%3B%20%7D%20catch%20(e)%20%7B%7D%20%7D)%3B%0Areturn%20btns.length%3B%0A%7D%0Afunction%20parseItem(li%2C%20idx)%20%7B%0Avar%20raw%20%3D%20(li.innerText%20%7C%7C%20'').replace(%2F%5Cu00a0%2Fg%2C%20'%20').trim()%3B%0Avar%20item%20%3D%20%7B%20index%3A%20idx%20%2B%201%2C%20rawText%3A%20raw%20%7D%3B%0Avar%20pad%20%3D%20function%20(n)%20%7B%20return%20('0'%20%2B%20n).slice(-2)%3B%20%7D%3B%0Avar%20full%20%3D%20raw.match(%2F(%5Cd%7B4%7D)%EB%85%84%5Cs*(%5Cd%7B1%2C2%7D)%EC%9B%94%5Cs*(%5Cd%7B1%2C2%7D)%EC%9D%BC%2F)%3B%0Aitem.visitDate%20%3D%20full%20%3F%20full%5B1%5D%20%2B%20'-'%20%2B%20pad(full%5B2%5D)%20%2B%20'-'%20%2B%20pad(full%5B3%5D)%20%3A%20null%3B%0Aitem.dates%20%3D%20(raw.match(%2F%5Cd%7B1%2C2%7D%5C.%5Cs%3F%5Cd%7B1%2C2%7D%5C.%5Cs%3F%5B%EC%9B%94%ED%99%94%EC%88%98%EB%AA%A9%EA%B8%88%ED%86%A0%EC%9D%BC%5D%2Fg)%20%7C%7C%20%5B%5D).slice(0%2C%204)%3B%0Avar%20rv%20%3D%20raw.match(%2F(%5Cd%2B)%5Cs*%EB%B2%88%EC%A7%B8%5Cs*%EB%B0%A9%EB%AC%B8%2F)%3B%0Aitem.revisitCount%20%3D%20rv%20%3F%20parseInt(rv%5B1%5D%2C%2010)%20%3A%20null%3B%0Aitem.photoCount%20%3D%20li.querySelectorAll('img').length%3B%0Avar%20ownerIdx%20%3D%20raw.lastIndexOf('%EC%82%AC%EC%9E%A5%EB%8B%98')%3B%0Aitem.hasOwnerReply%20%3D%20ownerIdx%20!%3D%3D%20-1%3B%0Aitem.ownerReplyText%20%3D%20ownerIdx%20!%3D%3D%20-1%20%3F%20raw.slice(ownerIdx).slice(0%2C%201200)%20%3A%20null%3B%0Areturn%20item%3B%0A%7D%0Afunction%20download(data)%20%7B%0Avar%20blob%20%3D%20new%20Blob(%5BJSON.stringify(data%2C%20null%2C%202)%5D%2C%20%7B%20type%3A%20'application%2Fjson'%20%7D)%3B%0Avar%20a%20%3D%20document.createElement('a')%3B%0Aa.href%20%3D%20URL.createObjectURL(blob)%3B%0Avar%20name%20%3D%20(data.placeName%20%7C%7C%20'naver_place').replace(%2F%5B%5E%5Cw%EA%B0%80-%ED%9E%A3%5D%2B%2Fg%2C%20'_').slice(0%2C%2040)%3B%0Aa.download%20%3D%20name%20%2B%20'_reviews_'%20%2B%20new%20Date().toISOString().slice(0%2C%2010)%20%2B%20'.json'%3B%0Adocument.body.appendChild(a)%3B%0Aa.click()%3B%0Aa.remove()%3B%0A%7D%0Afunction%20getPlaceName()%20%7B%0Avar%20og%20%3D%20document.querySelector('meta%5Bproperty%3D%22og%3Atitle%22%5D')%3B%0Avar%20t%20%3D%20(og%20%26%26%20og.content)%20%7C%7C%20document.title%20%7C%7C%20''%3B%0Areturn%20t.replace(%2F%5Cs*%3A%5Cs*%EB%84%A4%EC%9D%B4%EB%B2%84.*%24%2F%2C%20'').trim()%3B%0A%7D%0A(async%20function%20main()%20%7B%0Aif%20(!%2F%5C%2Freview%2F.test(location.pathname))%20%7B%0Avar%20target%20%3D%20location.href.replace(%2F%5C%2F(home%7Cphoto%7Cmenu%7Cinformation%7Cprice%7Cbooking)(%5B%5C%2F%3F%23%5D.*)%3F%24%2F%2C%20'')%0A.replace(%2F%5C%2Freview.*%24%2F%2C%20'')%0A.replace(%2F%5B%5C%2F%5D%2B%24%2F%2C%20'')%20%2B%20'%2Freview%2Fvisitor'%3B%0AstatusEl.innerHTML%20%3D%20'%EC%A7%80%EA%B8%88%EC%9D%80%20%3Cb%3E%EB%A6%AC%EB%B7%B0%20%ED%83%AD%EC%9D%B4%20%EC%95%84%EB%8B%99%EB%8B%88%EB%8B%A4.%3C%2Fb%3E%3Cbr%3E%EC%97%AC%EA%B8%B0%EC%84%9C%20%EC%8B%A4%ED%96%89%ED%95%98%EB%A9%B4%20%EB%AF%B8%EB%A6%AC%EB%B3%B4%EA%B8%B0%2010%EA%B0%9C%EB%A7%8C%20%EC%88%98%EC%A7%91%EB%8F%BC%EC%9A%94.'%3B%0Avar%20go%20%3D%20document.createElement('button')%3B%0Ago.textContent%20%3D%20'%EB%A6%AC%EB%B7%B0%20%ED%83%AD%EC%9C%BC%EB%A1%9C%20%EC%9D%B4%EB%8F%99'%3B%0Ago.style.cssText%20%3D%20'margin-top%3A8px%3Bbackground%3A%233d8a5f%3Bcolor%3A%23fff%3Bborder%3A0%3Bpadding%3A6px%2012px%3Bborder-radius%3A8px%3Bcursor%3Apointer%3Bfont-size%3A12px%3Bdisplay%3Ablock'%3B%0Ago.onclick%20%3D%20function%20()%20%7B%20location.href%20%3D%20target%3B%20%7D%3B%0AstatusEl.parentNode.insertBefore(go%2C%20statusEl.nextSibling)%3B%0Aov.querySelector('%23npc-stop').remove()%3B%0Awindow.__npCollectorRunning%20%3D%20false%3B%0Areturn%3B%20%0A%7D%0Avar%20round%20%3D%200%2C%20idle%20%3D%200%2C%20lastCount%20%3D%200%3B%0Avar%20ctx%20%3D%20%7B%20moreButtonEverFound%3A%20false%2C%20endReason%3A%20'unknown'%20%7D%3B%0Avar%20listUl%20%3D%20getReviewList()%3B%0Aif%20(!listUl%20%7C%7C%20getItems(listUl).length%20%3D%3D%3D%200)%20%7B%0AsetStatus('%EB%A6%AC%EB%B7%B0%20%EB%AA%A9%EB%A1%9D%EC%9D%84%20%EC%B0%BE%EC%A7%80%20%EB%AA%BB%ED%96%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%20%EB%A6%AC%EB%B7%B0%20%ED%83%AD%EC%9D%B4%20%EC%97%B4%EB%A6%B0%20%EC%83%81%ED%83%9C%EC%9D%B8%EC%A7%80%20%ED%99%95%EC%9D%B8%ED%95%B4%20%EC%A3%BC%EC%84%B8%EC%9A%94.')%3B%0Awindow.__npCollectorRunning%20%3D%20false%3B%0Areturn%3B%0A%7D%0Awhile%20(true)%20%7B%0Aif%20(stopped)%20%7B%20ctx.endReason%20%3D%20'userStopped'%3B%20break%3B%20%7D%0Aif%20(round%20%3E%3D%20CONFIG.maxRounds)%20%7B%20ctx.endReason%20%3D%20'maxRounds'%3B%20break%3B%20%7D%0Around%2B%2B%3B%0Aif%20(!%2F%5C%2Freview%2F.test(location.pathname))%20%7B%0AsetStatus('%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B0%80%20%EB%A6%AC%EB%B7%B0%20%ED%83%AD%EC%9D%84%20%EB%B2%97%EC%96%B4%EB%82%98%20%EC%88%98%EC%A7%91%EC%9D%84%20%EC%A4%91%EB%8B%A8%ED%96%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%20%EB%A6%AC%EB%B7%B0%20%ED%83%AD%EC%9D%84%20%EB%8B%A4%EC%8B%9C%20%EC%97%B4%EA%B3%A0%20%EC%9E%AC%EC%8B%A4%ED%96%89%ED%95%B4%20%EC%A3%BC%EC%84%B8%EC%9A%94.')%3B%0Awindow.__npCollectorRunning%20%3D%20false%3B%0Areturn%3B%0A%7D%0AlistUl%20%3D%20getReviewList()%20%7C%7C%20listUl%3B%0Avar%20items%20%3D%20getItems(listUl)%3B%0AsetStatus('%EC%88%98%EC%A7%91%20%EC%A4%91%E2%80%A6%20'%20%2B%20items.length%20%2B%20'%EA%B0%9C%20%EB%A1%9C%EB%93%9C%EB%90%A8%20('%20%2B%20round%20%2B%20'%ED%9A%8C%EC%B0%A8)')%3B%0Aif%20(items.length%20%3E%200)%20%7B%0Atry%20%7B%20items%5Bitems.length%20-%201%5D.scrollIntoView(%7B%20block%3A%20'end'%20%7D)%3B%20%7D%20catch%20(e)%20%7B%7D%0Atry%20%7B%0Awindow.scrollTo(0%2C%20document.documentElement.scrollHeight)%3B%0Awindow.dispatchEvent(new%20Event('scroll'))%3B%0A%7D%20catch%20(e)%20%7B%7D%0A%7D%0Avar%20btn%20%3D%20findListMoreButton(listUl)%3B%0Aif%20(btn)%20%7B%0Actx.moreButtonEverFound%20%3D%20true%3B%0Abtn.click()%3B%0Aidle%20%3D%200%3B%0A%7D%20else%20%7B%0Aif%20(items.length%20%3D%3D%3D%20lastCount)%20idle%2B%2B%3B%20else%20idle%20%3D%200%3B%0Aif%20(idle%20%3E%3D%20CONFIG.idleLimit)%20%7B%20ctx.endReason%20%3D%20'exhausted'%3B%20break%3B%20%7D%0A%7D%0AlastCount%20%3D%20items.length%3B%0Aawait%20sleep(CONFIG.delayMs)%3B%0A%7D%0AsetStatus('%EB%B3%B8%EB%AC%B8%20%ED%8E%BC%EC%B9%98%EB%8A%94%20%EC%A4%91%E2%80%A6')%3B%0AlistUl%20%3D%20getReviewList()%20%7C%7C%20listUl%3B%0Avar%20expanded%20%3D%20expandTruncated(listUl)%3B%0Aif%20(expanded%20%3E%200)%20await%20sleep(1200)%3B%0AlistUl%20%3D%20getReviewList()%20%7C%7C%20listUl%3B%0Avar%20finalItems%20%3D%20getItems(listUl).map(parseItem)%3B%0Avar%20replies%20%3D%20finalItems.filter(function%20(r)%20%7B%20return%20r.hasOwnerReply%3B%20%7D).length%3B%0Avar%20warnings%20%3D%20diagnose(finalItems%2C%20ctx)%3B%0Avar%20data%20%3D%20%7B%0A_note%3A%20'hasOwnerReply%2FownerReplyText%2Fdates%EB%8A%94%20%ED%9C%B4%EB%A6%AC%EC%8A%A4%ED%8B%B1%20%EC%B6%94%EC%B6%9C%EA%B0%92%EC%9E%85%EB%8B%88%EB%8B%A4.%20%EC%9B%90%EB%AC%B8%EC%9D%80%20rawText%EC%97%90%20%EB%B3%B4%EC%A1%B4%EB%90%98%EC%96%B4%20%EC%9E%88%EC%9C%BC%EB%A9%B0%2C%20%EB%B6%84%EC%84%9D%20%EC%8B%9C%20rawText%EB%A5%BC%20%EA%B8%B0%EC%A4%80%EC%9C%BC%EB%A1%9C%20%EA%B2%80%EC%A6%9D%ED%95%98%EC%84%B8%EC%9A%94.'%2C%0AplaceName%3A%20getPlaceName()%2C%0AsourceUrl%3A%20location.href%2C%0AcapturedAt%3A%20new%20Date().toISOString()%2C%0AreviewCount%3A%20finalItems.length%2C%0AownerReplyCount%3A%20replies%2C%0Adiagnostics%3A%20%7B%0AcollectorVersion%3A%20CONFIG.version%2C%0AendReason%3A%20ctx.endReason%2C%0Arounds%3A%20round%2C%0AmoreButtonEverFound%3A%20ctx.moreButtonEverFound%2C%0Awarnings%3A%20warnings%0A%7D%2C%0Areviews%3A%20finalItems%0A%7D%3B%0Adownload(data)%3B%0Aif%20(warnings.length%20%3E%200)%20%7B%0Aov.style.background%20%3D%20'%237a4a12'%3B%0AstatusEl.innerHTML%20%3D%20'%3Cb%3E%E2%9A%A0%20%ED%99%94%EB%A9%B4%20%EA%B5%AC%EC%A1%B0%20%EB%B3%80%EA%B2%BD%20%EC%9D%98%EC%8B%AC%3C%2Fb%3E%3Cbr%3E'%20%2B%0Awarnings.map(function%20(x)%20%7B%20return%20'%C2%B7%20'%20%2B%20x%3B%20%7D).join('%3Cbr%3E')%20%2B%0A'%3Cbr%3E%3Cbr%3E%ED%8C%8C%EC%9D%BC%EC%9D%80%20%EC%A0%80%EC%9E%A5%ED%96%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%20%EC%9D%B4%20JSON%EC%9D%84%20Claude%EC%97%90%EA%B2%8C%20%EA%B0%80%EC%A0%B8%EA%B0%80%EB%A9%B4%20%EC%88%98%EC%A7%91%EA%B8%B0%EB%A5%BC%20%EC%88%98%EC%A0%95%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%96%B4%EC%9A%94.'%3B%0A%7D%20else%20%7B%0AsetStatus('%EC%99%84%EB%A3%8C%3A%20%EB%A6%AC%EB%B7%B0%20'%20%2B%20finalItems.length%20%2B%20'%EA%B0%9C%20%EC%A0%80%EC%9E%A5%20(%EB%8B%B5%EA%B8%80%20%EC%B6%94%EC%A0%95%20'%20%2B%20replies%20%2B%20'%EA%B0%9C)%20%C2%B7%20%EC%83%81%ED%83%9C%20%EC%A0%95%EC%83%81')%3B%0AsetTimeout(function%20()%20%7B%20ov.remove()%3B%20%7D%2C%206000)%3B%0A%7D%0Awindow.__npCollectorRunning%20%3D%20false%3B%0A%7D)()%3B%0A%7D)()%3B%0A" onclick="alert('클릭이 아니라 북마크바로 드래그해서 설치하세요.');return false;">📥 리뷰 수집기</a>
+      <div class="bm-hint">북마크바가 안 보이면 <b>Ctrl+Shift+B</b> (Mac: ⌘+Shift+B)로 켤 수 있어요</div>
+    </div>
+    <details>
+      <summary>드래그 설치가 안 될 때 (콘솔 실행 방식)</summary>
+      <p style="font-size:13.5px;margin-top:8px">리뷰 페이지에서 <b>F12 → Console 탭</b>을 열고 아래 코드를 붙여넣은 뒤 Enter를 누르면 동일하게 작동합니다.</p>
+      <textarea id="console-code" readonly>(function () {
+  'use strict';
+
+  if (window.__npCollectorRunning) {
+    alert('수집기가 이미 실행 중입니다.');
+    return;
+  }
+  window.__npCollectorRunning = true;
+
+  var CONFIG = {
+    version: 'v1.4 (2026-08-02)',
+    maxRounds: 400,      // '더보기' 클릭 최대 횟수 (10개/회 → 최대 약 4,000개)
+    delayMs: 800,        // 클릭 간 대기 (너무 짧으면 로딩 전에 다음 클릭)
+    idleLimit: 8         // 새 리뷰가 안 늘어난 채 N회 지나면 종료
+  };
+
+  // ---------- 자가진단 ----------
+  // 네이버가 화면 구조를 바꾸면 수집 결과의 "형태"가 먼저 무너진다.
+  // 조용히 이상한 데이터를 내놓는 대신, 형태 검사를 통과 못 하면 경고한다.
+  function diagnose(items, ctx) {
+    var w = [];
+    var total = items.length;
+    if (total === 0) {
+      w.push('리뷰 항목을 하나도 찾지 못했습니다 (목록 구조 변경 의심)');
+      return w;
+    }
+    var dated = items.filter(function (r) { return r.visitDate; }).length;
+    if (dated / total &lt; 0.8) {
+      w.push('방문일 인식률 ' + Math.round(100 * dated / total) + '% (날짜 표기 형식 변경 의심)');
+    }
+    var withLabel = items.filter(function (r) { return /방문일/.test(r.rawText); }).length;
+    if (withLabel / total &lt; 0.8) {
+      w.push("리뷰 카드에서 '방문일' 라벨 미검출 다수 (카드 구조 변경 의심)");
+    }
+    if (!ctx.moreButtonEverFound &amp;&amp; total &lt;= 12) {
+      w.push("'더보기' 버튼을 한 번도 찾지 못한 채 " + total + '개로 종료 (버튼 문구/구조 변경 의심)');
+    }
+    // 별점 소실: 별점은 일부 리뷰에만 있는 게 정상이지만, 표본이 충분한데 0건이면 표기 자체가 바뀐 것
+    if (total &gt;= 30) {
+      var starred = items.filter(function (r) { return /별점/.test(r.rawText); }).length;
+      if (starred === 0) w.push('별점 표기가 전혀 검출되지 않음 (별점 구조 변경 의심)');
+    }
+    // 본문 소실: 카드 텍스트 길이 중앙값이 비정상적으로 짧으면 리뷰 본문이 안 담긴 것
+    var lens = items.map(function (r) { return r.rawText.length; }).sort(function (a, b) { return a - b; });
+    var median = lens[Math.floor(lens.length / 2)];
+    if (median &lt; 60) {
+      w.push('리뷰 텍스트 길이 중앙값 ' + median + '자 (본문 미수집 의심)');
+    }
+    if (ctx.endReason === 'maxRounds') {
+      w.push('최대 회차(' + CONFIG.maxRounds + '회)에 도달해 중단됨 (리뷰가 더 남았을 수 있음)');
+    }
+    return w;
+  }
+
+  // ---------- UI 오버레이 ----------
+  var ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:2147483647;' +
+    'background:#14201c;color:#f2efe6;padding:14px 16px;border-radius:12px;' +
+    'font:13px/1.6 -apple-system,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35);' +
+    'max-width:250px;';
+  ov.innerHTML =
+    '&lt;div style="font-weight:700;margin-bottom:4px"&gt;리뷰 수집기&lt;/div&gt;' +
+    '&lt;div id="npc-status"&gt;준비 중…&lt;/div&gt;' +
+    '&lt;button id="npc-stop" style="margin-top:10px;background:#c8553d;color:#fff;' +
+    'border:0;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px"&gt;' +
+    '지금까지 수집분 저장&lt;/button&gt;';
+  document.body.appendChild(ov);
+  var statusEl = ov.querySelector('#npc-status');
+  var stopped = false;
+  ov.querySelector('#npc-stop').onclick = function () { stopped = true; };
+
+  function setStatus(t) { statusEl.textContent = t; }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function visible(el) { return !!(el.offsetParent !== null); }
+  function normText(el) { return (el.innerText || '').trim(); }
+
+  // ---------- 리뷰 목록 탐지 (휴리스틱) ----------
+  // 클래스명이 난독화되어 자주 바뀌므로, "날짜 패턴이 든 LI를 여럿 가진 UL"을 찾는다.
+  var DATE_RE = /\d{4}년\s*\d{1,2}월\s*\d{1,2}일|\d{1,2}\.\s?\d{1,2}\.\s?[월화수목금토일]/;
+
+  function getReviewList() {
+    var uls = Array.prototype.slice.call(document.querySelectorAll('ul'));
+    var best = null, bestScore = 0;
+    uls.forEach(function (ul) {
+      var lis = Array.prototype.filter.call(ul.children, function (c) {
+        return c.tagName === 'LI';
+      });
+      if (lis.length &lt; 2) return;
+      var hits = 0;
+      lis.slice(0, 12).forEach(function (li) {
+        var t = li.innerText || '';
+        if (DATE_RE.test(t)) hits++;
+        if (t.indexOf('방문') !== -1) hits += 0.5;
+      });
+      var score = hits * Math.log(lis.length + 1);
+      if (score &gt; bestScore) { bestScore = score; best = ul; }
+    });
+    return best;
+  }
+
+  function getItems(listUl) {
+    if (!listUl) return [];
+    return Array.prototype.filter.call(listUl.children, function (c) {
+      return c.tagName === 'LI';
+    });
+  }
+
+  // ---------- '더보기' 버튼 ----------
+  // 목록 하단의 '더보기'(다음 페이지 로드)와 리뷰 본문 안의 '더보기'(내용 펼침)를 구분한다.
+  function findListMoreButton(listUl) {
+    if (!listUl) return null;
+    var ok = function (el) {
+      // 실측 문구는 "펼쳐서 더보기" (∨ 아이콘 포함). 향후 변형에 대비해
+      // '~더보기'로 끝나는 짧은 문구를 모두 인식한다. 오클릭은 아래 위치/링크 조건이 방지.
+      var t = normText(el).replace(/[\s∨⌄˅v&gt;›]+/gi, '');
+      if (!/더보기$/.test(t) || t.length &gt; 8) return false;
+      if (!visible(el)) return false;
+      if (listUl.contains(el)) return false; // 리뷰 내부 펼침 버튼 제외
+      var href = el.getAttribute('href') || '';
+      if (/\/(photo|menu|home|information|price|booking)/.test(href)) return false; // 타 탭 링크 제외
+      // 위치 조건: 리뷰 목록보다 문서상 '뒤'에 있어야 함 (상단 사진 미리보기의 더보기 배제)
+      if (!(listUl.compareDocumentPosition(el) &amp; 4 /* FOLLOWING */)) return false;
+      return true;
+    };
+    // 1) 목록의 조상 4단계 이내 우선 탐색
+    var node = listUl.parentElement, depth = 0;
+    while (node &amp;&amp; depth &lt; 4) {
+      var cands = node.querySelectorAll('a,button');
+      for (var i = 0; i &lt; cands.length; i++) if (ok(cands[i])) return cands[i];
+      node = node.parentElement; depth++;
+    }
+    // 2) 전역 폴백 (위치 조건이 있어 안전)
+    var all = document.querySelectorAll('a,button');
+    for (var j = 0; j &lt; all.length; j++) if (ok(all[j])) return all[j];
+    return null;
+  }
+
+  function expandTruncated(listUl) {
+    if (!listUl) return 0;
+    var btns = Array.prototype.slice.call(listUl.querySelectorAll('a,button'))
+      .filter(function (el) {
+        var t = normText(el).replace(/\s+/g, '');
+        return (t === '더보기' || t === '내용더보기') &amp;&amp; visible(el);
+      });
+    btns.forEach(function (b) { try { b.click(); } catch (e) {} });
+    return btns.length;
+  }
+
+  // ---------- 리뷰 파싱 (best-effort) ----------
+  // 구조가 바뀌어도 데이터가 살아남도록 rawText를 항상 보존한다.
+  function parseItem(li, idx) {
+    var raw = (li.innerText || '').replace(/\u00a0/g, ' ').trim();
+    var item = { index: idx + 1, rawText: raw };
+
+    // 방문일: "2026년 8월 1일" (전체 형식) 우선, 보조로 "8.1.토" 형식
+    var pad = function (n) { return ('0' + n).slice(-2); };
+    var full = raw.match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
+    item.visitDate = full ? full[1] + '-' + pad(full[2]) + '-' + pad(full[3]) : null;
+    item.dates = (raw.match(/\d{1,2}\.\s?\d{1,2}\.\s?[월화수목금토일]/g) || []).slice(0, 4);
+
+    var rv = raw.match(/(\d+)\s*번째\s*방문/);
+    item.revisitCount = rv ? parseInt(rv[1], 10) : null;
+
+    item.photoCount = li.querySelectorAll('img').length;
+
+    // 사장님 답글 (휴리스틱: 본문에 '사장님' 마커 존재 시 해당 지점 이후를 답글로 추정)
+    var ownerIdx = raw.lastIndexOf('사장님');
+    item.hasOwnerReply = ownerIdx !== -1;
+    item.ownerReplyText = ownerIdx !== -1 ? raw.slice(ownerIdx).slice(0, 1200) : null;
+
+    return item;
+  }
+
+  // ---------- 저장 ----------
+  function download(data) {
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    var name = (data.placeName || 'naver_place').replace(/[^\w가-힣]+/g, '_').slice(0, 40);
+    a.download = name + '_reviews_' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  function getPlaceName() {
+    var og = document.querySelector('meta[property="og:title"]');
+    var t = (og &amp;&amp; og.content) || document.title || '';
+    return t.replace(/\s*:\s*네이버.*$/, '').trim();
+  }
+
+  // ---------- 메인 루프 ----------
+  (async function main() {
+    // 리뷰 탭 가드: 사진/홈/메뉴 탭에서 실행하면 미리보기 10개만 수집되므로 차단
+    if (!/\/review/.test(location.pathname)) {
+      var target = location.href.replace(/\/(home|photo|menu|information|price|booking)([\/?#].*)?$/, '')
+                                .replace(/\/review.*$/, '')
+                                .replace(/[\/]+$/, '') + '/review/visitor';
+      statusEl.innerHTML = '지금은 &lt;b&gt;리뷰 탭이 아닙니다.&lt;/b&gt;&lt;br&gt;여기서 실행하면 미리보기 10개만 수집돼요.';
+      var go = document.createElement('button');
+      go.textContent = '리뷰 탭으로 이동';
+      go.style.cssText = 'margin-top:8px;background:#3d8a5f;color:#fff;border:0;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;display:block';
+      go.onclick = function () { location.href = target; };
+      statusEl.parentNode.insertBefore(go, statusEl.nextSibling);
+      ov.querySelector('#npc-stop').remove();
+      window.__npCollectorRunning = false;
+      return; // 이동 후 북마클릿을 다시 클릭
+    }
+
+    var round = 0, idle = 0, lastCount = 0;
+    var ctx = { moreButtonEverFound: false, endReason: 'unknown' };
+    var listUl = getReviewList();
+
+    if (!listUl || getItems(listUl).length === 0) {
+      setStatus('리뷰 목록을 찾지 못했습니다. 리뷰 탭이 열린 상태인지 확인해 주세요.');
+      window.__npCollectorRunning = false;
+      return;
+    }
+
+    while (true) {
+      if (stopped) { ctx.endReason = 'userStopped'; break; }
+      if (round &gt;= CONFIG.maxRounds) { ctx.endReason = 'maxRounds'; break; }
+      round++;
+
+      // 안전장치: 수집 도중 페이지가 리뷰 탭을 벗어나면 즉시 중단 (오염 데이터 저장 방지)
+      if (!/\/review/.test(location.pathname)) {
+        setStatus('페이지가 리뷰 탭을 벗어나 수집을 중단했습니다. 리뷰 탭을 다시 열고 재실행해 주세요.');
+        window.__npCollectorRunning = false;
+        return;
+      }
+
+      listUl = getReviewList() || listUl;
+      var items = getItems(listUl);
+      setStatus('수집 중… ' + items.length + '개 로드됨 (' + round + '회차)');
+
+      if (items.length &gt; 0) {
+        // 버튼이 없는 무한스크롤 방식도 대응: 마지막 리뷰 노출 + 스크롤 이벤트 발생
+        try { items[items.length - 1].scrollIntoView({ block: 'end' }); } catch (e) {}
+        try {
+          window.scrollTo(0, document.documentElement.scrollHeight);
+          window.dispatchEvent(new Event('scroll'));
+        } catch (e) {}
+      }
+
+      var btn = findListMoreButton(listUl);
+      if (btn) {
+        ctx.moreButtonEverFound = true;
+        btn.click();
+        idle = 0;
+      } else {
+        if (items.length === lastCount) idle++; else idle = 0;
+        if (idle &gt;= CONFIG.idleLimit) { ctx.endReason = 'exhausted'; break; }
+      }
+      lastCount = items.length;
+      await sleep(CONFIG.delayMs);
+    }
+
+    // 잘린 본문 펼치기 → 렌더 대기 → 파싱
+    setStatus('본문 펼치는 중…');
+    listUl = getReviewList() || listUl;
+    var expanded = expandTruncated(listUl);
+    if (expanded &gt; 0) await sleep(1200);
+
+    listUl = getReviewList() || listUl;
+    var finalItems = getItems(listUl).map(parseItem);
+    var replies = finalItems.filter(function (r) { return r.hasOwnerReply; }).length;
+
+    var warnings = diagnose(finalItems, ctx);
+
+    var data = {
+      _note: 'hasOwnerReply/ownerReplyText/dates는 휴리스틱 추출값입니다. 원문은 rawText에 보존되어 있으며, 분석 시 rawText를 기준으로 검증하세요.',
+      placeName: getPlaceName(),
+      sourceUrl: location.href,
+      capturedAt: new Date().toISOString(),
+      reviewCount: finalItems.length,
+      ownerReplyCount: replies,
+      diagnostics: {
+        collectorVersion: CONFIG.version,
+        endReason: ctx.endReason,
+        rounds: round,
+        moreButtonEverFound: ctx.moreButtonEverFound,
+        warnings: warnings
+      },
+      reviews: finalItems
+    };
+
+    download(data);
+
+    if (warnings.length &gt; 0) {
+      ov.style.background = '#7a4a12';
+      statusEl.innerHTML = '&lt;b&gt;⚠ 화면 구조 변경 의심&lt;/b&gt;&lt;br&gt;' +
+        warnings.map(function (x) { return '· ' + x; }).join('&lt;br&gt;') +
+        '&lt;br&gt;&lt;br&gt;파일은 저장했습니다. 이 JSON을 Claude에게 가져가면 수집기를 수정할 수 있어요.';
+      // 경고는 자동으로 사라지지 않음
+    } else {
+      setStatus('완료: 리뷰 ' + finalItems.length + '개 저장 (답글 추정 ' + replies + '개) · 상태 정상');
+      setTimeout(function () { ov.remove(); }, 6000);
+    }
+    window.__npCollectorRunning = false;
+  })();
+})();
+</textarea>
+      <button class="copy-btn" onclick="var t=document.getElementById('console-code');t.select();document.execCommand('copy');this.textContent='복사됨 ✓';this.classList.add('done')">코드 복사</button>
+    </details>
+  </section>
+
+  <section>
+    <h2><span class="step-no">2</span>리뷰 페이지 열기</h2>
+    <p>중요: PC용 네이버 지도(map.naver.com)의 왼쪽 패널에서는 작동하지 않습니다. <b>모바일 플레이스 페이지</b>를 PC 브라우저에서 직접 열어야 해요.</p>
+    <ol>
+      <li>PC 네이버 지도(map.naver.com)에서 업체를 검색해 클릭</li>
+      <li>브라우저 <b>주소창의 URL 전체를 복사</b> (naver.me 공유 링크 아님)</li>
+      <li>아래 변환기에 붙여넣으면 리뷰 페이지 링크가 만들어집니다</li>
+    </ol>
+    <div class="bm-zone" style="text-align:left;padding:18px">
+      <input id="cv-input" type="text" placeholder="예: https://map.naver.com/p/entry/place/1234567?..."
+        style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;font-family:var(--mono)">
+      <div id="cv-out" style="margin-top:12px;font-size:14px"></div>
+    </div>
+    <p style="font-size:13.5px;color:var(--dim)">열린 페이지 주소가 <b>m.place.naver.com/…/review/visitor</b> 형태이고 리뷰 목록이 보이면 준비 완료입니다. 첫 번째 링크에서 "페이지를 찾을 수 없음"이 뜨면 두 번째 링크로 여세요.</p>
+    <script>
+      document.getElementById('cv-input').addEventListener('input', function(){
+        var out = document.getElementById('cv-out');
+        var m = this.value.match(/(?:place|restaurant|entry\/place)\/(\d{5,})/);
+        if(!m){
+          out.innerHTML = this.value.trim()
+            ? '<span style="color:var(--clay)">업체 번호를 찾지 못했습니다. naver.me 단축 링크가 아니라 지도 화면의 <b>주소창 URL</b>을 붙여넣어 주세요.</span>'
+            : '';
+          return;
+        }
+        var id = m[1];
+        out.innerHTML =
+          '<div style="font-weight:700;margin-bottom:6px">✅ 리뷰 페이지 링크 (새 탭에서 열기):</div>' +
+          '<div class="url-box" style="margin:4px 0"><a href="https://m.place.naver.com/restaurant/'+id+'/review/visitor" target="_blank" style="color:var(--moss);font-weight:700">m.place.naver.com/restaurant/'+id+'/review/visitor</a></div>' +
+          '<div class="url-box" style="margin:4px 0"><a href="https://m.place.naver.com/place/'+id+'/review/visitor" target="_blank" style="color:var(--dim)">m.place.naver.com/place/'+id+'/review/visitor</a> <span style="font-size:12px;color:var(--dim)">(음식점이 아닐 때)</span></div>';
+      });
+    </script>
+  </section>
+
+  <section>
+    <h2><span class="step-no">3</span>수집 실행</h2>
+    <ol>
+      <li>리뷰 탭이 열린 상태에서 북마크바의 <b>📥 리뷰 수집기</b> 클릭</li>
+      <li>화면 우하단에 진행 카운터가 뜨고, 자동으로 스크롤하며 '더보기'를 끝까지 누릅니다</li>
+      <li>완료되면 <b>업체명_reviews_날짜.json</b> 파일이 자동 다운로드됩니다</li>
+      <li>리뷰 1,000개 기준 약 2~3분 소요 · 도중에 멈추고 싶으면 <b>'지금까지 수집분 저장'</b> 클릭</li>
+    </ol>
+    <div class="note"><b>수집 중 주의:</b> 탭을 최소화해도 되지만 닫지는 마세요. 같은 창에서 다른 페이지로 이동하면 수집이 중단됩니다.</div>
+  </section>
+
+  <section>
+    <h2><span class="step-no">4</span>분석 의뢰</h2>
+    <p>다운로드된 JSON 파일을 Claude에게 업로드하고 이렇게 요청하세요:</p>
+    <div class="url-box" style="font-family:inherit">"이 리뷰 데이터 분석해줘 — 불만 테마 분류, 사장님 답글률과 톤 진단, 전략 시사점 뽑아줘"</div>
+    <p style="font-size:13.5px;color:var(--dim)">JSON에는 각 리뷰의 원문(rawText)이 통째로 보존되어 있어서, 자동 분류가 놓친 뉘앙스도 분석 단계에서 잡아냅니다.</p>
+  </section>
+
+  <section>
+    <h2>⚠️ 문제 해결</h2>
+    <table>
+      <tr><td>목록을 못 찾음</td><td>리뷰 탭이 열려 있는지, 주소가 m.place.naver.com인지 확인. 페이지 새로고침 후 재시도.</td></tr>
+      <tr><td>수집이 중간에 멈춤</td><td>네트워크가 느리면 로딩 전에 종료 판정될 수 있어요. '지금까지 수집분 저장'으로 일단 받고, 새로고침 후 재실행하면 처음부터 다시 수집됩니다.</td></tr>
+      <tr><td>답글 수가 이상함</td><td>답글 감지는 추정값입니다. 본문에 '사장님'이라는 단어가 들어간 리뷰가 오탐될 수 있는데, 분석 단계(Claude)에서 원문 기준으로 걸러냅니다.</td></tr>
+      <tr><td>주황색 경고가 뜸</td><td>수집기가 화면 구조 변화를 스스로 감지한 것입니다. 파일은 저장되니, 그 JSON을 Claude에게 가져오면 무엇이 어떻게 바뀌었는지 진단 정보를 보고 바로 수정할 수 있습니다.</td></tr>
+      <tr><td>어느 날부터 작동 안 함</td><td>네이버가 화면 구조를 바꾼 경우입니다. 이 파일과 함께 "수집기가 안 된다"고 Claude에게 가져오면 수정해 드립니다.</td></tr>
+    </table>
+  </section>
+
+  <footer>
+    본인이 브라우저로 열람 중인 화면을 저장하는 도구입니다 · 자동 접속/대량 요청 없음<br>
+    수집한 데이터는 컨설팅 내부 분석 용도로만 사용하세요
+  </footer>
+</div>
+</body>
+</html>
